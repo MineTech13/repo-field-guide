@@ -1,0 +1,87 @@
+[
+  {
+    "id": "headman-manor",
+    "name": "Headman Manor",
+    "emoji": "🏚️",
+    "summary": "An old western-style mansion on several floors, with blind corners and narrow corridors.",
+    "tags": ["narrow", "vertical", "pits"],
+    "lighting": "Dim interiors with lots of shadowy corners.",
+    "hiding": "Good. Lots of rooms, doors and furniture.",
+    "hazards": {
+      "early": ["Blind corners hide monsters until you're right on them", "Narrow corridors: a monster can block your only way back to the truck"],
+      "mid": ["Hidden drops start to appear, sometimes right past a door", "Multi-floor routes get longer, so plan the cart path between floors"],
+      "late": ["Bottomless pits on higher levels", "Drops right behind doors, so look before you sprint through"]
+    },
+    "hazardWeight": { "early": 4, "mid": 8, "late": 14 },
+    "tips": ["You can move the cart between floors without damaging heavy valuables if you're careful", "Scout a second route back to the truck in case a corridor gets blocked"],
+    "sources": ["bloxodes-maps"]
+  },
+  {
+    "id": "mcjannek-station",
+    "name": "McJannek Station",
+    "emoji": "🧊",
+    "summary": "A dim arctic research station with broad corridors, open rooms and multi-floor drops.",
+    "tags": ["open", "pits", "vertical", "water"],
+    "lighting": "Dim. Open rooms give monsters long sightlines.",
+    "hiding": "Poor. Fewer hiding spots than the manor.",
+    "hazards": {
+      "early": ["Open rooms: sight-based monsters spot you from far away", "Stairs can damage loads, so slow down with the cart"],
+      "mid": ["Pits and narrow gaps appear", "Long open corridors make you an easy target for the Clown laser and Huntsman shots"],
+      "late": ["Deadly pits and liquid pools that need parkour", "Multi-floor drops on the extraction route"]
+    },
+    "hazardWeight": { "early": 5, "mid": 9, "late": 15 },
+    "tips": ["Move between cover, because open halls are kill zones for ranged monsters", "Carry the most fragile loot by hand over stairs instead of in the cart"],
+    "sources": ["bloxodes-maps"]
+  },
+  {
+    "id": "swiftbroom-academy",
+    "name": "Swiftbroom Academy",
+    "emoji": "🧹",
+    "summary": "A castle-like wizarding school full of sudden stairs, pits and lava.",
+    "tags": ["lava", "pits", "vertical"],
+    "lighting": "Mixed. Torch-lit halls with dark side rooms.",
+    "hiding": "Medium. Monsters are hard to shake once they spot you.",
+    "hazards": {
+      "early": ["Death pits can show up even at low quota", "Sudden stairs can tip the cart"],
+      "mid": ["Lava pools on the way to valuables", "Any push, throw or scream near an edge can be fatal"],
+      "late": ["Extraction rooms with lava pits: one fall is basically death", "Monsters that push or throw (Bowtie, Upscream, Mentalist) become lethal"]
+    },
+    "hazardWeight": { "early": 6, "mid": 11, "late": 17 },
+    "tips": ["Lava and pits are great for disposing of Bangers", "Never fight next to a ledge here, so pull monsters into flat rooms first"],
+    "sources": ["bloxodes-maps"]
+  },
+  {
+    "id": "museum-of-human-art",
+    "name": "Museum of Human Art",
+    "emoji": "🖼️",
+    "summary": "A very dark, abandoned art museum with open galleries, pits and vents.",
+    "tags": ["dark", "open", "pits"],
+    "lighting": "Very dark. Your flashlight is most of your light.",
+    "hiding": "Poor. Open galleries with few hiding spots.",
+    "hazards": {
+      "early": ["Darkness hides monsters until they're close, so listen carefully", "Valuables on high ledges tempt risky jumps"],
+      "mid": ["Pits throughout the galleries", "Flashlight dependence: light-sensitive monsters (Headman, Oogly) are worse here"],
+      "late": ["Pits plus darkness plus long galleries make chases deadly"]
+    },
+    "hazardWeight": { "early": 6, "mid": 10, "late": 16 },
+    "tips": ["Vents are escape routes, but you can't carry loot through them", "Call out gallery names so the team can find each other in the dark"],
+    "sources": ["bloxodes-maps"]
+  },
+  {
+    "id": "sunstone-valley-resort",
+    "name": "Sunstone Valley Resort",
+    "emoji": "⛏️",
+    "summary": "A dark Gold Rush western resort with minecart tracks, attractions, vertical rooms and breakable walkways. Added in v0.5.0.",
+    "tags": ["dark", "vertical", "narrow", "pits"],
+    "lighting": "Unusually dark.",
+    "hiding": "Medium. Indoor facilities, narrow corridors and elevation changes.",
+    "hazards": {
+      "early": ["Darkness and elevation changes", "Breakable wooden walkways"],
+      "mid": ["Drops next to narrow corridors", "Overfilled carts near drops can lose several valuables at once"],
+      "late": ["Vertical rooms with deep drops", "Pony territory: ceilings and drops combine badly"]
+    },
+    "hazardWeight": { "early": 6, "mid": 10, "late": 16 },
+    "tips": ["Don't overfill the cart on walkway routes", "Look up, because ceiling attackers love this map's tall rooms"],
+    "sources": ["bloxodes-maps", "accountshark", "gamemarket"]
+  }
+]

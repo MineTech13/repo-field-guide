@@ -1,0 +1,12 @@
+[
+  { "id": "tranq", "name": "Tranquilizer gun", "emoji": "💉", "kind": "weapon", "description": "Stuns most monsters from range. Knocks the Huntsman over.", "goodAgainst": ["upscream", "bowtie", "huntsman", "reaper", "robe"] },
+  { "id": "stun", "name": "Stun weapon / stun grenade", "emoji": "⚡", "kind": "weapon", "description": "Any reliable stun. Needed to grab the Pony, and buys time against Robe and Elsa.", "goodAgainst": ["pony", "elsa", "robe", "oogly"] },
+  { "id": "firearm", "name": "Firearm (gun, Human Gun, …)", "emoji": "🔫", "kind": "weapon", "description": "Ranged damage. Safe against things you shouldn't melee.", "goodAgainst": ["huntsman", "headman", "bowtie", "loom", "reaper", "clown"] },
+  { "id": "grenade", "name": "Grenades", "emoji": "🧨", "kind": "weapon", "description": "Burst damage. Stun or frag both help against flyers.", "goodAgainst": ["oogly", "huntsman", "trudge", "loom", "cleanup-crew"] },
+  { "id": "mine", "name": "Land mines", "emoji": "🪤", "kind": "weapon", "description": "Set traps on patrol routes. Stack several for big monsters.", "goodAgainst": ["trudge", "huntsman", "hidden", "loom"] },
+  { "id": "sledgehammer", "name": "Sledgehammer", "emoji": "🔨", "kind": "weapon", "description": "Heavy melee with good stun. The best general melee pick.", "goodAgainst": ["elsa", "upscream", "headman", "heart-hugger", "chef"] },
+  { "id": "melee", "name": "Light melee (bat, pan, sword…)", "emoji": "🏏", "kind": "weapon", "description": "Fine against small or fragile monsters.", "goodAgainst": ["gnome", "shadow-child", "mentalist", "tick", "spewer"] },
+  { "id": "strength", "name": "Strength upgrades", "emoji": "💪", "kind": "upgrade", "description": "Lift and slam heavier monsters (3+ for Chef or Rugrat, 7 for Bowtie, 13 for the big ones).", "goodAgainst": ["chef", "rugrat", "animal", "headgrab", "hidden"] },
+  { "id": "grabRange", "name": "Grab range upgrades", "emoji": "🧲", "kind": "upgrade", "description": "Grab monsters and teammates from a safer distance.", "goodAgainst": ["headgrab", "upscream", "heart-hugger"] },
+  { "id": "health", "name": "Health packs", "emoji": "❤️‍🩹", "kind": "consumable", "description": "Heal between encounters. Changes what's safe to risk.", "goodAgainst": [] }
+]

@@ -1,0 +1,78 @@
+{
+  "bloxodes": {
+    "name": "Bloxodes R.E.P.O. wiki",
+    "url": "https://bloxodes.com/wiki/repo/monsters",
+    "note": "Star tiers, HP, orb values"
+  },
+  "bloxodes-maps": {
+    "name": "Bloxodes R.E.P.O. maps",
+    "url": "https://bloxodes.com/wiki/repo/maps"
+  },
+  "itemlevel": {
+    "name": "ItemLevel monster guide",
+    "url": "https://itemlevel.net/repo-all-monsters-guide-how-to-beat-them/"
+  },
+  "gamepressure": {
+    "name": "Gamepressure: Monster Update monsters",
+    "url": "https://www.gamepressure.com/newsroom/meet-all-new-monsters-in-repo-from-the-latest-update-the-birthday/zf8887"
+  },
+  "gamer": {
+    "name": "Gamer.org: Monster Update breakdown",
+    "url": "https://www.gamer.org/repo-update-breakdown-11-new-enemies-big-movement-buffs/"
+  },
+  "accountshark": {
+    "name": "AccountShark: Sunstone Update notes",
+    "url": "https://accountshark.net/blog/repo-sunstone-update-v0-5-0-sunstone-valley-resort-pony-enemy-new-items-patch-notes"
+  },
+  "gamemarket": {
+    "name": "GameMarket: Sunstone Update notes",
+    "url": "https://gamemarket.gg/news/repo/r-e-p-o-sunstone-update-full-patch-notes-and-new-content-explained"
+  },
+  "escapist": {
+    "name": "The Escapist: all monsters",
+    "url": "https://www.escapistmagazine.com/all-monsters-how-to-kill-or-escape-them-in-r-e-p-o/",
+    "note": "March 2025, predates v0.3.0"
+  },
+  "wikipedia": {
+    "name": "Wikipedia: R.E.P.O.",
+    "url": "https://en.wikipedia.org/wiki/R.E.P.O."
+  },
+  "fantime-monsters": {
+    "name": "Fantime Horror: monsters & spawns",
+    "url": "https://www.fantime-horror.com/repo/monsters/",
+    "note": "Spawn table, respawn timers"
+  },
+  "fantime-items": {
+    "name": "Fantime Horror: items & shop",
+    "url": "https://www.fantime-horror.com/repo/items/",
+    "note": "Item prices, upgrade pool"
+  },
+  "substack-spawns": {
+    "name": "Haplo's Substack: spawn rates and tiers",
+    "url": "https://haplogamingcook.substack.com/p/repo-monster-spawn-rates-and-tiers"
+  },
+  "bloxodes-upgrades": {
+    "name": "Bloxodes: upgrades",
+    "url": "https://bloxodes.com/wiki/repo/upgrades"
+  },
+  "bloxodes-weapons": {
+    "name": "Bloxodes: weapons",
+    "url": "https://bloxodes.com/wiki/repo/weapons"
+  },
+  "repogame-upgrades": {
+    "name": "repo-game.org: upgrade priority",
+    "url": "https://www.repo-game.org/en/repogame-upgrades"
+  },
+  "thegamer-upgrades": {
+    "name": "TheGamer: best upgrades first",
+    "url": "https://www.thegamer.com/repo-best-upgrades-unlock-first-guide/"
+  },
+  "gamerant-secret": {
+    "name": "GameRant: secret shop locations",
+    "url": "https://gamerant.com/repo-where-how-find-secret-shops-locations/"
+  },
+  "gamesgg-secret": {
+    "name": "games.gg: secret shop",
+    "url": "https://games.gg/r-e-p-o/guides/repo-secret-shop-location/"
+  }
+}

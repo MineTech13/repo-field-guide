@@ -1,0 +1,28 @@
+{
+  "name": "repo-field-guide",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Unofficial interactive round helper and monster guide for R.E.P.O.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "validate": "vitest run tests/data.test.ts",
+    "check": "npm run validate && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "preact": "^11.2.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1"
+  }
+}
