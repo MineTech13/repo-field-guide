@@ -26,7 +26,7 @@ export function Encyclopedia() {
 
   const list = MONSTERS.filter(
     (m) =>
-      (!q || [m.name, ...m.aliases, m.behavior].some((t) => norm(t).includes(q))) &&
+      (!q || [m.name, ...m.aliases, ...m.nicknames, m.behavior].some((t) => norm(t).includes(q))) &&
       (tier === 0 || m.tier === tier) &&
       (det === 'all' || m.detection.includes(det)),
   ).sort((a, b) =>
@@ -46,7 +46,7 @@ export function Encyclopedia() {
         </p>
       </div>
       <div class="filters">
-        <input class="search" type="search" placeholder="Search name or behavior…" value={query} onInput={(e) => setQuery((e.target as HTMLInputElement).value)} aria-label="Search monsters" />
+        <input class="search" type="search" placeholder="Search name, callout or behavior…" value={query} onInput={(e) => setQuery((e.target as HTMLInputElement).value)} aria-label="Search monsters" />
         <div class="seg" role="group" aria-label="Tier filter">
           {([0, 3, 2, 1] as const).map((t) => (
             <button class={tier === t ? 'on' : ''} aria-pressed={tier === t} onClick={() => setTier(t)}>
@@ -83,6 +83,7 @@ export function Encyclopedia() {
               </span>
             </div>
             <p class="ency-golden">{m.golden}</p>
+            <p class="ency-nick">“{m.nicknames.join('”, “')}”</p>
           </a>
         ))}
       </div>

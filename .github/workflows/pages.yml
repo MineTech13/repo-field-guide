@@ -1,6 +1,6 @@
-# Optional: deploy to GitHub Pages.
+# Deploys the site to GitHub Pages.
 # Enable it in the repo: Settings → Pages → Source: "GitHub Actions".
-# Not needed if you only use Cloudflare Pages (which builds from the repo by itself).
+# This is how the live site is deployed: https://minetech13.github.io/repo-field-guide/
 name: Deploy to GitHub Pages
 
 on:

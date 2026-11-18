@@ -19,6 +19,16 @@ describe('monsters.json', () => {
     for (const m of MONSTERS) expect(m.id, m.id).toMatch(ID);
   });
 
+  it('names, aliases and callouts never point at two monsters', () => {
+    const seen = new Map<string, string>();
+    for (const m of MONSTERS)
+      for (const n of [m.name, ...m.aliases, ...m.nicknames]) {
+        const key = n.toLowerCase();
+        expect(seen.get(key) ?? m.id, `"${n}" used by ${seen.get(key)} and ${m.id}`).toBe(m.id);
+        seen.set(key, m.id);
+      }
+  });
+
   it.each(MONSTERS.map((m) => [m.id, m] as const))('%s is complete and valid', (_id, m) => {
     for (const key of ['name', 'emoji', 'hp', 'orb', 'golden', 'tells', 'behavior', 'damage'] as const) {
       expect(typeof m[key] === 'string' && m[key].trim().length > 0, `${m.id}.${key}`).toBe(true);
@@ -30,6 +40,8 @@ describe('monsters.json', () => {
     for (const d of m.detection) expect(DETECTIONS, `${m.id} detection ${d}`).toContain(d);
     for (const t of m.tags) expect(TAGS, `${m.id} tag ${t}`).toContain(t);
     expect(m.do.length + m.dont.length, `${m.id} needs do/dont`).toBeGreaterThan(0);
+    expect(Array.isArray(m.nicknames), `${m.id}.nicknames`).toBe(true);
+    for (const n of m.nicknames) expect(n.trim().length, `${m.id} empty nickname`).toBeGreaterThan(0);
     expect(typeof m.counter.kill).toBe('string');
     for (const i of m.counter.items) expect(ITEMS.map((x) => x.id), `${m.id} item ${i}`).toContain(i);
     expect(m.sources.length, `${m.id} needs a source`).toBeGreaterThan(0);

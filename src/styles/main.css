@@ -1057,6 +1057,12 @@ select {
   font-size: 0.88rem;
   color: var(--muted);
 }
+.ency-nick {
+  margin: 6px 0 0;
+  font: italic 0.8rem var(--sans);
+  color: var(--muted);
+  opacity: 0.8;
+}
 
 /* ---------- maps ---------- */
 .maps-grid {

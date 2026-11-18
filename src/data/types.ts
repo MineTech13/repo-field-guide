@@ -34,7 +34,10 @@ export type MonsterTag =
 export interface Monster {
   id: string;
   name: string;
+  /** Alternate names that appear in guides or older versions (shown as "aka"). */
   aliases: string[];
+  /** Short descriptive callouts players use in voice chat ("ceiling eye", "shotgun guy"). Searchable. */
+  nicknames: string[];
   emoji: string;
   /** In-game star rating 1–3 (higher spawns as the "big" monster of a level). */
   tier: 1 | 2 | 3;

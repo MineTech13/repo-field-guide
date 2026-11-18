@@ -21,7 +21,7 @@ function buildIndex(): (Hit & { hay: string })[] {
       title: m.name,
       text: m.golden,
       href: `#/monsters/${m.id}`,
-      hay: norm([m.name, ...m.aliases, m.golden, m.tells, m.behavior, ...m.do, ...m.dont, m.counter.kill].join(' ')),
+      hay: norm([m.name, ...m.aliases, ...m.nicknames, m.golden, m.tells, m.behavior, ...m.do, ...m.dont, m.counter.kill].join(' ')),
     });
   for (const m of MAPS)
     out.push({ kind: 'Map', emoji: m.emoji, title: m.name, text: m.summary, href: '#/maps', hay: norm([m.name, m.summary, ...m.tips, ...Object.values(m.hazards).flat()].join(' ')) });
@@ -59,7 +59,7 @@ export function WikiPage() {
         class="search big-search"
         type="search"
         autoFocus
-        placeholder='Try "stun", "lava", "pony", "stamina", "toilet"…'
+        placeholder='Try "stun", "lava", "shotgun guy", "stamina", "toilet"…'
         value={q}
         onInput={(e) => setQ((e.target as HTMLInputElement).value)}
         aria-label="Search the wiki"

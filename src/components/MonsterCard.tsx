@@ -27,6 +27,11 @@ export function MonsterCard({ monster: m, spotted, usableItems = [], noAnswer, d
       <p class="tells">
         <strong>How you notice it:</strong> {m.tells}
       </p>
+      {m.nicknames.length > 0 && (
+        <p class="tells">
+          <strong>Callouts:</strong> “{m.nicknames.join('”, “')}”
+        </p>
+      )}
       <p>{m.behavior}</p>
       <dl class="facts">
         <dt>Detects you by</dt>

@@ -15,7 +15,7 @@ export function MonsterPicker({ state, update }: Props) {
   const [query, setQuery] = useState('');
   const spottedIds = new Set(state.spotted.map((s) => s.id));
   const q = norm(query);
-  const matches = MONSTERS.filter((m) => !q || [m.name, ...m.aliases].some((n) => norm(n).includes(q)));
+  const matches = MONSTERS.filter((m) => !q || [m.name, ...m.aliases, ...m.nicknames].some((n) => norm(n).includes(q)));
 
   return (
     <Section title="Monsters this level" aside={<span class="muted small">{state.spotted.length} logged</span>}>
@@ -56,7 +56,7 @@ export function MonsterPicker({ state, update }: Props) {
       <input
         class="search"
         type="search"
-        placeholder="Search monsters… (e.g. clown, duck)"
+        placeholder="Search name or callout… (e.g. duck, shotgun guy)"
         value={query}
         onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
         aria-label="Search monsters"

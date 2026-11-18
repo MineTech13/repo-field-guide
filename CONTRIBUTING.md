@@ -20,6 +20,7 @@ Rules of thumb:
 - **Cite a source.** Add it to `sources.json` and reference its key. Patch notes, a wiki, or a guide all work. "I tested it" is fine for a `note`, but say so.
 - **Disagreements go in `notes`.** If sources conflict, mention both and set `"verified": false` if it really matters.
 - **Keep text short and actionable.** `golden` is the single most important rule, shown first. Write it like a teammate yelling in voice chat.
+- **`aliases` vs `nicknames`.** `aliases` are alternate names that appear in guides or older versions (shown as "aka"). `nicknames` are short callouts players use in voice chat ("ceiling eye", "shotgun guy"). Both are searchable, and the same name can't belong to two monsters.
 - **Monster tags drive the combo warnings.** See the comment on `MonsterTag` in `src/data/types.ts`.
 
 Then run:

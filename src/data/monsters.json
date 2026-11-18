@@ -2,12 +2,23 @@
   {
     "id": "apex-predator",
     "name": "Apex Predator",
-    "aliases": ["Duck"],
+    "aliases": [
+      "Duck"
+    ],
+    "nicknames": [
+      "duck",
+      "ducky",
+      "quack"
+    ],
     "emoji": "🦆",
     "tier": 1,
     "threat": "low",
-    "detection": ["provoked"],
-    "tags": ["passive"],
+    "detection": [
+      "provoked"
+    ],
+    "tags": [
+      "passive"
+    ],
     "hp": "150",
     "orb": "$2,000–$3,000",
     "addedIn": "early-access",
@@ -15,22 +26,51 @@
     "tells": "A little duck that waddles after you and watches your camera.",
     "behavior": "Follows players around. If grabbed or damaged it turns into a flying predator form for about 10 seconds and bites repeatedly.",
     "damage": "Bites 3× per second in predator form (about 10 per bite, so up to roughly 30/s).",
-    "do": ["Crouch out of its line of sight so it loses interest", "If you want the orb, lure it onto the extraction point and let the platform crush it"],
-    "dont": ["Grab it, hit it or throw things at it", "Let a teammate 'just test' it near the cart"],
-    "counter": { "stun": true, "kill": "Stun it first, or crush it with the extraction platform or scrap piston, which doesn't trigger the transformation.", "items": ["stun", "tranq"] },
+    "do": [
+      "Crouch out of its line of sight so it loses interest",
+      "If you want the orb, lure it onto the extraction point and let the platform crush it"
+    ],
+    "dont": [
+      "Grab it, hit it or throw things at it",
+      "Let a teammate 'just test' it near the cart"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Stun it first, or crush it with the extraction platform or scrap piston, which doesn't trigger the transformation.",
+      "items": [
+        "stun",
+        "tranq"
+      ]
+    },
     "notes": "Sources differ on bite damage (10 per bite vs 30/s).",
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "bella",
     "name": "Bella",
-    "aliases": ["Tricycle"],
+    "aliases": [
+      "Tricycle"
+    ],
+    "nicknames": [
+      "tricycle girl",
+      "bell girl",
+      "bike kid"
+    ],
     "emoji": "🔔",
     "tier": 1,
     "threat": "low",
-    "detection": ["provoked"],
-    "tags": ["passive", "noisy"],
+    "detection": [
+      "provoked"
+    ],
+    "tags": [
+      "passive",
+      "noisy"
+    ],
     "hp": "200",
     "orb": "$2,200–$3,000",
     "addedIn": "0.3.0",
@@ -38,21 +78,46 @@
     "tells": "A little girl on a tricycle ringing a bell.",
     "behavior": "Rides a route around the map. She rings her bell when you block her or hang around too long. On the third ring she goes aggressive and fast. The ring counter resets after about 20 seconds.",
     "damage": "5 per ram or hit, repeated while berserk.",
-    "do": ["Step off her route as soon as she rings", "Back off or leave the room to let the counter reset"],
-    "dont": ["Block corridors with the cart on her route", "Swing at her while she attacks, because your weapon gets deflected"],
-    "counter": { "stun": true, "kill": "Stun her, then hit her. Easier to just avoid.", "items": ["stun", "tranq"] },
+    "do": [
+      "Step off her route as soon as she rings",
+      "Back off or leave the room to let the counter reset"
+    ],
+    "dont": [
+      "Block corridors with the cart on her route",
+      "Swing at her while she attacks, because your weapon gets deflected"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Stun her, then hit her. Easier to just avoid.",
+      "items": [
+        "stun",
+        "tranq"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "birthday-boy",
     "name": "Birthday Boy",
     "aliases": [],
+    "nicknames": [
+      "balloon boy",
+      "balloon guy"
+    ],
     "emoji": "🎈",
     "tier": 1,
     "threat": "low",
-    "detection": ["provoked"],
-    "tags": ["passive"],
+    "detection": [
+      "provoked"
+    ],
+    "tags": [
+      "passive"
+    ],
     "hp": "150",
     "orb": "$2,200–$2,900",
     "addedIn": "0.3.0",
@@ -60,21 +125,49 @@
     "tells": "Balloons placed around the map.",
     "behavior": "Places balloons around the map. If a player or their weapon pops one he chases that player. If an object pops one he comes to investigate. He crawls under counters and through small gaps.",
     "damage": "Charge and swing for 10, crawling hit for 10. He keeps slapping repeatedly.",
-    "do": ["Watch where you throw loot and swing weapons near balloons", "If you popped one, zigzag around corners"],
-    "dont": ["Hide under counters, because he crawls under them", "Fire explosives in balloon rooms"],
-    "counter": { "stun": true, "kill": "Killing him removes all balloons. If he despawns and a balloon pops later, he comes back already angry.", "items": ["stun", "tranq", "sledgehammer"] },
+    "do": [
+      "Watch where you throw loot and swing weapons near balloons",
+      "If you popped one, zigzag around corners"
+    ],
+    "dont": [
+      "Hide under counters, because he crawls under them",
+      "Fire explosives in balloon rooms"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Killing him removes all balloons. If he despawns and a balloon pops later, he comes back already angry.",
+      "items": [
+        "stun",
+        "tranq",
+        "sledgehammer"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "elsa",
     "name": "Elsa",
     "aliases": [],
+    "nicknames": [
+      "dog",
+      "doggo",
+      "puppy"
+    ],
     "emoji": "🐕",
     "tier": 1,
     "threat": "medium",
-    "detection": ["sight", "provoked"],
-    "tags": ["passive"],
+    "detection": [
+      "sight",
+      "provoked"
+    ],
+    "tags": [
+      "passive"
+    ],
     "hp": "600",
     "orb": "$2,300–$3,000",
     "addedIn": "0.3.0",
@@ -82,21 +175,48 @@
     "tells": "A small friendly dog. A 'PET THE DOG!' prompt appears the first time she sees you.",
     "behavior": "Wanders up to players and wants pets. Petted, she calms down and leaves. Ignored, or hurt by players OR other monsters, she transforms and attacks.",
     "damage": "Charges and swings for 5–30. About 25 extra if she knocks you into a wall.",
-    "do": ["Pet her whenever she comes to you", "Fight her in open rooms, not hallways, if she turns"],
-    "dont": ["Hit her, even by accident", "Lead other monsters into her, because their attacks set her off too"],
-    "counter": { "stun": true, "kill": "600 HP and can't be grabbed. Use stun-heavy weapons like the sledgehammer, or knock her into a pit.", "items": ["sledgehammer", "stun", "grenade"] },
+    "do": [
+      "Pet her whenever she comes to you",
+      "Fight her in open rooms, not hallways, if she turns"
+    ],
+    "dont": [
+      "Hit her, even by accident",
+      "Lead other monsters into her, because their attacks set her off too"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "600 HP and can't be grabbed. Use stun-heavy weapons like the sledgehammer, or knock her into a pit.",
+      "items": [
+        "sledgehammer",
+        "stun",
+        "grenade"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "gnome",
     "name": "Gnome",
     "aliases": [],
+    "nicknames": [
+      "gnomes",
+      "pickaxe gnomes"
+    ],
     "emoji": "⛏️",
     "tier": 1,
     "threat": "low",
-    "detection": ["sight"],
-    "tags": ["loot-breaker", "group"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "loot-breaker",
+      "group"
+    ],
     "hp": "20",
     "orb": "None",
     "addedIn": "early-access",
@@ -104,21 +224,47 @@
     "tells": "Packs of 3–5 small gnomes with pickaxes.",
     "behavior": "Goes for valuables first and chips away at them with pickaxes. Will also swing at players at very close range.",
     "damage": "10 per pickaxe swing (about 1 s wind-up).",
-    "do": ["Pick one up and slam it into the floor, or throw it into the others", "Keep fragile valuables away from them"],
-    "dont": ["Leave the cart unattended near a pack", "Waste weapon ammo on them"],
-    "counter": { "stun": false, "kill": "Grab and smash. Very weak, but there are many of them.", "items": ["melee"] },
+    "do": [
+      "Pick one up and slam it into the floor, or throw it into the others",
+      "Keep fragile valuables away from them"
+    ],
+    "dont": [
+      "Leave the cart unattended near a pack",
+      "Waste weapon ammo on them"
+    ],
+    "counter": {
+      "stun": false,
+      "kill": "Grab and smash. Very weak, but there are many of them.",
+      "items": [
+        "melee"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "peeper",
     "name": "Peeper",
-    "aliases": ["Ceiling Eye"],
+    "aliases": [],
+    "nicknames": [
+      "ceiling eye",
+      "eyeball",
+      "eye"
+    ],
     "emoji": "👁️",
     "tier": 1,
     "threat": "medium",
-    "detection": ["sight"],
-    "tags": ["ceiling", "forces-look"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "ceiling",
+      "forces-look"
+    ],
     "hp": "30",
     "orb": "Disputed (none, or $2,000–$4,000)",
     "addedIn": "early-access",
@@ -126,22 +272,45 @@
     "tells": "An eye on the ceiling that snaps open and drags your camera toward it.",
     "behavior": "Locks onto one player at a time, forcing their aim upward toward it. Damage starts after about 3 seconds of lock.",
     "damage": "Damage over time after a ~3 s lock (sources say 2/s or 10/s).",
-    "do": ["Walk back the way you came to break line of sight", "Have a teammate guide or drag the locked player out", "Call out Peeper rooms so carriers avoid them"],
-    "dont": ["Carry loot through its room, because you can't see where you're going", "Try to fight it"],
-    "counter": { "stun": false, "kill": "Not worth fighting. Avoid its room.", "items": [] },
+    "do": [
+      "Walk back the way you came to break line of sight",
+      "Have a teammate guide or drag the locked player out",
+      "Call out Peeper rooms so carriers avoid them"
+    ],
+    "dont": [
+      "Carry loot through its room, because you can't see where you're going",
+      "Try to fight it"
+    ],
+    "counter": {
+      "stun": false,
+      "kill": "Not worth fighting. Avoid its room.",
+      "items": []
+    },
     "notes": "Sources disagree on damage per second and whether it drops an orb.",
     "verified": true,
-    "sources": ["bloxodes", "itemlevel"]
+    "sources": [
+      "bloxodes",
+      "itemlevel"
+    ]
   },
   {
     "id": "shadow-child",
     "name": "Shadow Child",
     "aliases": [],
+    "nicknames": [
+      "shadow kid",
+      "ghost kid"
+    ],
     "emoji": "🌑",
     "tier": 1,
     "threat": "medium",
-    "detection": ["gaze"],
-    "tags": ["look-away", "displacer"],
+    "detection": [
+      "gaze"
+    ],
+    "tags": [
+      "look-away",
+      "displacer"
+    ],
     "hp": "Low (one melee hit in most guides; 150 per Bloxodes)",
     "orb": "$2,000–$5,000",
     "addedIn": "early-access",
@@ -149,22 +318,49 @@
     "tells": "A small dark child figure that giggles when it teleports.",
     "behavior": "If you keep looking at it, it attacks after a short delay, yanking you toward it. It teleports away on its own after about 10 seconds.",
     "damage": "30–50 and a strong pull or launch.",
-    "do": ["Look away and let it teleport", "Hit it once if you can reach it, because it's fragile"],
-    "dont": ["Stare at it near pits or ledges, because the yank can throw you"],
-    "counter": { "stun": true, "kill": "One melee hit kills it in most guides.", "items": ["melee", "sledgehammer"] },
+    "do": [
+      "Look away and let it teleport",
+      "Hit it once if you can reach it, because it's fragile"
+    ],
+    "dont": [
+      "Stare at it near pits or ledges, because the yank can throw you"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "One melee hit kills it in most guides.",
+      "items": [
+        "melee",
+        "sledgehammer"
+      ]
+    },
     "notes": "Buffed in v0.3.0: more damage and a harder yank.",
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamer"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamer"
+    ]
   },
   {
     "id": "spewer",
     "name": "Spewer",
     "aliases": [],
+    "nicknames": [
+      "puker",
+      "vomit frog",
+      "face hugger"
+    ],
     "emoji": "🤮",
     "tier": 1,
     "threat": "low",
-    "detection": ["sound"],
-    "tags": ["noisy", "loot-breaker", "grabber"],
+    "detection": [
+      "sound"
+    ],
+    "tags": [
+      "noisy",
+      "loot-breaker",
+      "grabber"
+    ],
     "hp": "65",
     "orb": "$1,000–$4,000",
     "addedIn": "early-access",
@@ -172,21 +368,46 @@
     "tells": "Constant gurgling. A tadpole-like creature.",
     "behavior": "Latches onto a player's face and makes them vomit for up to a minute. The vomit damages nearby players, valuables and even other monsters, and it's loud.",
     "damage": "Bile about 10 per hit (≈10/s when cornered).",
-    "do": ["Grab and shake it, or tumble, to get it off", "Move the vomiting player away from the cart", "Aim the vomit at monsters (it can kill a Clown in 2–3 vomits)"],
-    "dont": ["Stand next to a vomiting teammate", "Vomit near a Huntsman, because the noise draws its fire"],
-    "counter": { "stun": true, "kill": "Grab it and shake it off, then smash it.", "items": ["melee"] },
+    "do": [
+      "Grab and shake it, or tumble, to get it off",
+      "Move the vomiting player away from the cart",
+      "Aim the vomit at monsters (it can kill a Clown in 2–3 vomits)"
+    ],
+    "dont": [
+      "Stand next to a vomiting teammate",
+      "Vomit near a Huntsman, because the noise draws its fire"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Grab it and shake it off, then smash it.",
+      "items": [
+        "melee"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "tick",
     "name": "Tick",
     "aliases": [],
+    "nicknames": [
+      "bug",
+      "leech"
+    ],
     "emoji": "🪲",
     "tier": 1,
     "threat": "low",
-    "detection": ["proximity"],
-    "tags": ["grabber"],
+    "detection": [
+      "proximity"
+    ],
+    "tags": [
+      "grabber"
+    ],
     "hp": "10 (+10 per drain)",
     "orb": "None",
     "addedIn": "0.3.0",
@@ -194,22 +415,47 @@
     "tells": "A small bug that jumps on your grab beam when you grab something nearby.",
     "behavior": "Attaches and drains health, growing as it feeds. Detaches after draining about 100 HP.",
     "damage": "Drains about 10 HP per second.",
-    "do": ["Smash it into a wall or floor quickly", "Kill a fed Tick, because it pops into a healing cloud"],
-    "dont": ["Grab objects next to it at low HP", "Let it feed on a critically hurt teammate"],
-    "counter": { "stun": true, "kill": "Smash it quickly. A fed Tick leaves a healing cloud when it dies.", "items": ["melee"] },
+    "do": [
+      "Smash it into a wall or floor quickly",
+      "Kill a fed Tick, because it pops into a healing cloud"
+    ],
+    "dont": [
+      "Grab objects next to it at low HP",
+      "Let it feed on a critically hurt teammate"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Smash it quickly. A fed Tick leaves a healing cloud when it dies.",
+      "items": [
+        "melee"
+      ]
+    },
     "notes": "Sources disagree on exactly how much it drains before detaching.",
     "verified": false,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "animal",
     "name": "Animal",
     "aliases": [],
+    "nicknames": [
+      "runner",
+      "crazy animal"
+    ],
     "emoji": "🐾",
     "tier": 2,
     "threat": "low",
-    "detection": ["sight", "provoked"],
-    "tags": ["loot-breaker"],
+    "detection": [
+      "sight",
+      "provoked"
+    ],
+    "tags": [
+      "loot-breaker"
+    ],
     "hp": "150",
     "orb": "$1,400–$4,300",
     "addedIn": "early-access",
@@ -217,21 +463,52 @@
     "tells": "A fast four-legged creature running around erratically.",
     "behavior": "When provoked it rampages erratically, smashing into players and valuables.",
     "damage": "Low: about 2 per contact, but it wrecks loot.",
-    "do": ["Climb onto high furniture or let it run itself out", "Two players grabbing it at once freezes it, then slam it 2–3 times", "Lead it into Gnomes, because it tramples them"],
-    "dont": ["Fight it next to the cart"],
-    "counter": { "stun": true, "kill": "Double-grab to freeze it, then slam.", "items": ["melee", "strength"] },
+    "do": [
+      "Climb onto high furniture or let it run itself out",
+      "Two players grabbing it at once freezes it, then slam it 2–3 times",
+      "Lead it into Gnomes, because it tramples them"
+    ],
+    "dont": [
+      "Fight it next to the cart"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Double-grab to freeze it, then slam.",
+      "items": [
+        "melee",
+        "strength"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "banger",
     "name": "Banger",
-    "aliases": ["Bang"],
+    "aliases": [
+      "Bang"
+    ],
+    "nicknames": [
+      "bomb",
+      "bomb guys",
+      "fuse guy"
+    ],
     "emoji": "💣",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight", "provoked"],
-    "tags": ["noisy", "loot-breaker", "group"],
+    "detection": [
+      "sight",
+      "provoked"
+    ],
+    "tags": [
+      "noisy",
+      "loot-breaker",
+      "group"
+    ],
     "hp": "50",
     "orb": "None",
     "addedIn": "early-access",
@@ -239,21 +516,44 @@
     "tells": "Groups of about 3. A fuse sound, then a warning yell just before the blast.",
     "behavior": "When alerted, it lights its fuse and rushes you, exploding after about 10 seconds. The blast also hurts monsters and valuables.",
     "damage": "Explosion about 30. Point-blank can be instant death.",
-    "do": ["Grab it and throw it into a pit, well, lava, acid or water", "Throw it at other monsters"],
-    "dont": ["Let it blow up next to the cart", "Hold it too long, because it breaks free after about 3 s"],
-    "counter": { "stun": true, "kill": "Throw it into a hazard or at a monster. It's a free grenade.", "items": [] },
+    "do": [
+      "Grab it and throw it into a pit, well, lava, acid or water",
+      "Throw it at other monsters"
+    ],
+    "dont": [
+      "Let it blow up next to the cart",
+      "Hold it too long, because it breaks free after about 3 s"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Throw it into a hazard or at a monster. It's a free grenade.",
+      "items": []
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "bowtie",
     "name": "Bowtie",
     "aliases": [],
+    "nicknames": [
+      "gust guy",
+      "wind guy"
+    ],
     "emoji": "🎀",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight"],
-    "tags": ["displacer", "loot-breaker"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "displacer",
+      "loot-breaker"
+    ],
     "hp": "200 (fragile to melee per some guides)",
     "orb": "$2,000–$7,000",
     "addedIn": "early-access",
@@ -261,20 +561,44 @@
     "tells": "Turns to face you, then lets out a huge scream.",
     "behavior": "Screams a forward gust that shoves players and valuables. You can't sprint or jump in it. It's slow and can't move while screaming.",
     "damage": "About 5 per collision or charge, more if it pins you or pushes you off a ledge.",
-    "do": ["Break line of sight behind walls", "Sneak up behind it while it's distracted"],
-    "dont": ["Stand near ledges, pits or lava in its line of sight", "Leave valuables in front of it"],
-    "counter": { "stun": true, "kill": "Attack from behind. Tranq gun or firearms work well.", "items": ["tranq", "firearm", "sledgehammer"] },
+    "do": [
+      "Break line of sight behind walls",
+      "Sneak up behind it while it's distracted"
+    ],
+    "dont": [
+      "Stand near ledges, pits or lava in its line of sight",
+      "Leave valuables in front of it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Attack from behind. Tranq gun or firearms work well.",
+      "items": [
+        "tranq",
+        "firearm",
+        "sledgehammer"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "chef",
     "name": "Chef",
     "aliases": [],
+    "nicknames": [
+      "frog chef",
+      "knife frog"
+    ],
     "emoji": "🔪",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight"],
+    "detection": [
+      "sight"
+    ],
     "tags": [],
     "hp": "150",
     "orb": "$1,600–$5,000",
@@ -283,21 +607,50 @@
     "tells": "A croak, a grin, then knives go up.",
     "behavior": "Leaps at you with spinning knives. If it misses, it's off-balance for about 3 seconds. It can jump over landmines and carts.",
     "damage": "10 per knife hit, several hits per leap.",
-    "do": ["Dodge sideways, then attack during the recovery", "Lift and slam with 3 Strength or two players (about 4 slams)"],
-    "dont": ["Run in a straight line", "Count on mines to stop it"],
-    "counter": { "stun": true, "kill": "Punish its recovery window after a miss.", "items": ["melee", "sledgehammer", "strength"] },
+    "do": [
+      "Dodge sideways, then attack during the recovery",
+      "Lift and slam with 3 Strength or two players (about 4 slams)"
+    ],
+    "dont": [
+      "Run in a straight line",
+      "Count on mines to stop it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Punish its recovery window after a miss.",
+      "items": [
+        "melee",
+        "sledgehammer",
+        "strength"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "gambit",
     "name": "Gambit",
-    "aliases": ["Spinny", "Roulette"],
+    "aliases": [
+      "Spinny"
+    ],
+    "nicknames": [
+      "roulette",
+      "wheel guy",
+      "casino"
+    ],
     "emoji": "🎰",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight"],
-    "tags": ["grabber"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "grabber"
+    ],
     "hp": "150",
     "orb": "$3,500–$4,400",
     "addedIn": "0.3.0",
@@ -305,22 +658,49 @@
     "tells": "Walks straight toward a player with a wheel.",
     "behavior": "Grabs a player and spins a roulette wheel: green +25 HP, white full heal, red −50, black drops you to 1 HP, yellow gives a money bag. Then it leaves for a while.",
     "damage": "Red slot −50, black slot sets you to 1 HP.",
-    "do": ["Run or hide before it reaches you when you're hurt", "At full HP the gamble is mostly fine"],
-    "dont": ["Stun it while it holds a teammate, because that deals 60 to the grabbed player"],
-    "counter": { "stun": true, "kill": "The grabbed player can attack during the spin. Don't stun it mid-grab.", "items": ["melee", "sledgehammer"] },
+    "do": [
+      "Run or hide before it reaches you when you're hurt",
+      "At full HP the gamble is mostly fine"
+    ],
+    "dont": [
+      "Stun it while it holds a teammate, because that deals 60 to the grabbed player"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "The grabbed player can attack during the spin. Don't stun it mid-grab.",
+      "items": [
+        "melee",
+        "sledgehammer"
+      ]
+    },
     "notes": "Yellow payout is disputed ($1,000 vs $5,000).",
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "headgrab",
     "name": "Head Grab",
-    "aliases": ["Headgrab", "Head Grabber"],
+    "aliases": [
+      "Headgrab",
+      "Head Grabber"
+    ],
+    "nicknames": [
+      "head thief",
+      "head stealer"
+    ],
     "emoji": "🫳",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight"],
-    "tags": ["after-death"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "after-death"
+    ],
     "hp": "150",
     "orb": "$3,500–$4,400",
     "addedIn": "0.3.0",
@@ -328,21 +708,49 @@
     "tells": "Shows up around dead players' bodies.",
     "behavior": "Takes a dead player's head and gets faster and more dangerous while holding it. It targets the player whose death camera it can see.",
     "damage": "Punches for 5–10, more often while holding a head.",
-    "do": ["Recover dead teammates' heads quickly", "Dead player: switch spectate targets", "Rip the head off it to stun it briefly"],
-    "dont": ["Leave a body near it"],
-    "counter": { "stun": true, "kill": "Two players lift it, or use grab range upgrades.", "items": ["grabRange", "strength", "stun"] },
+    "do": [
+      "Recover dead teammates' heads quickly",
+      "Dead player: switch spectate targets",
+      "Rip the head off it to stun it briefly"
+    ],
+    "dont": [
+      "Leave a body near it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Two players lift it, or use grab range upgrades.",
+      "items": [
+        "grabRange",
+        "strength",
+        "stun"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "heart-hugger",
     "name": "Heart Hugger",
     "aliases": [],
+    "nicknames": [
+      "plant",
+      "heart plant",
+      "pink gas"
+    ],
     "emoji": "💗",
     "tier": 2,
     "threat": "high",
-    "detection": ["sight"],
-    "tags": ["grabber", "displacer"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "grabber",
+      "displacer"
+    ],
     "hp": "300",
     "orb": "$3,500–$4,500",
     "addedIn": "0.3.0",
@@ -350,22 +758,52 @@
     "tells": "A stationary plant with a floating heart. It sprays pink mist when it sees you.",
     "behavior": "Pink gas drags you toward the heart, where you get crushed or slapped several times.",
     "damage": "Heavy: 30 per slap, up to about 150 total.",
-    "do": ["Keep your distance and route around it", "Have a teammate pull the victim out", "Swing a weapon while being pulled"],
-    "dont": ["Go near it alone", "Expect a stun to cancel the grab, because it doesn't mid-grab"],
-    "counter": { "stun": true, "kill": "300 HP. Sledgehammer works well. It's stationary, so you can skip it.", "items": ["sledgehammer", "grenade", "firearm"] },
+    "do": [
+      "Keep your distance and route around it",
+      "Have a teammate pull the victim out",
+      "Swing a weapon while being pulled"
+    ],
+    "dont": [
+      "Go near it alone",
+      "Expect a stun to cancel the grab, because it doesn't mid-grab"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "300 HP. Sledgehammer works well. It's stationary, so you can skip it.",
+      "items": [
+        "sledgehammer",
+        "grenade",
+        "firearm"
+      ]
+    },
     "notes": "Damage numbers differ between sources (60 vs 30 per slap ×5).",
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "hidden",
     "name": "Hidden",
     "aliases": [],
+    "nicknames": [
+      "invisible",
+      "breather",
+      "footprints"
+    ],
     "emoji": "👣",
     "tier": 2,
     "threat": "medium",
-    "detection": ["proximity"],
-    "tags": ["invisible", "displacer", "grabber"],
+    "detection": [
+      "proximity"
+    ],
+    "tags": [
+      "invisible",
+      "displacer",
+      "grabber"
+    ],
     "hp": "100",
     "orb": "Disputed (none, or $3,500–$7,000)",
     "addedIn": "early-access",
@@ -373,21 +811,50 @@
     "tells": "Heavy breathing, black footprints, foggy breath. Otherwise invisible.",
     "behavior": "Grabs a player, makes them drop everything, and carries them far away, sometimes into a monster's nest or back to the truck.",
     "damage": "None from the grab itself. The danger is where it drops you.",
-    "do": ["Buddy up", "Grab your teammate (or the Hidden) to break the carry", "Spam tumble to stun-lock it"],
-    "dont": ["Carry valuables alone when you hear breathing"],
-    "counter": { "stun": true, "kill": "Possible but unreliable. Traps on its route work.", "items": ["mine", "strength"] },
+    "do": [
+      "Buddy up",
+      "Grab your teammate (or the Hidden) to break the carry",
+      "Spam tumble to stun-lock it"
+    ],
+    "dont": [
+      "Carry valuables alone when you hear breathing"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Possible but unreliable. Traps on its route work.",
+      "items": [
+        "mine",
+        "strength"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "mentalist",
     "name": "Mentalist",
-    "aliases": ["Alien"],
+    "aliases": [
+      "Alien"
+    ],
+    "nicknames": [
+      "alien",
+      "gravity alien",
+      "floaty"
+    ],
     "emoji": "🧠",
     "tier": 2,
     "threat": "high",
-    "detection": ["sight"],
-    "tags": ["displacer", "loot-breaker"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "displacer",
+      "loot-breaker"
+    ],
     "hp": "150",
     "orb": "$3,000–$6,000",
     "addedIn": "early-access",
@@ -395,21 +862,55 @@
     "tells": "No footsteps, just a floaty hum. It teleports.",
     "behavior": "Lifts nearby players and valuables in an anti-gravity field for about 10 seconds, then slams everything down.",
     "damage": "Slam about 50. A high lift can be fatal.",
-    "do": ["Hide, because it's deaf with poor eyesight", "Pull a lifted teammate out of the field", "Hit it from behind, because it's fragile"],
-    "dont": ["Bring the cart into its aura", "Stand over pits when it's nearby"],
-    "counter": { "stun": true, "kill": "A few melee hits from behind.", "items": ["melee", "sledgehammer", "firearm"] },
+    "do": [
+      "Hide, because it's deaf with poor eyesight",
+      "Pull a lifted teammate out of the field",
+      "Hit it from behind, because it's fragile"
+    ],
+    "dont": [
+      "Bring the cart into its aura",
+      "Stand over pits when it's nearby"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "A few melee hits from behind.",
+      "items": [
+        "melee",
+        "sledgehammer",
+        "firearm"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "oogly",
     "name": "Oogly",
-    "aliases": ["Ooly", "Ugly"],
+    "aliases": [
+      "Ooly",
+      "Ugly"
+    ],
+    "nicknames": [
+      "spotlight",
+      "flyer",
+      "light thing"
+    ],
     "emoji": "🔦",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight", "light"],
-    "tags": ["ceiling", "displacer", "grabber"],
+    "detection": [
+      "sight",
+      "light"
+    ],
+    "tags": [
+      "ceiling",
+      "displacer",
+      "grabber"
+    ],
     "hp": "200",
     "orb": "$3,500–$4,500",
     "addedIn": "0.3.0",
@@ -417,21 +918,48 @@
     "tells": "A flying alien thing with a bright spotlight and plasma lines.",
     "behavior": "Patrols in the air with a detection light. Dives, grabs and tosses whoever is in the light.",
     "damage": "About 4/s while held (around 5 s), or around 40 per swoop.",
-    "do": ["Leave the lit area or the room", "Hide under objects", "Grab it during a dive"],
-    "dont": ["Melee it while it's in the air", "Carry loot through its light"],
-    "counter": { "stun": true, "kill": "Stun or frag grenades, then grab it.", "items": ["grenade", "tranq", "stun"] },
+    "do": [
+      "Leave the lit area or the room",
+      "Hide under objects",
+      "Grab it during a dive"
+    ],
+    "dont": [
+      "Melee it while it's in the air",
+      "Carry loot through its light"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Stun or frag grenades, then grab it.",
+      "items": [
+        "grenade",
+        "tranq",
+        "stun"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "rugrat",
     "name": "Rugrat",
     "aliases": [],
+    "nicknames": [
+      "baby",
+      "big baby"
+    ],
     "emoji": "👶",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight"],
-    "tags": ["loot-breaker"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "loot-breaker"
+    ],
     "hp": "150",
     "orb": "$1,600–$4,000",
     "addedIn": "early-access",
@@ -439,21 +967,47 @@
     "tells": "A crawling baby heading for players with valuables.",
     "behavior": "Steals valuables (up to two) and throws them at players. Runs off when it has nothing to throw.",
     "damage": "Depends on the weight of the thrown item.",
-    "do": ["Drop loot and let an empty-handed teammate deal with it", "Lift it with 2–3 players or 3 Strength, then slam it"],
-    "dont": ["Fight it while holding expensive items"],
-    "counter": { "stun": true, "kill": "Team lift and slam into wall or floor.", "items": ["strength", "melee"] },
+    "do": [
+      "Drop loot and let an empty-handed teammate deal with it",
+      "Lift it with 2–3 players or 3 Strength, then slam it"
+    ],
+    "dont": [
+      "Fight it while holding expensive items"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Team lift and slam into wall or floor.",
+      "items": [
+        "strength",
+        "melee"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "upscream",
     "name": "Upscream",
     "aliases": [],
+    "nicknames": [
+      "screamer",
+      "thrower"
+    ],
     "emoji": "📢",
     "tier": 2,
     "threat": "medium",
-    "detection": ["sight"],
-    "tags": ["displacer", "group", "grabber"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "displacer",
+      "group",
+      "grabber"
+    ],
     "hp": "50",
     "orb": "$2,000–$4,000",
     "addedIn": "early-access",
@@ -461,21 +1015,50 @@
     "tells": "Groups of 2–3. A shout right before the throw.",
     "behavior": "Grabs a player, screams in their face and throws them, stunning them for about 2 seconds.",
     "damage": "About 10 per throw, plus a 2 s stun.",
-    "do": ["Melee it (sledgehammer is great) or tranq it", "Slam it into a wall once it's down"],
-    "dont": ["Fight near ledges, pits or lava"],
-    "counter": { "stun": true, "kill": "Low HP. Tranq, then grab and slam.", "items": ["tranq", "sledgehammer", "melee"] },
+    "do": [
+      "Melee it (sledgehammer is great) or tranq it",
+      "Slam it into a wall once it's down"
+    ],
+    "dont": [
+      "Fight near ledges, pits or lava"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Low HP. Tranq, then grab and slam.",
+      "items": [
+        "tranq",
+        "sledgehammer",
+        "melee"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "cleanup-crew",
     "name": "Cleanup Crew",
-    "aliases": ["Bombthrower", "Bombthor"],
+    "aliases": [
+      "Bombthrower",
+      "Bombthor"
+    ],
+    "nicknames": [
+      "bomb thrower",
+      "head thrower",
+      "radiation guy"
+    ],
     "emoji": "☢️",
     "tier": 3,
     "threat": "lethal",
-    "detection": ["sight"],
-    "tags": ["loot-breaker"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "loot-breaker"
+    ],
     "hp": "350",
     "orb": "$5,700–$7,400",
     "addedIn": "0.3.0",
@@ -483,22 +1066,53 @@
     "tells": "A hulking figure that throws its own head.",
     "behavior": "Throws its head when it sees you. The head bounces, explodes and leaves toxic or radiation gas. It regrows the head, and drops one last head when it dies.",
     "damage": "Head blast up to about 90–100, gas about 15/s, melee about 20 (+40 into a wall).",
-    "do": ["Run with sharp turns, not in a straight line", "Grab the thrown head and throw it sideways", "Back off after killing it, because the last head still explodes"],
-    "dont": ["Clump up", "Leave valuables or orbs near the gas"],
-    "counter": { "stun": true, "kill": "350 HP. Grab a leg to topple it, then go all-in.", "items": ["firearm", "grenade", "mine", "sledgehammer"] },
+    "do": [
+      "Run with sharp turns, not in a straight line",
+      "Grab the thrown head and throw it sideways",
+      "Back off after killing it, because the last head still explodes"
+    ],
+    "dont": [
+      "Clump up",
+      "Leave valuables or orbs near the gas"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "350 HP. Grab a leg to topple it, then go all-in.",
+      "items": [
+        "firearm",
+        "grenade",
+        "mine",
+        "sledgehammer"
+      ]
+    },
     "notes": "Gamer.org lists a 'Bombthor' separately. Other guides only know this monster as Cleanup Crew / Bombthrower.",
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure", "gamer"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure",
+      "gamer"
+    ]
   },
   {
     "id": "clown",
     "name": "Clown",
-    "aliases": ["Beamer"],
+    "aliases": [
+      "Beamer"
+    ],
+    "nicknames": [
+      "laser clown",
+      "laser guy"
+    ],
     "emoji": "🤡",
     "tier": 3,
     "threat": "lethal",
-    "detection": ["sight"],
-    "tags": ["loot-breaker"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "loot-breaker"
+    ],
     "hp": "250",
     "orb": "$5,000–$8,000",
     "addedIn": "early-access",
@@ -506,20 +1120,48 @@
     "tells": "Loud footsteps and laughter before the beam.",
     "behavior": "Roams until it spots someone, then sweeps a horizontal laser that adjusts to your height. It also kicks hard. After the laser it has a cooldown.",
     "damage": "Laser 100 (one-shot). Kick 50–60 with knockback.",
-    "do": ["Use solid walls as cover", "Crouch once the sweep starts", "Attack during the cooldown after a laser", "Bait the laser from a jump-only ledge, because it can't jump"],
-    "dont": ["Hide behind doors, cabinets or safes, because the laser destroys them", "Stand in long open hallways"],
-    "counter": { "stun": true, "kill": "Hit it during the post-laser cooldown. Spewer vomit also hurts it.", "items": ["firearm", "grenade", "sledgehammer", "tranq"] },
+    "do": [
+      "Use solid walls as cover",
+      "Crouch once the sweep starts",
+      "Attack during the cooldown after a laser",
+      "Bait the laser from a jump-only ledge, because it can't jump"
+    ],
+    "dont": [
+      "Hide behind doors, cabinets or safes, because the laser destroys them",
+      "Stand in long open hallways"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Hit it during the post-laser cooldown. Spewer vomit also hurts it.",
+      "items": [
+        "firearm",
+        "grenade",
+        "sledgehammer",
+        "tranq"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "headman",
     "name": "Headman",
     "aliases": [],
+    "nicknames": [
+      "floating head",
+      "big head"
+    ],
     "emoji": "🗿",
     "tier": 3,
     "threat": "high",
-    "detection": ["sight", "light"],
+    "detection": [
+      "sight",
+      "light"
+    ],
     "tags": [],
     "hp": "250",
     "orb": "$2,000–$8,000",
@@ -528,21 +1170,50 @@
     "tells": "A floating head with no footsteps, only clicking teeth.",
     "behavior": "Floats around. Bites as soon as it sees you, and flashlights make it hiss and charge. Long cooldown after each bite.",
     "damage": "Bite about 50 with knockback.",
-    "do": ["Go through a doorway or turn a corner and hide", "Melee it after a bite, because it has terrible reach", "Shoot it, because it has a big hitbox"],
-    "dont": ["Shine your flashlight at it"],
-    "counter": { "stun": true, "kill": "Melee during its bite cooldown, or guns.", "items": ["firearm", "sledgehammer", "melee"] },
+    "do": [
+      "Go through a doorway or turn a corner and hide",
+      "Melee it after a bite, because it has terrible reach",
+      "Shoot it, because it has a big hitbox"
+    ],
+    "dont": [
+      "Shine your flashlight at it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Melee during its bite cooldown, or guns.",
+      "items": [
+        "firearm",
+        "sledgehammer",
+        "melee"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "huntsman",
     "name": "Huntsman",
-    "aliases": ["Hunter"],
+    "aliases": [
+      "Hunter"
+    ],
+    "nicknames": [
+      "shotgun guy",
+      "blind guy",
+      "cowboy"
+    ],
     "emoji": "🎯",
     "tier": 3,
     "threat": "lethal",
-    "detection": ["sound"],
-    "tags": ["stay-quiet"],
+    "detection": [
+      "sound"
+    ],
+    "tags": [
+      "stay-quiet"
+    ],
     "hp": "250",
     "orb": "$3,000–$7,000",
     "addedIn": "early-access",
@@ -550,20 +1221,47 @@
     "tells": "Patrols a fixed route with a shotgun. Grunts about 0.5 s before firing.",
     "behavior": "Fires at the last sound it heard: footsteps, dropped loot, explosions, voice and even text chat. It doesn't chase. Stepping off stairs or ledges stuns it briefly.",
     "damage": "Shotgun up to 100. Instant death up close, weaker at range. About 2 s reload.",
-    "do": ["Crouch-walk and mute voice near it", "Throw an item to misdirect its shot", "Attack from cover during the reload"],
-    "dont": ["Melee it", "Drop or slam loot near its route", "Sprint past it"],
-    "counter": { "stun": true, "kill": "Knock it down stairs, tranq it, or use grenades, mines or guns. Never melee.", "items": ["tranq", "grenade", "mine", "firearm"] },
+    "do": [
+      "Crouch-walk and mute voice near it",
+      "Throw an item to misdirect its shot",
+      "Attack from cover during the reload"
+    ],
+    "dont": [
+      "Melee it",
+      "Drop or slam loot near its route",
+      "Sprint past it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Knock it down stairs, tranq it, or use grenades, mines or guns. Never melee.",
+      "items": [
+        "tranq",
+        "grenade",
+        "mine",
+        "firearm"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "loom",
     "name": "Loom",
     "aliases": [],
+    "nicknames": [
+      "clapper",
+      "hands"
+    ],
     "emoji": "👏",
     "tier": 3,
     "threat": "lethal",
-    "detection": ["random"],
+    "detection": [
+      "random"
+    ],
     "tags": [],
     "hp": "500",
     "orb": "$5,500–$7,500",
@@ -572,21 +1270,52 @@
     "tells": "Hands creeping in at the edges of your screen. A slow, crouched figure.",
     "behavior": "Locks onto one random player and always knows where they are. Claps or pinches for a one-shot. It despawns after five misses. It doesn't spawn on level 1.",
     "damage": "Clap or pinch 100, even if you're crouched.",
-    "do": ["Keep moving or crouch-run", "Sprint away right after a miss", "Make it miss five times to despawn it"],
-    "dont": ["Hide and wait, because it knows where you are", "Rely on fall damage, because it's immune to fall and impact damage"],
-    "counter": { "stun": true, "kill": "500 HP and immune to impact. Only weapons or thrown items hurt it.", "items": ["firearm", "grenade", "mine"] },
+    "do": [
+      "Keep moving or crouch-run",
+      "Sprint away right after a miss",
+      "Make it miss five times to despawn it"
+    ],
+    "dont": [
+      "Hide and wait, because it knows where you are",
+      "Rely on fall damage, because it's immune to fall and impact damage"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "500 HP and immune to impact. Only weapons or thrown items hurt it.",
+      "items": [
+        "firearm",
+        "grenade",
+        "mine"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "gamepressure"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "gamepressure"
+    ]
   },
   {
     "id": "pony",
     "name": "Pony",
     "aliases": [],
+    "nicknames": [
+      "horse",
+      "ceiling horse",
+      "tongue horse"
+    ],
     "emoji": "🐴",
     "tier": 3,
     "threat": "high",
-    "detection": ["sight"],
-    "tags": ["ceiling", "displacer", "loot-breaker", "grabber"],
+    "detection": [
+      "sight"
+    ],
+    "tags": [
+      "ceiling",
+      "displacer",
+      "loot-breaker",
+      "grabber"
+    ],
     "hp": "400",
     "orb": "$5,500–$7,500",
     "addedIn": "0.5.0",
@@ -594,21 +1323,47 @@
     "tells": "A whinny overhead. It often moves across the ceiling.",
     "behavior": "Drops from ceilings, tongue-grabs players, steals carried items and weapons, kicks, and throws you into terrain. Its death sends out a stunning shockwave.",
     "damage": "Tongue grab about 55. Kick about 10. Thrown into terrain about 60.",
-    "do": ["Check ceilings often", "Keep your distance and strafe sideways", "Carry a stun weapon, because it can only be grabbed when stunned"],
-    "dont": ["Kill it next to a pit, because the death shockwave stuns everyone nearby", "Carry your best valuable under it"],
-    "counter": { "stun": true, "kill": "Stun it, then grab and punish.", "items": ["stun", "tranq", "firearm"] },
+    "do": [
+      "Check ceilings often",
+      "Keep your distance and strafe sideways",
+      "Carry a stun weapon, because it can only be grabbed when stunned"
+    ],
+    "dont": [
+      "Kill it next to a pit, because the death shockwave stuns everyone nearby",
+      "Carry your best valuable under it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Stun it, then grab and punish.",
+      "items": [
+        "stun",
+        "tranq",
+        "firearm"
+      ]
+    },
     "notes": "New in v0.5.0 (Sunstone Update, Oct 2026). Official notes only say 'New Enemy - Pony!', so details come from early player guides.",
     "verified": false,
-    "sources": ["bloxodes", "accountshark", "gamemarket"]
+    "sources": [
+      "bloxodes",
+      "accountshark",
+      "gamemarket"
+    ]
   },
   {
     "id": "reaper",
     "name": "Reaper",
     "aliases": [],
+    "nicknames": [
+      "blender",
+      "blade guy",
+      "spinner"
+    ],
     "emoji": "⚔️",
     "tier": 3,
     "threat": "high",
-    "detection": ["sight"],
+    "detection": [
+      "sight"
+    ],
     "tags": [],
     "hp": "250",
     "orb": "$6,000–$8,000",
@@ -617,21 +1372,50 @@
     "tells": "Very quiet footsteps, so it appears suddenly. Spinning arms.",
     "behavior": "Slow, short chases with spinning blade arms. Mostly deaf, but reacts to the grab beam. Crouching helps you stay hidden.",
     "damage": "Blades can take you from 100 to 0 in about 2 s.",
-    "do": ["Approach from behind while it's idle", "Crouch and slip out of view", "Use tranq or ranged weapons"],
-    "dont": ["Attack into the spinning arms", "Use your grab beam near it"],
-    "counter": { "stun": true, "kill": "Slow and predictable. Ranged weapons or tranq, then melee from behind.", "items": ["firearm", "tranq", "sledgehammer"] },
+    "do": [
+      "Approach from behind while it's idle",
+      "Crouch and slip out of view",
+      "Use tranq or ranged weapons"
+    ],
+    "dont": [
+      "Attack into the spinning arms",
+      "Use your grab beam near it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Slow and predictable. Ranged weapons or tranq, then melee from behind.",
+      "items": [
+        "firearm",
+        "tranq",
+        "sledgehammer"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "robe",
     "name": "Robe",
     "aliases": [],
+    "nicknames": [
+      "robe guy",
+      "don't look guy"
+    ],
     "emoji": "👻",
     "tier": 3,
     "threat": "lethal",
-    "detection": ["gaze", "sound"],
-    "tags": ["look-away", "stay-quiet"],
+    "detection": [
+      "gaze",
+      "sound"
+    ],
+    "tags": [
+      "look-away",
+      "stay-quiet"
+    ],
     "hp": "250 (very tanky)",
     "orb": "$5,000–$8,000",
     "addedIn": "early-access",
@@ -639,21 +1423,50 @@
     "tells": "A tall robed figure, often sneaking up from behind.",
     "behavior": "Hears noise and speeds up when your crosshair meets it. Hunts hidden players and checks under furniture.",
     "damage": "Charge about 50–100 with extreme knockback.",
-    "do": ["Look at the floor and walk away", "Hide in deep cover and stay silent until it leaves", "Flee if you don't have a stun tool AND a heavy weapon"],
-    "dont": ["Look at it", "Fight it, because explosives barely faze it", "Make noise near it"],
-    "counter": { "stun": true, "kill": "Not practical. Avoid.", "items": ["tranq", "stun"] },
+    "do": [
+      "Look at the floor and walk away",
+      "Hide in deep cover and stay silent until it leaves",
+      "Flee if you don't have a stun tool AND a heavy weapon"
+    ],
+    "dont": [
+      "Look at it",
+      "Fight it, because explosives barely faze it",
+      "Make noise near it"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "Not practical. Avoid.",
+      "items": [
+        "tranq",
+        "stun"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   },
   {
     "id": "trudge",
     "name": "Trudge",
     "aliases": [],
+    "nicknames": [
+      "mace guy",
+      "big mace"
+    ],
     "emoji": "🔨",
     "tier": 3,
     "threat": "lethal",
-    "detection": ["sound", "sight"],
-    "tags": ["displacer", "loot-breaker"],
+    "detection": [
+      "sound",
+      "sight"
+    ],
+    "tags": [
+      "displacer",
+      "loot-breaker"
+    ],
     "hp": "500",
     "orb": "$5,000–$8,000",
     "addedIn": "early-access",
@@ -661,10 +1474,28 @@
     "tells": "A dragging mace you can hear through walls, and heavy footsteps.",
     "behavior": "Slow, but pulls nearby players and valuables in, then smashes. Reaches into hiding spots with a tendril.",
     "damage": "Mace slam about 100 (often instant death). Bite on hidden players about 50.",
-    "do": ["Leave the room or wing entirely", "Use mines if you want the kill, and bring enough of them"],
-    "dont": ["Hide in a nearby closet", "Fight in tight hallways or small rooms"],
-    "counter": { "stun": true, "kill": "500 HP. Only with a plan: stack mines or explosives.", "items": ["mine", "grenade", "firearm"] },
+    "do": [
+      "Leave the room or wing entirely",
+      "Use mines if you want the kill, and bring enough of them"
+    ],
+    "dont": [
+      "Hide in a nearby closet",
+      "Fight in tight hallways or small rooms"
+    ],
+    "counter": {
+      "stun": true,
+      "kill": "500 HP. Only with a plan: stack mines or explosives.",
+      "items": [
+        "mine",
+        "grenade",
+        "firearm"
+      ]
+    },
     "verified": true,
-    "sources": ["bloxodes", "itemlevel", "escapist"]
+    "sources": [
+      "bloxodes",
+      "itemlevel",
+      "escapist"
+    ]
   }
 ]
