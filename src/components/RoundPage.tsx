@@ -82,99 +82,108 @@ export function RoundPage() {
         }}
       />
 
-      <div class="focus-top">
-        <ThreatCard advice={advice} />
-        <SeenMonsters state={state} update={update} fromGame={liveInfo.monsters} respawn={liveInfo.respawn} unknown={liveInfo.unknown} />
-      </div>
-
+      {/* Small screens: one column in "order". Big screens: situation on the left, playbook on the right. */}
       <div class="focus-cols">
-        <div class="focus-main">
-          <Collapsible id="playbook" title="Monster playbook" badge={monsters.length || undefined} defaultOpen>
-            {monsters.length === 0 ? (
-              <p class="muted small">Add monsters you've seen to get their rules here.</p>
-            ) : (
-              <div class="cards">
-                {monsters.map((ma, i) => (
-                  <MonsterCard
-                    key={`${ma.monster.id}-${wide ? 'w' : 'n'}`}
-                    monster={ma.monster}
-                    spotted={ma.spotted}
-                    usableItems={ma.usableItems}
-                    noAnswer={ma.noAnswer}
-                    defaultOpen={!ma.spotted.killed && (wide || i === 0)}
-                  />
-                ))}
-              </div>
-            )}
-          </Collapsible>
-        </div>
-
         <div class="focus-side">
-          {combos.length > 0 && (
-            <Collapsible id="combos" title="Dangerous combos" badge={combos.length} tone={combos.some((c) => c.severity === 'danger') ? 'danger' : 'warn'} defaultOpen>
-              <ul class="bullets">
-                {combos.map((c) => (
-                  <li class={`bullet bullet-${c.severity}`}>
-                    <SevIcon severity={c.severity} />
-                    <span>
-                      <strong>{c.title}.</strong> {c.text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+          <div class="slot" style={{ order: 1 }}>
+            <ThreatCard advice={advice} />
+          </div>
+          <div class="slot" style={{ order: 2 }}>
+            <SeenMonsters state={state} update={update} fromGame={liveInfo.monsters} respawn={liveInfo.respawn} unknown={liveInfo.unknown} />
+          </div>
+          <div class="slot" style={{ order: 6 }}>
+            <Collapsible id="spawns" title="What's still out there?">
+              <SpawnCheckPanel state={state} bare />
             </Collapsible>
-          )}
-
-          <Collapsible id="map" title={map ? `${map.emoji} ${map.name} hazards` : 'Map hazards'} badge={map ? phase : undefined}>
-            {!map ? (
-              <p class="muted small">Pick the map in the bar above.</p>
-            ) : (
-              <>
-                <p class="muted">{map.summary}</p>
-                <ul class="bullets">
-                  {map.hazards[phase].map((h) => (
-                    <li class={`bullet bullet-${phase === 'early' ? 'info' : 'warn'}`}>
-                      <SevIcon severity={phase === 'early' ? 'info' : 'warn'} />
-                      <span>{h}</span>
+          </div>
+          <div class="slot" style={{ order: 7 }}>
+            <Collapsible id="map" title={map ? `${map.emoji} ${map.name} hazards` : 'Map hazards'} badge={map ? phase : undefined}>
+              {!map ? (
+                <p class="muted small">Pick the map in the bar above.</p>
+              ) : (
+                <>
+                  <p class="muted">{map.summary}</p>
+                  <ul class="bullets">
+                    {map.hazards[phase].map((h) => (
+                      <li class={`bullet bullet-${phase === 'early' ? 'info' : 'warn'}`}>
+                        <SevIcon severity={phase === 'early' ? 'info' : 'warn'} />
+                        <span>{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <dl class="facts">
+                    <dt>Light</dt>
+                    <dd>{map.lighting}</dd>
+                    <dt>Hiding</dt>
+                    <dd>{map.hiding}</dd>
+                  </dl>
+                  <ul class="tips">
+                    {map.tips.map((t) => (
+                      <li>💡 {t}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </Collapsible>
+          </div>
+          <div class="slot" style={{ order: 8 }}>
+            <Collapsible id="memory" title="Round memory" badge={memFilled ? `${memFilled} set` : 'optional'}>
+              {memoryBullets.length > 0 && (
+                <ul class="bullets" style={{ marginBottom: '12px' }}>
+                  {memoryBullets.map((b) => (
+                    <li class={`bullet bullet-${b.severity}`}>
+                      <SevIcon severity={b.severity} />
+                      <span>{b.text}</span>
                     </li>
                   ))}
                 </ul>
-                <dl class="facts">
-                  <dt>Light</dt>
-                  <dd>{map.lighting}</dd>
-                  <dt>Hiding</dt>
-                  <dd>{map.hiding}</dd>
-                </dl>
-                <ul class="tips">
-                  {map.tips.map((t) => (
-                    <li>💡 {t}</li>
+              )}
+              <RoundMemory state={state} update={update} bare />
+            </Collapsible>
+          </div>
+          <div class="slot" style={{ order: 9 }}>
+            <Collapsible id="companion" title="Game companion" badge={snap.enabled ? (snap.status === 'live' ? '🟢 live' : '⚪ on') : 'optional'}>
+              <CompanionPanel snap={snap} />
+            </Collapsible>
+          </div>
+        </div>
+        <div class="focus-main">
+          <div class="slot" style={{ order: 3 }}>
+            <Collapsible id="playbook" title="Monster playbook" badge={monsters.length || undefined} defaultOpen>
+              {monsters.length === 0 ? (
+                <p class="muted small">Add monsters you've seen to get their rules here.</p>
+              ) : (
+                <div class="cards">
+                  {monsters.map((ma, i) => (
+                    <MonsterCard
+                      key={`${ma.monster.id}-${wide ? 'w' : 'n'}`}
+                      monster={ma.monster}
+                      spotted={ma.spotted}
+                      usableItems={ma.usableItems}
+                      noAnswer={ma.noAnswer}
+                      defaultOpen={!ma.spotted.killed && (wide || i === 0)}
+                    />
+                  ))}
+                </div>
+              )}
+            </Collapsible>
+          </div>
+          <div class="slot" style={{ order: 4 }}>
+            {combos.length > 0 && (
+              <Collapsible id="combos" title="Dangerous combos" badge={combos.length} tone={combos.some((c) => c.severity === 'danger') ? 'danger' : 'warn'} defaultOpen>
+                <ul class="bullets">
+                  {combos.map((c) => (
+                    <li class={`bullet bullet-${c.severity}`}>
+                      <SevIcon severity={c.severity} />
+                      <span>
+                        <strong>{c.title}.</strong> {c.text}
+                      </span>
+                    </li>
                   ))}
                 </ul>
-              </>
+              </Collapsible>
             )}
-          </Collapsible>
-
-          <Collapsible id="spawns" title="What's still out there?">
-            <SpawnCheckPanel state={state} bare />
-          </Collapsible>
-
-          <Collapsible id="memory" title="Round memory" badge={memFilled ? `${memFilled} set` : 'optional'}>
-            {memoryBullets.length > 0 && (
-              <ul class="bullets" style={{ marginBottom: '12px' }}>
-                {memoryBullets.map((b) => (
-                  <li class={`bullet bullet-${b.severity}`}>
-                    <SevIcon severity={b.severity} />
-                    <span>{b.text}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <RoundMemory state={state} update={update} bare />
-          </Collapsible>
-
-          <Collapsible id="companion" title="Game companion" badge={snap.enabled ? (snap.status === 'live' ? '🟢 live' : '⚪ on') : 'optional'}>
-            <CompanionPanel snap={snap} />
-          </Collapsible>
+          </div>
         </div>
       </div>
     </div>

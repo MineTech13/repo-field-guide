@@ -2010,14 +2010,17 @@ a.chip:hover {
 }
 
 /* ---------- big screens: use the space, show everything ---------- */
-.focus-top,
+/* Small screens: the wrappers disappear and the slots form one column by their "order". */
 .focus-cols,
 .focus-main,
 .focus-side {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: contents;
+}
+.slot {
   min-width: 0;
+}
+.slot:empty {
+  display: none;
 }
 @media (min-width: 1280px) {
   .page {
@@ -2030,16 +2033,24 @@ a.chip:hover {
   .focus {
     max-width: none;
   }
-  /* threat call next to the monster chips */
-  .focus-top {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
-  }
-  /* playbook on the left, everything else beside it */
+  /* situation (threat, seen, spawns, map, memory) left · playbook right */
   .focus-cols {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 12px;
+    align-items: start;
+  }
+  .focus-main,
+  .focus-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  /* playbook cards side by side when there's room */
+  .focus-main .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
     align-items: start;
   }
   .shop-grid {
@@ -2047,18 +2058,9 @@ a.chip:hover {
   }
 }
 @media (min-width: 1700px) {
-  .focus-cols {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  }
   /* shop picks two side by side (still in ranked order, row by row) */
   .shop-result .picks {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
-  }
-  /* playbook cards two side by side */
-  .focus-main .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
-    align-items: start;
   }
 }
