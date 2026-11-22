@@ -13,7 +13,7 @@ interface Props {
 }
 
 /** Compact sticky bar: map · level · next. Everything a round needs, in one row. */
-export function RoundBar({ state, update, onReset, live, fromGame }: Props) {
+export function RoundBar({ state, update, onReset, fromGame }: Props) {
   const phase = phaseFor(state.level);
   return (
     <div class="round-bar" role="group" aria-label="Current level">
