@@ -9,7 +9,19 @@ const monsterByKey = new Map(MONSTERS.map((m) => [m.gameKey, m]));
  * valuables, where you last saw each monster, and found heads. Other floors are faded.
  * Game coordinates: x = east, z = north, y = up. Units are metres.
  */
-export function LiveMap({ live, plan }: { live: GameStateV1; plan: ExtractionPlan }) {
+export function LiveMap({
+  live,
+  plan,
+  radius,
+  minimap,
+}: {
+  live: GameStateV1;
+  plan: ExtractionPlan;
+  /** Minimap: metres shown around you (null/undefined = whole explored map). */
+  radius?: number | null;
+  /** Round minimap look, no caption. */
+  minimap?: boolean;
+}) {
   const L = live.layout;
   if (!L) return null;
   const rooms = L.rooms ?? [];
@@ -31,10 +43,25 @@ export function LiveMap({ live, plan }: { live: GameStateV1; plan: ExtractionPla
   }
   if (!xs.length) return <p class="muted small">Nothing explored yet. The map fills in as you explore.</p>;
   const pad = 6;
-  const minX = Math.min(...xs) - pad;
-  const maxX = Math.max(...xs) + pad;
-  const minZ = Math.min(...zs) - pad;
-  const maxZ = Math.max(...zs) + pad;
+  let minX = Math.min(...xs) - pad;
+  let maxX = Math.max(...xs) + pad;
+  let minZ = Math.min(...zs) - pad;
+  let maxZ = Math.max(...zs) + pad;
+  if (radius && me) {
+    minX = me[0] - radius;
+    maxX = me[0] + radius;
+    minZ = me[2] - radius;
+    maxZ = me[2] + radius;
+  } else if (minimap) {
+    // Whole map in a square frame: centre it.
+    const size = Math.max(maxX - minX, maxZ - minZ);
+    const cx = (minX + maxX) / 2;
+    const cz = (minZ + maxZ) / 2;
+    minX = cx - size / 2;
+    maxX = cx + size / 2;
+    minZ = cz - size / 2;
+    maxZ = cz + size / 2;
+  }
   const w = Math.max(20, maxX - minX);
   const h = Math.max(20, maxZ - minZ);
   const unit = Math.max(w, h) / 100; // marker size scales with the map
@@ -45,7 +72,7 @@ export function LiveMap({ live, plan }: { live: GameStateV1; plan: ExtractionPla
   const heads = (live.team ?? []).filter((p) => p.dead && p.head && !p.isLocal);
 
   return (
-    <figure class="live-map">
+    <figure class={`live-map ${minimap ? 'minimap' : ''}`}>
       <svg viewBox={`${minX} ${-maxZ} ${w} ${h}`} role="img" aria-label="Map of what you've explored">
         {rooms.map((r) => (
           <rect class="lm-room" x={r[0] - r[3] / 2} y={-(r[2] + r[5] / 2)} width={r[3]} height={r[5]} opacity={sameFloor(r[1], r[4] / 2) ? 1 : 0.25} vector-effect="non-scaling-stroke" />
@@ -120,7 +147,9 @@ export function LiveMap({ live, plan }: { live: GameStateV1; plan: ExtractionPla
           </g>
         )}
       </svg>
-      <figcaption class="muted small">▲ you · ■ extraction · ● discovered valuable (bigger = more $) · dashed line = suggested route · faded = other floor. Only what's been discovered.</figcaption>
+      {!minimap && (
+        <figcaption class="muted small">▲ you · ■ extraction · ● discovered valuable (bigger = more $) · dashed line = suggested route · faded = other floor. Only what's been discovered.</figcaption>
+      )}
     </figure>
   );
 }

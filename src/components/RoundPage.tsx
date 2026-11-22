@@ -1,9 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useMemo } from 'preact/hooks';
 import { advise } from '../engine/advise';
 import { planExtraction } from '../engine/extraction';
-import { useRound } from '../hooks';
-import { applyLive, emptyMemo, type ApplyMemo } from '../live/apply';
-import { useLive } from '../live/store';
+import { useLiveRound } from '../live/useLiveRound';
 import { defaultRound } from '../state/round';
 import { MonsterCard } from './MonsterCard';
 import { Collapsible } from './round/Collapsible';
@@ -18,54 +16,10 @@ import { RoundMemory } from './RoundMemory';
 import { SpawnCheckPanel } from './SpawnCheckPanel';
 import { SevIcon } from './ui';
 
-const MEMO_KEY = 'repo-field-guide:live-memo:v1';
-
-function loadMemo(): ApplyMemo {
-  try {
-    return {
-      ...emptyMemo(),
-      ...JSON.parse(sessionStorage.getItem(MEMO_KEY) ?? '{}'),
-    };
-  } catch {
-    return emptyMemo();
-  }
-}
-
 /** Round page, "Focus view": one column, the essentials first, details folded away. */
 export function RoundPage() {
-  const [state, update, replace] = useRound();
+  const { state, update, replace, snap, liveInfo } = useLiveRound();
   const advice = useMemo(() => advise(state), [state]);
-  const snap = useLive();
-
-  // ---- optional game companion: merge its data in, never take over
-  const memo = useRef<ApplyMemo>(loadMemo());
-  const [liveInfo, setLiveInfo] = useState({
-    unknown: [] as string[],
-    respawn: {} as Record<string, number>,
-    map: false,
-    level: false,
-    monsters: [] as string[],
-  });
-  useEffect(() => {
-    if (!snap.data) return;
-    const r = applyLive(state, snap.data, memo.current);
-    memo.current = r.memo;
-    try {
-      sessionStorage.setItem(MEMO_KEY, JSON.stringify(r.memo));
-    } catch {
-      /* ignore */
-    }
-    if (JSON.stringify(r.state) !== JSON.stringify(state)) replace(r.state);
-    setLiveInfo((prev) => ({
-      unknown: r.unknown,
-      respawn: r.respawn,
-      map: r.fromGame.map || (prev.map && !r.fromGame.level),
-      level: r.fromGame.level || prev.level,
-      monsters: [...new Set([...(r.fromGame.level ? [] : prev.monsters), ...r.fromGame.monsters])],
-    }));
-    // Only react to new game data, not to our own state changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [snap.data]);
 
   const live = snap.data;
   const layout = live?.phase === 'level' ? live.layout : undefined;

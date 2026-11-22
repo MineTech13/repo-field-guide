@@ -4,7 +4,9 @@ import { AboutPage } from './components/AboutPage';
 import { Encyclopedia } from './components/Encyclopedia';
 import { MapsPage } from './components/MapsPage';
 import { MonsterDetail } from './components/MonsterDetail';
+import { LivePage } from './components/LivePage';
 import { LivePill } from './components/LivePill';
+import { useLive } from './live/store';
 import { RoundPage } from './components/RoundPage';
 import { ShopPage } from './components/shop/ShopPage';
 import { SpawnsPage } from './components/SpawnsPage';
@@ -28,6 +30,9 @@ export function App() {
   const route = useRoute();
   const [theme, toggleTheme] = useTheme();
   const top = route[0] ?? '';
+  const snap = useLive();
+  // "Live" only shows up once you've turned on the optional game companion.
+  const nav = snap.enabled ? [...NAV.slice(0, 1), { href: '#/live', label: 'Live', match: ['live'] }, ...NAV.slice(1)] : NAV;
   const inWiki = ['wiki', 'monsters', 'maps', 'spawns'].includes(top);
 
   let page;
@@ -38,19 +43,22 @@ export function App() {
   else if (top === 'wiki') page = <WikiPage />;
   else if (top === 'shop') page = <ShopPage tab={route[1]} />;
   else if (top === 'about') page = <AboutPage />;
+  else if (top === 'live') page = <LivePage />;
   else page = <RoundPage />;
 
   return (
     <>
       <header class="topbar">
         <a class="brand" href="#/">
-          <span class="brand-mark" aria-hidden="true">◎</span>
+          <span class="brand-mark" aria-hidden="true">
+            ◎
+          </span>
           <span>
             R.E.P.O. <b>Field Guide</b>
           </span>
         </a>
         <nav class="nav" aria-label="Main">
-          {NAV.map((n) => (
+          {nav.map((n) => (
             <a href={n.href} class={n.match.includes(top) ? 'active' : ''} aria-current={n.match.includes(top) ? 'page' : undefined}>
               {n.label}
             </a>
@@ -61,7 +69,7 @@ export function App() {
           {theme === 'dark' ? '☀' : '☾'}
         </button>
       </header>
-      <main class="page">
+      <main class={`page ${top === 'live' ? 'page-live' : ''}`}>
         {inWiki && (
           <nav class="tabs wiki-sub" aria-label="Wiki sections">
             {WIKI_SUB.map((s) => (
@@ -73,12 +81,14 @@ export function App() {
         )}
         {page}
       </main>
-      <footer class="footer">
-        <p>
-          Unofficial fan project. Not affiliated with or endorsed by semiwork. Info is gathered from community guides and may lag
-          behind game updates. {REPO_URL && <a href={REPO_URL}>Contribute on GitHub</a>}
-        </p>
-      </footer>
+      {top !== 'live' && (
+        <footer class="footer">
+          <p>
+            Unofficial fan project. Not affiliated with or endorsed by semiwork. Info is gathered from community guides and may lag behind game updates.{' '}
+            {REPO_URL && <a href={REPO_URL}>Contribute on GitHub</a>}
+          </p>
+        </footer>
+      )}
     </>
   );
 }

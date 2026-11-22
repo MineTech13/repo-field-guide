@@ -1,7 +1,8 @@
 import { dollarsK, type ExtractionPlan } from '../../engine/extraction';
 
 /** Biggest discovered valuables first, each to its closest found extraction point. */
-export function ExtractionPlanner({ plan, total, completed }: { plan: ExtractionPlan; total?: number; completed?: number }) {
+export function ExtractionPlanner({ plan, total, completed, compact }: { plan: ExtractionPlan; total?: number; completed?: number; compact?: boolean }) {
+  const shown = compact ? 3 : Infinity;
   const open = plan.points.filter((p) => !p.done);
   return (
     <div class="ext-plan">
@@ -31,7 +32,7 @@ export function ExtractionPlanner({ plan, total, completed }: { plan: Extraction
               <p class="muted small">Nothing discovered closest to this one yet.</p>
             ) : (
               <ol class="ext-items">
-                {p.items.map((it) => (
+                {p.items.slice(0, shown).map((it) => (
                   <li>
                     <span>{it.name}</span>
                     <span class="muted small">~{it.distance} m</span>
@@ -40,6 +41,7 @@ export function ExtractionPlanner({ plan, total, completed }: { plan: Extraction
                 ))}
               </ol>
             )}
+            {p.items.length > shown && <p class="muted small">+{p.items.length - shown} more</p>}
           </div>
         );
       })}

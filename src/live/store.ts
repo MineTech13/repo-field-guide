@@ -67,7 +67,9 @@ function receive(json: unknown) {
   set({ status: 'live', data: json, source: 'live', receivedAt: Date.now() });
   const route = routeForPhaseChange(lastPhase, json.phase);
   lastPhase = json.phase ?? lastPhase;
-  if (route && snap.followGame && typeof location !== 'undefined' && location.hash.split('?')[0] !== route) location.hash = route;
+  // The Live page follows the game by itself, so stay there.
+  const onLivePage = typeof location !== 'undefined' && location.hash.startsWith('#/live');
+  if (route && snap.followGame && !onLivePage && location.hash.split('?')[0] !== route) location.hash = route;
 }
 
 let stream: EventSource | null = null;
