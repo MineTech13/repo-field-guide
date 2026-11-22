@@ -54,7 +54,7 @@ export function SpawnCheckPanel({ state, bare }: { state: RoundState; bare?: boo
         {c.overflow && (
           <li class="bullet bullet-info">
             <span>
-              More than the table allows. Probably a group swap ({SPAWNS.groupSwap.chancePct}% chance a tier-3 slot becomes a pack) or a mislog.
+              More than the table allows. Probably a respawn you logged twice, a rare group spawn (about {SPAWNS.groupSwap.chancePct}% on levels 1–3), or a modded monster.
             </span>
           </li>
         )}

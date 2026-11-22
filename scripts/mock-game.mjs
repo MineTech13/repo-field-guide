@@ -52,7 +52,13 @@ const shop = () => ({
     { item: 'Item Gun Tranq', name: 'Tranq Gun', type: 'gun', priceK: 19 },
     { item: 'Item Health Pack Medium', name: 'Medium Health Pack', type: 'healthPack', priceK: 7 },
     { item: 'Item Femboy Rifle', name: 'Modded Rifle', type: 'gun', priceK: 25 },
+    { item: 'Item Upgrade Player Grab Strength', name: 'Strength Upgrade', type: 'item_upgrade', priceK: 7, haggle: 'Rejected', shown: 1 },
   ],
+  basket: [{ item: 'Item Health Pack Medium', priceK: 7 }],
+  basketTotalK: 7,
+  shopkeeper: { attemptsUsed: 1, attemptsLeft: 2 },
+  owned: { 'Item Melee Frying Pan': 1, 'Item Upgrade Player Energy': 1, 'Item Femboy Knife': 1 },
+  catalog: [{ item: 'Item Femboy Rifle', name: 'Femboy Rifle', type: 'gun', priceK: [20, 30], maxInShop: 1 }],
   players: level().players,
 });
 

@@ -44,8 +44,8 @@
     }
   ],
   "groupSwap": {
-    "chancePct": 4.67,
-    "text": "Some tier-3 slots can be filled by a group of smaller monsters instead (e.g. 6 Bangers or 4 Peepers). In the game data these groups are ordinary tier-3 entries with a lower weight (60 vs 100).",
+    "chancePct": 1,
+    "text": "Rarely, the tier-3 slot is filled by a group of smaller monsters instead (e.g. 10 Gnomes or 6 Bangers). This can only happen on levels 1–3 and only after you have played 5 runs. Groups have a lower weight than single monsters, so it happens about 1% of the time (≈1.2% on levels 1–2, ≈0.7% on level 3).",
     "groups": [
       {
         "id": "gnome",
@@ -56,15 +56,23 @@
         "count": 6
       },
       {
+        "id": "tick",
+        "count": 5
+      },
+      {
         "id": "apex-predator",
         "count": 4
       },
       {
-        "id": "shadow-child",
+        "id": "peeper",
         "count": 4
       },
       {
         "id": "spewer",
+        "count": 4
+      },
+      {
+        "id": "shadow-child",
         "count": 4
       },
       {
@@ -76,19 +84,11 @@
         "count": 3
       },
       {
-        "id": "chef",
-        "count": 3
-      },
-      {
         "id": "mentalist",
         "count": 3
       },
       {
-        "id": "peeper",
-        "count": 3
-      },
-      {
-        "id": "rugrat",
+        "id": "chef",
         "count": 3
       },
       {
@@ -96,7 +96,39 @@
         "count": 3
       },
       {
+        "id": "rugrat",
+        "count": 3
+      },
+      {
+        "id": "birthday-boy",
+        "count": 3
+      },
+      {
+        "id": "elsa",
+        "count": 3
+      },
+      {
+        "id": "headgrab",
+        "count": 3
+      },
+      {
+        "id": "oogly",
+        "count": 3
+      },
+      {
+        "id": "bella",
+        "count": 3
+      },
+      {
         "id": "hidden",
+        "count": 2
+      },
+      {
+        "id": "gambit",
+        "count": 2
+      },
+      {
+        "id": "heart-hugger",
         "count": 2
       }
     ]
@@ -136,12 +168,12 @@
   "rules": [
     "Monster counts per tier come from the game's difficulty curves (checked against the game, v0.5.2). The big steps are at levels 3, 6, 9, 10 and 20.",
     "Within a tier, each monster has a weight. A monster you met in recent levels gets a lower weight, so you see a bit more variety from level to level.",
-    "Some monsters have a minimum level: Loom only from level 3 on.",
+    "Loom only appears from level 3 on. Group spawns only on levels 1–3, after 5 runs played.",
     "A despawned monster comes back after 4–5 minutes. Every 10 minutes you stay in a level, that time shrinks by 20%, and after about 50 minutes respawns are almost instant.",
     "Once all extraction points are done, despawned monsters come back right away, so don't linger after the last extraction.",
     "At most 10 monster orbs can lie on the map (the oldest explodes). Gnomes and Bangers drop none."
   ],
-  "notes": "Monster counts and respawn timing are read from the game itself with the companion mod's data dump (v0.5.2). Group details come from a modded profile and will be re-checked against a vanilla dump.",
+  "notes": "Monster pools, weights, level limits, counts and respawn timing are read from the game itself with the companion mod’s data dump (v0.5.2).",
   "sources": [
     "game-dump",
     "fantime-monsters"

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'preact/hooks';
 import { SHOP, shopItemById, upgradeById } from '../../data';
 import type { ShopItem } from '../../data/types';
-import { STYLES, adviseShopV2, idForAsset, mapGameUpgrades, type ShelfCopy, type TeamMember } from '../../engine/shopAdvisor';
+import { HAGGLE, STYLES, adviseShopV2, idForAsset, mapGameUpgrades, type ExtraItem, type ShelfCopy, type TeamMember } from '../../engine/shopAdvisor';
 import { useStored } from '../../hooks';
 import { useLive } from '../../live/store';
 import { setNudge, toggleBan, togglePin, usePrefs } from '../../state/prefs';
@@ -58,12 +58,28 @@ export function ShopAdvisor() {
 
   // ---- optional game companion data (fills in, never required)
   const game = snap.data && st.useGame ? snap.data : null;
+  const inShop = game?.phase === 'shop';
+  // Unknown (modded) items keep their game asset name as id; names come from the game's catalog.
+  const idOf = (asset: string) => idForAsset(asset) ?? asset;
   const gameShelf: ShelfCopy[] | null =
-    game?.phase === 'shop' && game.shelf ? game.shelf.map((c) => ({ id: idForAsset(c.item) ?? c.name ?? c.item, priceK: c.priceK, fromGame: true })) : null;
+    inShop && game?.shelf
+      ? game.shelf.map((c) => ({ id: idOf(c.item), priceK: c.priceK, fromGame: true, discounted: c.haggle === 'Discounted', rejected: c.haggle === 'Rejected' }))
+      : null;
+  const extras: Record<string, ExtraItem> = {};
+  for (const c of [...(game?.catalog ?? []), ...(game?.shelf ?? [])]) {
+    const id = idOf(c.item);
+    if (upgradeById.has(id) || shopItemById.has(id)) continue;
+    extras[id] = { name: c.name || c.item.replace(/^Item /, ''), kind: c.type === 'item_upgrade' ? 'upgrade' : 'item', type: c.type };
+  }
+  const gameBasket = inShop && game?.basket ? game.basket.map((c) => ({ id: idOf(c.item), priceK: c.priceK })) : undefined;
+  const inventory: Record<string, number> | undefined = game?.owned
+    ? Object.fromEntries(Object.entries(game.owned).map(([asset, n]) => [idOf(asset), n]))
+    : undefined;
   const gameTeam: TeamMember[] | null = game?.players?.length
     ? game.players.map((p) => ({ name: p.name, isLocal: !!p.isLocal, upgrades: mapGameUpgrades(p.upgrades) }))
     : null;
   const gameLocal = gameTeam?.find((m) => m.isLocal);
+  const label = (id: string) => upgradeById.get(id)?.name ?? shopItemById.get(id)?.name ?? extras[id]?.name ?? id;
 
   const input = {
     budgetK: game?.surplusK ?? st.budgetK,
@@ -76,9 +92,15 @@ export function ShopAdvisor() {
     team: gameTeam ?? undefined,
     hurt,
     prefs,
+    basket: gameBasket,
+    basketTotalK: inShop ? game?.basketTotalK : undefined,
+    inventory,
+    haggleAttemptsLeft: inShop ? game?.shopkeeper?.attemptsLeft : undefined,
+    extras,
   };
   const advice = adviseShopV2(input);
   const unknownOnShelf = gameShelf?.filter((c) => !upgradeById.has(c.id) && !shopItemById.has(c.id)) ?? [];
+  const ownedFromGame = new Set(Object.keys(inventory ?? {}).filter((id) => shopItemById.has(id)));
 
   return (
     <div class="shop-grid">
@@ -216,10 +238,17 @@ export function ShopAdvisor() {
             {SHOP.items
               .filter((i) => i.category !== 'health' && i.category !== 'explosive' && i.id !== 'energy-crystal')
               .map((it) => {
-                const on = st.ownedItems.includes(it.id);
+                const fromGame = ownedFromGame.has(it.id);
+                const on = fromGame || st.ownedItems.includes(it.id);
                 return (
-                  <button class={`item-btn ${on ? 'on' : ''}`} aria-pressed={on} onClick={() => set({ ownedItems: on ? st.ownedItems.filter((x) => x !== it.id) : [...st.ownedItems, it.id] })}>
-                    {it.emoji} {it.name}
+                  <button
+                    class={`item-btn ${on ? 'on' : ''}`}
+                    aria-pressed={on}
+                    disabled={fromGame}
+                    title={fromGame ? 'Your team owns this (from the game)' : undefined}
+                    onClick={() => set({ ownedItems: on ? st.ownedItems.filter((x) => x !== it.id) : [...st.ownedItems, it.id] })}
+                  >
+                    {it.emoji} {it.name} {fromGame && <GameTag />}
                   </button>
                 );
               })}
@@ -231,14 +260,45 @@ export function ShopAdvisor() {
             <div class="shelf-read">
               {[...gameShelf].sort((a, b) => a.priceK - b.priceK).map((c) => {
                 const known = upgradeById.has(c.id) || shopItemById.has(c.id);
+                const state = c.discounted ? 'discounted' : c.rejected ? 'rejected' : '';
                 return (
-                  <span class={`copy-chip ${known ? '' : 'unknown'}`} title={known ? '' : 'Not in the guide (probably from another mod)'}>
-                    {known ? nameOf(c.id) : `❔ ${c.id}`} <strong>${c.priceK}K</strong>
+                  <span
+                    class={`copy-chip ${known ? '' : 'unknown'} ${state}`}
+                    title={c.discounted ? 'The shopkeeper gave a discount on this copy' : c.rejected ? 'The shopkeeper turned this copy down' : known ? '' : 'From another mod'}
+                  >
+                    {known ? '' : '🧩 '}
+                    {label(c.id)} <strong>${c.priceK}K</strong>
+                    {c.discounted && <small> 🤝 discounted</small>}
+                    {c.rejected && <small> ✗ turned down</small>}
                   </span>
                 );
               })}
             </div>
-            {unknownOnShelf.length > 0 && <p class="muted small">❔ items come from other mods, so the guide can’t rate them.</p>}
+            {unknownOnShelf.length > 0 && (
+              <div class="modded">
+                <p class="muted small">
+                  🧩 From other mods. The guide can’t judge these, so rate them yourself and the advisor will include them:
+                </p>
+                {[...new Set(unknownOnShelf.map((c) => c.id))].map((id) => {
+                  const n = prefs.nudge[id] ?? 0;
+                  return (
+                    <div class="nudge-row">
+                      <span class="nudge-name">
+                        🧩 {label(id)} <span class="muted small">{extras[id]?.type ?? ''}</span>
+                      </span>
+                      <span class="seg nudge-seg" role="group" aria-label={`${label(id)} rating`}>
+                        {[-1, 0, 1, 2].map((v) => (
+                          <button class={n === v ? 'on' : ''} aria-pressed={n === v} onClick={() => setPrefs((p) => setNudge(p, id, v))} title={['not useful', 'unrated', 'good', 'great'][v + 1]}>
+                            {['−', '?', '+', '++'][v + 1]}
+                          </button>
+                        ))}
+                      </span>
+                      <PinBan id={id} prefs={prefs} setPrefs={setPrefs} />
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </Section>
         ) : (
           <ManualShelf st={st} set={set} teamSize={input.teamSize} />
@@ -264,6 +324,48 @@ export function ShopAdvisor() {
             {advice.planning ? ' · prices estimated' : ''}
           </div>
         </section>
+
+        {advice.basket.length > 0 && (
+          <section class="panel basket">
+            <div class="panel-head">
+              <h2>🧺 In your basket</h2>
+              <span class="small muted">
+                <GameTag /> ${advice.basket.reduce((a, c) => a + c.priceK, 0)}K → ${advice.afterBasketK}K left
+              </span>
+            </div>
+            <div class="shelf-read">
+              {advice.basket.map((c) => (
+                <span class="copy-chip">
+                  {c.name} <strong>${c.priceK}K</strong>
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {advice.haggle && (advice.haggle.best || advice.haggle.freebies.length > 0) && (
+          <section class="panel haggle">
+            <h2>🤝 Haggle with the shopkeeper</h2>
+            {advice.haggle.best && (
+              <p>
+                Show him the <strong>{advice.haggle.best.name}</strong> (${advice.haggle.best.priceK}K). If he likes it (1 in 3), you save{' '}
+                <strong>
+                  ${advice.haggle.best.save[0]}
+                  {advice.haggle.best.save[1] !== advice.haggle.best.save[0] ? `–${advice.haggle.best.save[1]}` : ''}K
+                </strong>
+                .
+              </p>
+            )}
+            {advice.haggle.freebies.length > 0 && (
+              <p class="small">
+                Cheap picks become <strong>free</strong> if he likes them (he always takes at least ${HAGGLE.minOffK}K off): {advice.haggle.freebies.join(', ')}.
+              </p>
+            )}
+            <p class="muted small">
+              {advice.haggle.attemptsLeft != null ? `${advice.haggle.attemptsLeft} of ${HAGGLE.attempts} tries left this visit.` : `${HAGGLE.attempts} tries per shop visit.`} Hold the item up to his face; a copy he turns down stays at full price.
+            </p>
+          </section>
+        )}
 
         {advice.picks.length > 0 ? (
           <ol class="picks">

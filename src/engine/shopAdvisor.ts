@@ -72,9 +72,29 @@ export function itemPrice(item: ShopItem, base: number, teamSize: number, levels
 // ===================================================================
 
 export interface ShelfCopy {
+  /** Our id, or the game asset name for items the guide doesn't know (other mods). */
   id: string;
   priceK: number;
   fromGame?: boolean;
+  /** Shopkeeper already gave a discount on this copy / turned it down. */
+  discounted?: boolean;
+  rejected?: boolean;
+}
+
+/** Items the guide doesn't know (other mods), described by the game. */
+export interface ExtraItem {
+  name: string;
+  kind: 'upgrade' | 'item';
+  type?: string;
+}
+
+/** Shopkeeper haggling: 3 tries per visit, 1 in 3 is liked → 50–70% off, at least $5K off. */
+export const HAGGLE = { attempts: 3, chance: 1 / 3, min: 0.5, max: 0.7, minOffK: 5 } as const;
+
+export function haggleSaving(priceK: number): [number, number] {
+  const lo = Math.min(priceK, Math.max(Math.ceil(priceK * HAGGLE.min), HAGGLE.minOffK));
+  const hi = Math.min(priceK, Math.max(Math.ceil(priceK * HAGGLE.max), HAGGLE.minOffK));
+  return [lo, hi];
 }
 
 export interface TeamMember {
@@ -101,6 +121,15 @@ export interface AdvisorInput {
   team?: TeamMember[];
   hurt?: boolean;
   prefs: ShopPrefs;
+  /** Copies already in the checkout area (counted as bought). */
+  basket?: ShelfCopy[];
+  basketTotalK?: number;
+  /** Team inventory by our id or asset: owned items + bought-but-unused upgrades. */
+  inventory?: Record<string, number>;
+  /** Haggling attempts left this visit (from the companion). */
+  haggleAttemptsLeft?: number;
+  /** Names/kinds for ids the guide doesn't know (modded items). */
+  extras?: Record<string, ExtraItem>;
 }
 
 export interface AdvicePick {
@@ -125,6 +154,17 @@ export interface ShopAdviceV2 {
   nextLevel: number;
   nextPhase: Phase;
   planning: boolean;
+  /** Money left after paying for the basket. */
+  afterBasketK: number;
+  basket: { id: string; name: string; priceK: number }[];
+  unusedUpgrades: { id: string; name: string; count: number }[];
+  haggle: {
+    attemptsLeft: number | null;
+    /** Best copy to show the shopkeeper (most expensive planned buy). */
+    best: { id: string; name: string; priceK: number; save: [number, number] } | null;
+    /** Planned buys of $5K or less: free if he likes them. */
+    freebies: string[];
+  } | null;
 }
 
 const STUN_GEAR = new Set(['tranq', 'stun']);
@@ -187,14 +227,42 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
   const extraReasons: Record<string, string[]> = {};
   const skipped: ShopAdviceV2['skipped'] = [];
   const notes: string[] = [];
-  let budget = Math.max(0, input.budgetK - input.reserveK);
+  const extras = input.extras ?? {};
+  const known = (id: string) => upgradeById.has(id) || shopItemById.has(id);
+  const nameOf = (id: string) => upgradeById.get(id)?.name ?? shopItemById.get(id)?.name ?? extras[id]?.name ?? id;
+
+  // Team inventory: owned gear counts as owned; bought-but-unused upgrades were already paid for,
+  // so they count toward the +50% price step.
+  const unusedUpgrades: ShopAdviceV2['unusedUpgrades'] = [];
+  for (const [id, count] of Object.entries(input.inventory ?? {})) {
+    if (count <= 0) continue;
+    if (upgradeById.has(id)) {
+      unusedUpgrades.push({ id, name: nameOf(id), count });
+      if (!input.teamBought) teamBought[id] = (teamBought[id] ?? 0) + count;
+    } else ownedItems.add(id);
+  }
 
   // Copies available: from the shelf (fixed prices), or estimated in planning mode.
-  const shelfLeft = new Map<string, number[]>();
-  for (const c of input.shelf) {
-    if (!upgradeById.has(c.id) && !shopItemById.has(c.id)) continue;
-    shelfLeft.set(c.id, [...(shelfLeft.get(c.id) ?? []), c.priceK].sort((a, b) => a - b));
+  const shelfLeft = new Map<string, ShelfCopy[]>();
+  for (const c of input.shelf) shelfLeft.set(c.id, [...(shelfLeft.get(c.id) ?? []), c].sort((a, b) => a.priceK - b.priceK));
+
+  // The basket is as good as bought: pay for it, take those copies off the shelf.
+  const basket = (input.basket ?? []).map((c) => ({ id: c.id, name: nameOf(c.id), priceK: c.priceK }));
+  const basketTotal = input.basketTotalK ?? basket.reduce((a, c) => a + c.priceK, 0);
+  for (const c of basket) {
+    const left = shelfLeft.get(c.id);
+    const i = left?.findIndex((x) => x.priceK === c.priceK) ?? -1;
+    if (left && i >= 0) left.splice(i, 1);
+    if (upgradeById.has(c.id)) owned[c.id] = (owned[c.id] ?? 0) + 1;
+    else ownedItems.add(c.id);
   }
+  const afterBasketK = Math.max(0, input.budgetK - basketTotal);
+  let budget = Math.max(0, afterBasketK - input.reserveK);
+  if (basket.length) notes.push(`Your basket ($${basketTotal}K) is counted as bought: $${afterBasketK}K left to spend.`);
+  if (unusedUpgrades.length)
+    notes.push(
+      `Unused upgrades in the truck: ${unusedUpgrades.map((u) => `${u.name} ×${u.count}`).join(', ')}. Until someone uses them they keep that upgrade off the shelf.`,
+    );
 
   const gearOwned = () => {
     const g = new Set<string>();
@@ -253,7 +321,7 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
 
   const priceOf = (id: string): number | null => {
     const left = shelfLeft.get(id);
-    if (!planning) return left && left.length ? left[0] : null;
+    if (!planning) return left && left.length ? left[0].priceK : null;
     const u = upgradeById.get(id);
     const n = bought[id]?.length ?? 0;
     if (u) return n >= u.maxInShop ? null : upgradePrice(mid(u.price), input.teamSize, teamBought[id] ?? 0);
@@ -283,21 +351,31 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
       const repeat = (bought[it.id]?.length ?? 0) * 2;
       if (s.score - repeat > 0) cands.push({ kind: 'item', id: it.id, price, score: s.score - repeat, reasons: s.reasons });
     }
+    // Items from other mods: the guide can't judge them, so they start just below the
+    // suggestion threshold and only come up when you rate them up or pin them.
+    if (!planning) {
+      for (const [id, copies] of shelfLeft) {
+        if (known(id) || !copies.length || prefs.banned.includes(id)) continue;
+        const ex = extras[id];
+        const kind = ex?.kind ?? 'item';
+        const p = prefScore(id, null, kind, prefs, nameOf(id));
+        const repeat = (bought[id]?.length ?? 0) * 2;
+        const score = 2.5 + p.score - repeat;
+        if (score > 0) cands.push({ kind, id, price: copies[0].priceK, score, reasons: ['from another mod, rated by you', ...p.reasons] });
+      }
+    }
     // Small price sensitivity so equal-value picks favour the cheaper one.
     cands.sort((a, b) => b.score - b.price * 0.05 - (a.score - a.price * 0.05) || a.price - b.price);
     const pick = cands.find((c) => c.price <= budget && (c.score >= 3 || prefs.pinned.includes(c.id)));
     if (!pick) {
       const best = cands.find((c) => c.score >= 3);
-      if (best && best.price > budget) {
-        const name = upgradeById.get(best.id)?.name ?? shopItemById.get(best.id)!.name;
-        skipped.push({ name, reason: `Worth it, but costs ~$${best.price}K. Save up for it.` });
-      }
+      if (best && best.price > budget) skipped.push({ name: nameOf(best.id), reason: `Worth it, but costs ~$${best.price}K. Save up for it.` });
       break;
     }
     budget -= pick.price;
     (bought[pick.id] ??= []).push(pick.price);
     extraReasons[pick.id] = pick.reasons;
-    if (!planning) shelfLeft.get(pick.id)!.shift();
+    if (!planning) shelfLeft.get(pick.id)?.shift();
     if (pick.kind === 'upgrade') {
       owned[pick.id] = (owned[pick.id] ?? 0) + 1;
       // In planning mode the next copy is priced after this purchase; shelf copies keep their stocked price.
@@ -311,12 +389,12 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
     const reasons = [...new Set(extraReasons[id] ?? [])];
     if (u && !planning && prices.length > 1)
       reasons.unshift(`all ${prices.length} copies are priced now; bought one per visit, each next one would cost +50%`);
-    const base = u ? u.why : it!.effect;
+    const base = u ? u.why : it ? it.effect : `${extras[id]?.type ?? 'item'} from another mod`;
     return {
-      kind: u ? 'upgrade' : 'item',
+      kind: u || extras[id]?.kind === 'upgrade' ? 'upgrade' : 'item',
       id,
-      name: (u ?? it)!.name,
-      emoji: (u ?? it)!.emoji,
+      name: nameOf(id),
+      emoji: (u ?? it)?.emoji ?? '🧩',
       qty: prices.length,
       costK: prices.reduce((a, b) => a + b, 0),
       prices,
@@ -326,12 +404,41 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
   });
 
   if (!planning) {
-    const unknownCopies = input.shelf.filter((c) => !upgradeById.has(c.id) && !shopItemById.has(c.id)).length;
-    if (unknownCopies) notes.push(`${unknownCopies} item(s) on the shelf aren’t in the guide (probably from other mods), so they’re not rated.`);
+    const unknownIds = [...new Set(input.shelf.filter((c) => !known(c.id)).map((c) => c.id))];
+    if (unknownIds.length)
+      notes.push(
+        `${unknownIds.map(nameOf).join(', ')} ${unknownIds.length === 1 ? 'is' : 'are'} from other mods. The guide can’t judge ${unknownIds.length === 1 ? 'it' : 'them'}, so ${unknownIds.length === 1 ? 'it’s' : 'they’re'} only suggested if you rate ${unknownIds.length === 1 ? 'it' : 'them'} up or pin ${unknownIds.length === 1 ? 'it' : 'them'}.`,
+      );
+  }
+
+  // Shopkeeper haggling: show him the most expensive planned buy (biggest saving);
+  // cheap planned buys (≤ $5K) would become free.
+  let haggle: ShopAdviceV2['haggle'] = null;
+  if (!planning && input.haggleAttemptsLeft !== 0) {
+    const candidates = input.shelf.filter((c) => bought[c.id] && !c.discounted && !c.rejected);
+    const best = [...candidates].sort((a, b) => b.priceK - a.priceK)[0];
+    haggle = {
+      attemptsLeft: input.haggleAttemptsLeft ?? null,
+      best: best ? { id: best.id, name: nameOf(best.id), priceK: best.priceK, save: haggleSaving(best.priceK) } : null,
+      freebies: [...new Set(candidates.filter((c) => c.priceK <= HAGGLE.minOffK && c !== best).map((c) => nameOf(c.id)))],
+    };
   }
 
   const spentK = picks.reduce((a, p) => a + p.costK, 0);
-  return { picks, spentK, leftK: Math.max(0, input.budgetK - spentK), notes, skipped, nextLevel, nextPhase, planning };
+  return {
+    picks,
+    spentK,
+    leftK: Math.max(0, afterBasketK - spentK),
+    notes,
+    skipped,
+    nextLevel,
+    nextPhase,
+    planning,
+    afterBasketK,
+    basket,
+    unusedUpgrades,
+    haggle,
+  };
 }
 
 function teamTotals(team: TeamMember[] | undefined): Record<string, number> | null {

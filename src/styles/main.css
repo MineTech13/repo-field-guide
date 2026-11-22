@@ -1927,3 +1927,32 @@ a.chip:hover {
   margin-top: 8px;
   font-weight: 500;
 }
+
+/* basket, haggling, modded items */
+.copy-chip.discounted {
+  border-color: var(--ok);
+  background: var(--ok-soft);
+}
+.copy-chip.rejected {
+  opacity: 0.6;
+}
+.copy-chip small {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.basket h2,
+.haggle h2 {
+  margin-bottom: 8px;
+}
+.haggle {
+  border-color: var(--ok);
+}
+.haggle p {
+  margin: 0 0 6px;
+}
+.modded {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

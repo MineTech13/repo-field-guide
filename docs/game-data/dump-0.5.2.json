@@ -1,7 +1,7 @@
 {
   "gameVersion": "0.5.2",
-  "writtenAt": "2026-11-22T17:29:13.2583900Z",
-  "note": "Dumped with the companion mod (Ctrl+Shift+F10) from a modded profile; spawn-manager mods may affect enemy data.",
+  "writtenAt": "2026-11-22T17:45:34.0778999Z",
+  "note": "Dumped with the companion mod (Ctrl+Shift+F10). Shop/director values read from the running game.",
   "shop": {
     "itemValueMultiplier": 4,
     "upgradeValueIncrease": 0.5,
@@ -9,7 +9,7 @@
     "crystalValueIncrease": 0.2,
     "slots": {
       "items": 8,
-      "consumables": 6,
+      "consumables": 5,
       "upgrades": 10,
       "healthPacks": 6
     }
@@ -240,64 +240,11 @@
   "enemies": [
     {
       "tier": 1,
-      "setup": "Enemy - Elsa",
-      "rarity": 100,
-      "levelsCompletedCondition": false,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 0,
-      "monsters": [
-        {
-          "name": "Elsa",
-          "key": "ENEMY.ELSA",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 1,
-      "setup": "Enemy - Tick",
-      "rarity": 100,
-      "levelsCompletedCondition": false,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 0,
-      "monsters": [
-        {
-          "name": "Tick",
-          "key": "ENEMY.TICK",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 1,
-      "setup": "Enemy - Birthday Boy",
-      "rarity": 100,
-      "levelsCompletedCondition": false,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 0,
-      "monsters": [
-        {
-          "name": "Birthday Boy",
-          "key": "ENEMY.BIRTHDAY_BOY",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 1,
       "setup": "Enemy - Ceiling Eye",
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -306,7 +253,84 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Thin Man",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Shadow Child",
+          "key": "ENEMY.THIN_MAN",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Gnome",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Gnome",
+          "key": "ENEMY.GNOME",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 4
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Duck",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Apex Predator",
+          "key": "ENEMY.DUCK",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -316,6 +340,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -324,7 +349,180 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Tick",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Tick",
+          "key": "ENEMY.TICK",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Birthday Boy",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Birthday Boy",
+          "key": "ENEMY.BIRTHDAY_BOY",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Elsa",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Elsa",
+          "key": "ENEMY.ELSA",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Tricycle",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Bella",
+          "key": "ENEMY.TRICYCLE",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Valuable Thrower",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Rugrat",
+          "key": "ENEMY.VALUABLE_THROWER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Animal",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Animal",
+          "key": "ENEMY.ANIMAL",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Upscream",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Upscream",
+          "key": "ENEMY.UPSCREAM",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -334,6 +532,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -342,7 +541,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -352,6 +556,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -360,7 +565,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -370,6 +580,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -378,7 +589,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -388,6 +604,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -396,7 +613,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -406,6 +628,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -414,7 +637,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
         }
       ]
     },
@@ -424,6 +652,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -432,205 +661,108 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
     {
-      "tier": 3,
-      "setup": "Enemy Group - 6 Bangs",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Banger",
-          "key": "ENEMY.BANG",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy - Shadow",
-      "rarity": 100,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 2,
-      "runsPlayed": 0,
-      "monsters": [
-        {
-          "name": "Loom",
-          "key": "ENEMY.SHADOW",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 2 Spinny",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Gambit",
-          "key": "ENEMY.SPINNY",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy - Snatcher",
+      "tier": 2,
+      "setup": "Enemy - Heart Hugger",
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
-          "name": "Snatcher",
-          "key": "ENEMY.SNATCHER",
+          "name": "Heart Hugger",
+          "key": "ENEMY.HEART_HUGGER",
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Head Grabber",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Headgrab",
+          "key": "ENEMY.HEAD_GRABBER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Oogly",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Oogly",
+          "key": "ENEMY.OOGLY",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
     {
       "tier": 3,
-      "setup": "Enemy Group - 3 Floaters",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
+      "setup": "Enemy - Head",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
-      "runsPlayed": 5,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
       "monsters": [
         {
-          "name": "Mentalist",
-          "key": "ENEMY.FLOATER",
+          "name": "Headman",
+          "key": "ENEMY.HEAD",
           "respawnSec": [
             240,
             300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 3 Bowties",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Bowtie",
-          "key": "ENEMY.BOWTIE",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 2 Hidden",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Hidden",
-          "key": "ENEMY.HIDDEN",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 3 Elsas",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Elsa",
-          "key": "ENEMY.ELSA",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 4 Ceiling Eyes",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Peeper",
-          "key": "ENEMY.CEILING_EYE",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 4 Slow Mouths",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Spewer",
-          "key": "ENEMY.SLOW_MOUTH",
-          "respawnSec": [
-            240,
-            300
-          ]
-        }
-      ]
-    },
-    {
-      "tier": 3,
-      "setup": "Enemy Group - 3 Tumblers",
-      "rarity": 60,
-      "levelsCompletedCondition": true,
-      "levelsCompletedMin": 0,
-      "runsPlayed": 5,
-      "monsters": [
-        {
-          "name": "Chef",
-          "key": "ENEMY.TUMBLER",
-          "respawnSec": [
-            240,
-            300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -640,6 +772,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -648,7 +781,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -658,6 +796,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -666,7 +805,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
         }
       ]
     },
@@ -676,6 +820,7 @@
       "rarity": 100,
       "levelsCompletedCondition": false,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
       "runsPlayed": 0,
       "monsters": [
         {
@@ -684,7 +829,492 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Beamer",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Clown",
+          "key": "ENEMY.BEAMER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Slow Walker",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Trudge",
+          "key": "ENEMY.SLOW_WALKER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Shadow",
+      "rarity": 100,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 2,
+      "levelsCompletedMax": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Loom",
+          "key": "ENEMY.SHADOW",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Bomb Thrower",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Cleanup Crew",
+          "key": "ENEMY.BOMB_THROWER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Snatcher",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 10,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Snatcher",
+          "key": "ENEMY.SNATCHER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Animals",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Animal",
+          "key": "ENEMY.ANIMAL",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Bowties",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Bowtie",
+          "key": "ENEMY.BOWTIE",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Floaters",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Mentalist",
+          "key": "ENEMY.FLOATER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 2 Hidden",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Hidden",
+          "key": "ENEMY.HIDDEN",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 2
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Tumblers",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Chef",
+          "key": "ENEMY.TUMBLER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Upscreams",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Upscream",
+          "key": "ENEMY.UPSCREAM",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Valuable Throwers",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Rugrat",
+          "key": "ENEMY.VALUABLE_THROWER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 4 Ceiling Eyes",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Peeper",
+          "key": "ENEMY.CEILING_EYE",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 4
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 4 Ducks",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Apex Predator",
+          "key": "ENEMY.DUCK",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 4
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 4 Slow Mouths",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Spewer",
+          "key": "ENEMY.SLOW_MOUTH",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 4
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 4 Thin Men",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Shadow Child",
+          "key": "ENEMY.THIN_MAN",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 4
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 6 Bangs",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Banger",
+          "key": "ENEMY.BANG",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 6
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 10 Gnomes",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Gnome",
+          "key": "ENEMY.GNOME",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 10
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 2 Spinny",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Gambit",
+          "key": "ENEMY.SPINNY",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 2
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 2 Heart Huggers",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Heart Hugger",
+          "key": "ENEMY.HEART_HUGGER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 2
         }
       ]
     },
@@ -694,6 +1324,7 @@
       "rarity": 60,
       "levelsCompletedCondition": true,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
       "runsPlayed": 5,
       "monsters": [
         {
@@ -702,7 +1333,12 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 5
         }
       ]
     },
@@ -712,6 +1348,7 @@
       "rarity": 60,
       "levelsCompletedCondition": true,
       "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
       "runsPlayed": 5,
       "monsters": [
         {
@@ -720,7 +1357,108 @@
           "respawnSec": [
             240,
             300
-          ]
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Elsas",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Elsa",
+          "key": "ENEMY.ELSA",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Head Grabbers",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Headgrab",
+          "key": "ENEMY.HEAD_GRABBER",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Ooglies",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Oogly",
+          "key": "ENEMY.OOGLY",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Tricycles",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "levelsCompletedMax": 2,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Bella",
+          "key": "ENEMY.TRICYCLE",
+          "respawnSec": [
+            240,
+            300
+          ],
+          "activeSec": [
+            20,
+            40
+          ],
+          "count": 3
         }
       ]
     }
@@ -1167,7 +1905,7 @@
       "maxAmountInShop": 2,
       "minPlayerCount": 1,
       "maxPurchase": true,
-      "maxPurchaseAmount": 4,
+      "maxPurchaseAmount": 2,
       "secretShop": "none"
     },
     {
@@ -1179,7 +1917,7 @@
       "maxAmountInShop": 2,
       "minPlayerCount": 1,
       "maxPurchase": true,
-      "maxPurchaseAmount": 4,
+      "maxPurchaseAmount": 2,
       "secretShop": "none"
     },
     {

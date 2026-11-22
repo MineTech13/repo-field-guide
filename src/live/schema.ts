@@ -18,7 +18,26 @@ export interface GameStateV1 {
   seen?: LiveEncounter[];
   /** Only while in the shop: one entry per physical copy. */
   shelf?: LiveShelfItem[];
+  /** Only in the shop: copies in the checkout area, with the running total. */
+  basket?: { item: string; priceK: number }[];
+  basketTotalK?: number;
+  /** Only in the shop: haggling attempts (3 per visit). */
+  shopkeeper?: { attemptsUsed: number; attemptsLeft: number };
+  /** Only in the shop: every item the game knows, incl. other mods' items. */
+  catalog?: LiveCatalogItem[];
+  /** Team inventory by item asset: owned items and bought-but-unused upgrades. */
+  owned?: Record<string, number>;
   players?: LivePlayer[];
+}
+
+export interface LiveCatalogItem {
+  item: string;
+  name?: string;
+  type?: string;
+  /** Base price range in $K. */
+  priceK?: [number, number];
+  maxInShop?: number;
+  coopOnly?: boolean;
 }
 
 export interface LiveEncounter {
@@ -40,6 +59,9 @@ export interface LiveShelfItem {
   name?: string;
   type?: string;
   priceK: number;
+  /** Shopkeeper reaction to this copy. */
+  haggle?: 'Discounted' | 'Rejected';
+  shown?: number;
 }
 
 export interface LivePlayer {

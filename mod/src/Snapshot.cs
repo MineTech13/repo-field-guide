@@ -51,7 +51,13 @@ namespace RepoFieldGuide.Companion
             try { state["surplusK"] = SemiFunc.StatGetRunCurrency(); } catch { /* not in a run */ }
 
             if (plugin.TrackMonsters.Value) state["seen"] = Seen(tracker, plugin.ShowRespawnTimers.Value);
-            if (plugin.ShopReader.Value && SemiFunc.RunIsShop()) state["shelf"] = Shelf();
+            if (plugin.ShopReader.Value && SemiFunc.RunIsShop())
+            {
+                state["shelf"] = Shelf();
+                Basket(state);
+                state["catalog"] = Catalog();
+            }
+            if (plugin.ShopReader.Value) state["owned"] = Owned();
             if (plugin.ShopReader.Value) state["players"] = Players(plugin.IncludeTeammates.Value);
 
             return JsonConvert.SerializeObject(state);
@@ -94,15 +100,98 @@ namespace RepoFieldGuide.Companion
             foreach (var ia in UnityEngine.Object.FindObjectsByType<ItemAttributes>(FindObjectsSortMode.None))
             {
                 if (ia == null || !ia.shopItem || ia.item == null) continue;
-                list.Add(new Dictionary<string, object>
+                var entry = new Dictionary<string, object>
                 {
                     ["item"] = ia.item.name,
                     ["name"] = ia.item.itemName,
                     ["type"] = ia.item.itemType.ToString(),
                     ["priceK"] = ia.value,
-                });
+                };
+                // Shopkeeper haggling: was this copy shown to him, and did he give a discount?
+                var reaction = ia.GetComponent<ShopKeeperItemReaction>();
+                if (reaction != null)
+                {
+                    if (reaction.StateGet() != ShopKeeperItemReaction.State.Idle) entry["haggle"] = reaction.StateGet().ToString();
+                    if (reaction.TimesShownGet() > 0) entry["shown"] = reaction.TimesShownGet();
+                }
+                list.Add(entry);
             }
             return list;
+        }
+
+        /// <summary>
+        /// What's in the checkout area right now. The host sends this list (asset names + prices)
+        /// to every player, so it works for clients too.
+        /// </summary>
+        private static void Basket(Dictionary<string, object> state)
+        {
+            var shop = ShopManager.instance;
+            if (shop == null) return;
+            var list = new List<object>();
+            var names = shop.shoppingListItemNames;
+            var values = shop.shoppingListItemValues;
+            if (names != null && values != null)
+            {
+                for (int i = 0; i < Math.Min(names.Count, values.Count); i++)
+                    list.Add(new Dictionary<string, object> { ["item"] = names[i], ["priceK"] = values[i] });
+            }
+            state["basket"] = list;
+            state["basketTotalK"] = shop.totalCost;
+
+            // The shopkeeper allows 3 haggling attempts per shop visit.
+            var keeper = ShopKeeper.instance;
+            if (keeper != null)
+            {
+                int used = Math.Max(0, Math.Min(3, keeper.itemDiscountAttempts));
+                state["shopkeeper"] = new Dictionary<string, object> { ["attemptsUsed"] = used, ["attemptsLeft"] = 3 - used };
+            }
+        }
+
+        private static List<object> catalogCache;
+        private static int catalogCount = -1;
+
+        /// <summary>
+        /// Every item the game knows, including items added by other mods: name, type,
+        /// base price range ($K) and shelf limit. Lets the website show modded items properly.
+        /// Built once and reused while the item list doesn't change.
+        /// </summary>
+        private static List<object> Catalog()
+        {
+            var stats = StatsManager.instance;
+            if (stats == null || stats.itemDictionary == null) return new List<object>();
+            if (catalogCache != null && catalogCount == stats.itemDictionary.Count) return catalogCache;
+            var list = new List<object>();
+            foreach (var i in stats.itemDictionary.Values)
+            {
+                if (i == null || i.disabled) continue;
+                float min = i.value != null ? i.value.valueMin : 0f, max = i.value != null ? i.value.valueMax : 0f;
+                list.Add(new Dictionary<string, object>
+                {
+                    ["item"] = i.name,
+                    ["name"] = i.itemName,
+                    ["type"] = i.itemType.ToString(),
+                    ["priceK"] = new[] { Math.Max(1, (int)Math.Ceiling(min * 4f / 1000f)), Math.Max(1, (int)Math.Ceiling(max * 4f / 1000f)) },
+                    ["maxInShop"] = i.maxAmountInShop,
+                    ["coopOnly"] = i.minPlayerCount > 1,
+                });
+            }
+            catalogCache = list;
+            catalogCount = stats.itemDictionary.Count;
+            return list;
+        }
+
+        /// <summary>
+        /// The team inventory: items bought and still around (weapons, tools, drones, carts,
+        /// crystals) and upgrades bought but not used yet.
+        /// </summary>
+        private static Dictionary<string, int> Owned()
+        {
+            var owned = new Dictionary<string, int>();
+            var stats = StatsManager.instance;
+            if (stats == null || stats.itemsPurchased == null) return owned;
+            foreach (var kv in stats.itemsPurchased)
+                if (kv.Value > 0) owned[kv.Key] = kv.Value;
+            return owned;
         }
 
         private static List<object> Players(bool includeTeammates)

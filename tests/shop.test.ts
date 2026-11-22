@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { decodeBuild, encodeBuild, summarizeBuild } from '../src/engine/shop';
-import { adviseShopV2, baseUpgradeScore, defaultPrefs, idForAsset, mapGameUpgrades, upgradePrice, type AdvisorInput, type TeamMember } from '../src/engine/shopAdvisor';
+import { adviseShopV2, baseUpgradeScore, defaultPrefs, idForAsset, mapGameUpgrades, upgradePrice, haggleSaving, type AdvisorInput, type TeamMember } from '../src/engine/shopAdvisor';
 import { bandFor, respawnTimeAt, spawnCheck } from '../src/engine/spawns';
 import { shopItemById, upgradeById } from '../src/data';
 
@@ -85,7 +85,7 @@ describe('shop advisor', () => {
   it('only buys what is on the shelf', () => {
     const a = adviseShopV2(input({ budgetK: 100, shelf: [{ id: 'health', priceK: 5 }, { id: 'Item Femboy Rifle', priceK: 20 }] }));
     expect(a.picks.map((p) => p.id)).toEqual(['health']);
-    expect(a.notes.join(' ')).toMatch(/aren.t in the guide/);
+    expect(a.notes.join(' ')).toMatch(/from other mods/);
   });
 
   it('skips co-op only upgrades in solo', () => {
@@ -119,6 +119,49 @@ describe('shop advisor', () => {
     ];
     const a = adviseShopV2(input({ budgetK: 8, shelf: [{ id: 'strength', priceK: 7 }], team, prefs: { ...defaultPrefs(), style: 'carrier' } }));
     expect(a.picks[0].giveTo).toMatch(/^Alex \(has 0\) · you have 3/);
+  });
+
+  it('counts the basket as bought', () => {
+    const shelf = [
+      { id: 'stamina', priceK: 2 },
+      { id: 'stamina', priceK: 2 },
+      { id: 'tranq-gun', priceK: 16 },
+    ];
+    const a = adviseShopV2(input({ budgetK: 20, shelf, basket: [{ id: 'tranq-gun', priceK: 16 }], basketTotalK: 16 }));
+    expect(a.afterBasketK).toBe(4);
+    expect(a.picks.map((p) => p.id)).not.toContain('tranq-gun');
+    expect(a.spentK).toBeLessThanOrEqual(4);
+    expect(a.notes.join(' ')).toMatch(/basket/);
+  });
+
+  it('uses the team inventory: owned gear and unused upgrades', () => {
+    const a = adviseShopV2(input({ budgetK: 40, level: 3, shelf: [{ id: 'tranq-gun', priceK: 16 }], inventory: { 'tranq-gun': 1, stamina: 2 } }));
+    expect(a.picks.map((p) => p.id)).not.toContain('tranq-gun');
+    expect(a.unusedUpgrades).toEqual([{ id: 'stamina', name: 'Stamina', count: 2 }]);
+  });
+
+  it('suggests what to show the shopkeeper', () => {
+    expect(haggleSaving(3)).toEqual([3, 3]); // ≤ $5K becomes free
+    expect(haggleSaving(8)).toEqual([5, 6]); // at least $5K off
+    expect(haggleSaving(20)).toEqual([10, 14]); // 50–70%
+    const shelf = [
+      { id: 'stamina', priceK: 2 },
+      { id: 'tranq-gun', priceK: 16 },
+      { id: 'health', priceK: 9, rejected: true },
+    ];
+    const a = adviseShopV2(input({ budgetK: 40, level: 3, shelf, haggleAttemptsLeft: 2 }));
+    expect(a.haggle?.best?.id).toBe('tranq-gun');
+    expect(a.haggle?.attemptsLeft).toBe(2);
+    expect(a.haggle?.freebies).toContain('Stamina');
+    expect(adviseShopV2(input({ budgetK: 40, shelf, haggleAttemptsLeft: 0 })).haggle).toBeNull();
+  });
+
+  it('only suggests modded items you rated', () => {
+    const shelf = [{ id: 'Item Femboy Rifle', priceK: 10 }];
+    const extras = { 'Item Femboy Rifle': { name: 'Femboy Rifle', kind: 'item' as const, type: 'gun' } };
+    expect(adviseShopV2(input({ budgetK: 40, shelf, extras })).picks).toHaveLength(0);
+    const liked = adviseShopV2(input({ budgetK: 40, shelf, extras, prefs: { ...defaultPrefs(), nudge: { 'Item Femboy Rifle': 1 } } }));
+    expect(liked.picks[0]).toMatchObject({ id: 'Item Femboy Rifle', name: 'Femboy Rifle' });
   });
 
   it('applies diminishing returns', () => {

@@ -77,7 +77,7 @@
   },
   "game-dump": {
     "name": "Game data dump (companion mod, v0.5.2)",
-    "url": "https://github.com/MineTech13/repo-field-guide/blob/main/docs/game-data/dump-0.5.2-merged.json",
+    "url": "https://github.com/MineTech13/repo-field-guide/blob/main/docs/game-data/dump-0.5.2.json",
     "note": "Read directly from the game"
   }
 }
