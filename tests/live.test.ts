@@ -105,3 +105,19 @@ describe('follow the game', () => {
     expect(routeForPhaseChange('level', 'lobby')).toBeNull();
   });
 });
+
+describe('phase labels', () => {
+  it('describes every game phase', async () => {
+    const { describePhase } = await import('../src/live/phase');
+    expect(describePhase(null)).toBeNull();
+    expect(describePhase({ v: 1, phase: 'lobbyMenu', playerCount: 3 })).toMatchObject({ title: 'Lobby', waiting: true });
+    expect(describePhase({ v: 1, phase: 'lobbyMenu', playerCount: 3 })!.detail).toMatch(/3 players/);
+    expect(describePhase({ v: 1, phase: 'mainMenu' })).toMatchObject({ title: 'Main menu', waiting: true });
+    expect(describePhase({ v: 1, phase: 'lobby', levelsCompleted: 2 })!.detail).toMatch(/level 3/);
+    const lvl = describePhase({ v: 1, phase: 'level', levelsCompleted: 1, map: 'Sunstone Valley Resort', haul: { goal: 20000, current: 5000 } })!;
+    expect(lvl).toMatchObject({ title: 'Level 2', waiting: false, href: '#/' });
+    expect(lvl.detail).toBe('Sunstone Valley Resort · quota 25%');
+    expect(describePhase({ v: 1, phase: 'shop', surplusK: 12, levelsCompleted: 2 })).toMatchObject({ href: '#/shop/advisor' });
+    expect(describePhase({ v: 1, phase: 'arena' })!.detail).toMatch(/run is over/);
+  });
+});

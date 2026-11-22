@@ -6,7 +6,10 @@
 export interface GameStateV1 {
   v: 1;
   mod?: string;
-  phase?: 'level' | 'shop' | 'lobby' | 'arena' | 'menu';
+  /** lobby = the truck between levels; lobbyMenu = multiplayer lobby, waiting for players. */
+  phase?: 'level' | 'shop' | 'lobby' | 'lobbyMenu' | 'mainMenu' | 'tutorial' | 'arena' | 'menu';
+  /** Players currently in the game. */
+  playerCount?: number;
   updatedAt?: string;
   /** Level.NarrativeName, e.g. "Headman Manor". */
   map?: string | null;

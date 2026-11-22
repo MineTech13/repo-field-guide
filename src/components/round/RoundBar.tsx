@@ -52,7 +52,6 @@ export function RoundBar({ state, update, onReset, live, fromGame }: Props) {
       <span class={`phase-tag phase-${phase} rb-phase`}>{phase}</span>
 
       <span class="rb-spacer" />
-      {live.enabled && <LiveBadge live={live} />}
       <button class="btn primary rb-next" onClick={() => update(nextLevel)} title="Level +1, clears map and monsters">
         Next ▸
       </button>

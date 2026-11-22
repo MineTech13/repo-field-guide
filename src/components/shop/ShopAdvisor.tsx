@@ -6,6 +6,7 @@ import { useStored } from '../../hooks';
 import { useLive } from '../../live/store';
 import { setNudge, toggleBan, togglePin, usePrefs } from '../../state/prefs';
 import { loadRound } from '../../state/round';
+import { WaitingBanner } from '../LivePill';
 import { Collapsible } from '../round/Collapsible';
 import { GameTag } from '../round/RoundBar';
 import { Counter, Section, priceText } from '../ui';
@@ -105,6 +106,7 @@ export function ShopAdvisor() {
   return (
     <div class="shop-grid">
       <div class="stack">
+        <WaitingBanner want="shop" />
         {snap.data && (
           <section class={`panel game-fill ${st.useGame ? 'on' : ''}`}>
             <label class="switch">

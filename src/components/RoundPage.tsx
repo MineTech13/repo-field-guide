@@ -10,6 +10,7 @@ import { CompanionPanel } from './round/CompanionPanel';
 import { RoundBar } from './round/RoundBar';
 import { SeenMonsters } from './round/SeenMonsters';
 import { ThreatCard } from './round/ThreatCard';
+import { WaitingBanner } from './LivePill';
 import { RoundMemory } from './RoundMemory';
 import { SpawnCheckPanel } from './SpawnCheckPanel';
 import { SevIcon } from './ui';
@@ -62,6 +63,7 @@ export function RoundPage() {
 
   return (
     <div class="focus">
+      <WaitingBanner want="level" />
       <RoundBar
         state={state}
         update={update}

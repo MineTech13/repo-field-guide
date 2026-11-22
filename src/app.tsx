@@ -4,6 +4,7 @@ import { AboutPage } from './components/AboutPage';
 import { Encyclopedia } from './components/Encyclopedia';
 import { MapsPage } from './components/MapsPage';
 import { MonsterDetail } from './components/MonsterDetail';
+import { LivePill } from './components/LivePill';
 import { RoundPage } from './components/RoundPage';
 import { ShopPage } from './components/shop/ShopPage';
 import { SpawnsPage } from './components/SpawnsPage';
@@ -55,6 +56,7 @@ export function App() {
             </a>
           ))}
         </nav>
+        <LivePill />
         <button class="icon-btn" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`} title="Toggle theme">
           {theme === 'dark' ? '☀' : '☾'}
         </button>

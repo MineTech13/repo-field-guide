@@ -26,6 +26,7 @@ namespace RepoFieldGuide.Companion
                 ["v"] = 1,
                 ["mod"] = Plugin.Version,
                 ["phase"] = Phase(),
+                ["playerCount"] = PlayerCount(),
             };
 
             var run = RunManager.instance;
@@ -63,13 +64,34 @@ namespace RepoFieldGuide.Companion
             return JsonConvert.SerializeObject(state);
         }
 
+        /// <summary>
+        /// mainMenu · lobbyMenu (multiplayer lobby, waiting for players) · lobby (the truck
+        /// between levels) · level · shop · arena · tutorial · menu (anything else, e.g. loading).
+        /// </summary>
         private static string Phase()
         {
+            if (RunManager.instance == null || RunManager.instance.levelCurrent == null) return "menu";
             if (SemiFunc.RunIsShop()) return "shop";
             if (SemiFunc.RunIsArena()) return "arena";
+            if (SemiFunc.RunIsLobbyMenu()) return "lobbyMenu";
+            if (SemiFunc.IsMainMenu()) return "mainMenu";
+            if (SemiFunc.RunIsTutorial()) return "tutorial";
             if (SemiFunc.RunIsLobby()) return "lobby";
             if (SemiFunc.RunIsLevel()) return "level";
             return "menu";
+        }
+
+        private static int PlayerCount()
+        {
+            try
+            {
+                var list = SemiFunc.PlayerGetList();
+                return list != null ? list.Count : 0;
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         private static List<object> Seen(Tracker tracker, bool respawn)

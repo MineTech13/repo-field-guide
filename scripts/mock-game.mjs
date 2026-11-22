@@ -11,7 +11,7 @@ import { createServer } from 'node:http';
 const PORT = Number(process.env.PORT ?? 47381);
 const ALLOWED = [/^https:\/\/([a-z0-9-]+\.)?repoguide\.pages\.dev$/, /^https:\/\/minetech13\.github\.io$/, /^http:\/\/(localhost|127\.0\.0\.1):\d+$/];
 const args = process.argv.slice(2);
-const fixed = args.find((a) => a === 'level' || a === 'shop');
+const fixed = args.find((a) => ['level', 'shop', 'lobbyMenu', 'mainMenu', 'lobby', 'arena'].includes(a));
 // --no-stream: behave like companion 0.1.x (no /events), to test the polling fallback.
 const noStream = args.includes('--no-stream');
 const start = Date.now();
@@ -65,6 +65,7 @@ const shop = () => ({
 const state = () => {
   if (fixed === 'level') return level();
   if (fixed === 'shop') return shop();
+  if (fixed) return { v: 1, mod: 'mock', phase: fixed, playerCount: 3, levelsCompleted: 2, surplusK: 12 };
   return Math.floor((Date.now() - start) / 20000) % 2 === 0 ? level() : shop();
 };
 
