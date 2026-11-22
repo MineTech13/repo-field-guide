@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    R.E.P.O. Field Guide Companion: an optional, read-only BepInEx 5 plugin.
+
+    Game assemblies are referenced from $(REPOGamePath) and are never committed.
+    In the dev container they're mounted read-only at /game/Managed.
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>RepoFieldGuide.Companion</AssemblyName>
+    <RootNamespace>RepoFieldGuide.Companion</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <Version>0.1.0</Version>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <DebugType>embedded</DebugType>
+    <RestoreAdditionalProjectSources>https://nuget.bepinex.dev/v3/index.json</RestoreAdditionalProjectSources>
+    <REPOGamePath Condition="'$(REPOGamePath)' == '' and '$(REPO_GAME_MANAGED)' != ''">$(REPO_GAME_MANAGED)</REPOGamePath>
+    <REPOGamePath Condition="'$(REPOGamePath)' == ''">/game/Managed</REPOGamePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Game + Unity assemblies (compile-time only; the game provides them at runtime). -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" Publicize="true">
+      <HintPath>$(REPOGamePath)/Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine"><HintPath>$(REPOGamePath)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(REPOGamePath)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(REPOGamePath)/UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(REPOGamePath)/UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AnimationModule"><HintPath>$(REPOGamePath)/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Newtonsoft.Json"><HintPath>$(REPOGamePath)/Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PhotonUnityNetworking"><HintPath>$(REPOGamePath)/PhotonUnityNetworking.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Photon3Unity3D"><HintPath>$(REPOGamePath)/Photon3Unity3D.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>
