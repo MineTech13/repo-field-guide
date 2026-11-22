@@ -4,7 +4,7 @@ import { useLive } from '../live/store';
 /** Top-bar status while the optional game companion is connected. Hidden otherwise. */
 export function LivePill() {
   const snap = useLive();
-  if (!snap.enabled) return null;
+  if (!snap.enabled && !snap.demo) return null;
   if (snap.status !== 'live' || !snap.data) {
     return (
       <a class={`live-pill live-${snap.status}`} href="#/" title="Game companion">
@@ -15,10 +15,10 @@ export function LivePill() {
   }
   const info = describePhase(snap.data)!;
   return (
-    <a class={`live-pill live-live ${info.waiting ? 'waiting' : ''}`} href={info.href} title={`${info.title} · ${info.detail}`}>
+    <a class={`live-pill live-live ${info.waiting ? 'waiting' : ''}`} href={snap.demo ? '#/live' : info.href} title={`${info.title} · ${info.detail}`}>
       <span class="live-dot" aria-hidden="true" />
       <span class="live-pill-text">
-        {info.icon} <strong>{info.title}</strong>
+        {snap.demo && <span class="demo-tag">DEMO</span>} {info.icon} <strong>{info.title}</strong>
         <span class="live-pill-detail"> · {info.detail}</span>
       </span>
     </a>
@@ -28,7 +28,7 @@ export function LivePill() {
 /** Banner for pages whose content needs a phase the game isn't in right now. */
 export function WaitingBanner({ want }: { want: 'level' | 'shop' }) {
   const snap = useLive();
-  if (!snap.enabled || snap.status !== 'live' || !snap.data) return null;
+  if ((!snap.enabled && !snap.demo) || snap.status !== 'live' || !snap.data) return null;
   const info = describePhase(snap.data)!;
   if (snap.data.phase === want) return null;
   const text =

@@ -2471,7 +2471,7 @@ a.chip:hover {
     top: 70px;
   }
   .live-map.minimap svg {
-    max-height: calc(100vh - 230px);
+    max-height: calc(100vh - 250px);
     width: auto;
     margin: 0 auto;
   }
@@ -2483,7 +2483,124 @@ a.chip:hover {
   .live-side {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
-  .live-side > .live-threat {
+  .live-side > .live-threat,
+  .live-side > .live-find {
     grid-column: 1 / -1;
   }
+}
+
+/* ---------- Find: compass to discovered things ---------- */
+.lm-target line {
+  stroke: #4fc3ff;
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+.lm-target circle {
+  fill: none;
+  stroke: #4fc3ff;
+  stroke-width: 2.5;
+}
+.find {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.find-hint {
+  margin: 0;
+}
+.find-compass {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, #4fc3ff 10%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, #4fc3ff 45%, var(--border));
+}
+.compass {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, #4fc3ff 60%, var(--border));
+  display: grid;
+  place-items: center;
+}
+.compass-arrow {
+  display: block;
+  font-size: 2rem;
+  line-height: 1;
+  color: #4fc3ff;
+  transition: transform 0.3s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .compass-arrow {
+    transition: none;
+  }
+}
+.find-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.find-dist {
+  font: 800 1.5rem var(--mono);
+}
+.find-floor {
+  color: var(--warn);
+}
+.find-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.find-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+.find-kind {
+  font: 600 0.7rem var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 84px;
+}
+.find-chip {
+  font-size: 0.8rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: inherit;
+}
+.find-chip.on {
+  border-color: #4fc3ff;
+  background: color-mix(in srgb, #4fc3ff 20%, var(--surface-2));
+}
+
+/* ---------- demo ---------- */
+.demo-tag {
+  display: inline-block;
+  font: 800 0.66rem var(--mono);
+  letter-spacing: 0.08em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #b46cff;
+  color: #fff;
+  vertical-align: middle;
+}
+.demo-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  border: 1px dashed #b46cff;
+  background: color-mix(in srgb, #b46cff 12%, var(--surface));
+  font-size: 0.9rem;
 }

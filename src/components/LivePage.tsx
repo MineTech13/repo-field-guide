@@ -1,10 +1,13 @@
 import { useMemo, useState } from 'preact/hooks';
 import { advise } from '../engine/advise';
 import { dollarsK, planExtraction } from '../engine/extraction';
+import { navTargets } from '../engine/navigate';
 import { describePhase } from '../live/phase';
+import { live as liveStore } from '../live/store';
 import { useLiveRound } from '../live/useLiveRound';
 import { CompanionPanel } from './round/CompanionPanel';
 import { ExtractionPlanner } from './round/ExtractionPlanner';
+import { FindPanel } from './round/FindPanel';
 import { LiveMap } from './round/LiveMap';
 import { DETECTION_TEXT, SevIcon, ThreatBadge } from './ui';
 
@@ -26,6 +29,9 @@ export function LivePage() {
   const live = snap.data;
   const layout = live?.phase === 'level' ? live.layout : undefined;
   const plan = useMemo(() => planExtraction(layout), [layout]);
+  const targets = useMemo(() => (live ? navTargets(live, plan) : []), [live, plan]);
+  const [findId, setFindId] = useState<string | null>(null);
+  const findTarget = targets.find((t) => t.id === findId) ?? null;
   const [zoom, setZoom] = useState<number>(() => {
     try {
       return Number(localStorage.getItem(ZOOM_KEY) ?? 1);
@@ -42,7 +48,7 @@ export function LivePage() {
     }
   };
 
-  if (!snap.enabled || snap.status !== 'live' || !live) {
+  if ((!snap.enabled && !snap.demo) || snap.status !== 'live' || !live) {
     return (
       <div class="live-page live-setup">
         <section class="panel">
@@ -50,6 +56,12 @@ export function LivePage() {
           <p>
             Put this page on a second screen while you play. With the optional companion mod running, it shows what you've discovered: a minimap, monsters you've met, the extraction plan, your team
             and what to watch out for.
+          </p>
+          <p>
+            <button class="btn primary" onClick={() => liveStore.startDemo()}>
+              ▶ Try the demo
+            </button>{' '}
+            <span class="muted small">A made-up level, no game needed. Your own round isn't touched.</span>
           </p>
           <CompanionPanel snap={snap} />
         </section>
@@ -68,6 +80,16 @@ export function LivePage() {
 
   return (
     <div class="live-page">
+      {snap.demo && (
+        <div class="demo-bar" role="status">
+          <span>
+            <span class="demo-tag">DEMO</span> A made-up level to show what the Live page does with the companion mod. It loops every 2 minutes.
+          </span>
+          <button class="btn" onClick={() => liveStore.stopDemo()}>
+            Stop demo
+          </button>
+        </div>
+      )}
       {/* ---- status strip ---- */}
       <header class="live-strip panel">
         <div class="ls-phase">
@@ -151,8 +173,12 @@ export function LivePage() {
                 ))}
               </span>
             </div>
-            {layout ? <LiveMap live={live} plan={plan} radius={ZOOMS[zoom]?.radius} minimap /> : <p class="muted small">Turn on "Map and extraction planner" in the mod settings.</p>}
-            <p class="muted small lm-legend">▲ you · ■ extraction · ● valuable · 💀 found head · faded = other floor · only what's been discovered</p>
+            {layout ? (
+              <LiveMap live={live} plan={plan} radius={ZOOMS[zoom]?.radius} minimap target={findTarget?.at} />
+            ) : (
+              <p class="muted small">Turn on "Map and extraction planner" in the mod settings.</p>
+            )}
+            <p class="muted small lm-legend">▲ you · ■ extraction (number = planned order) · ● valuable · 🚚 truck · 💀 found head · faded = other floor · only what's been discovered</p>
           </section>
 
           <div class="live-side">
@@ -174,6 +200,14 @@ export function LivePage() {
                 ))}
               </ul>
             </section>
+
+            {/* ---- find ---- */}
+            {layout && (
+              <section class="panel live-find">
+                <h2>Find</h2>
+                <FindPanel targets={targets} selected={findTarget ? findId : null} onSelect={setFindId} me={layout.me} yaw={layout.yaw} />
+              </section>
+            )}
 
             {/* ---- monsters met ---- */}
             <section class="panel">

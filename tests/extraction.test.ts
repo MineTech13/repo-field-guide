@@ -127,3 +127,19 @@ describe('round memory from the game', () => {
     expect(changed.memo.lastMem?.alive).toBe(1);
   });
 });
+
+describe('find: heading to a target', () => {
+  it('turns relative to where you look', async () => {
+    const { headingTo, turnText, floorText } = await import('../src/engine/navigate');
+    // Looking north (+z), target to the east → 90° right.
+    const h = headingTo([0, 0, 0], 0, [10, 0, 0]);
+    expect(h).toEqual({ distance: 10, turn: 90, dy: 0 });
+    expect(turnText(h.turn)).toBe('to your right');
+    // Looking east, the same target is straight ahead.
+    expect(headingTo([0, 0, 0], 90, [10, 0, 0]).turn).toBe(0);
+    // Behind you, upstairs.
+    const b = headingTo([0, 0, 0], 0, [0, 4.5, -20]);
+    expect(turnText(b.turn)).toBe('behind you');
+    expect(floorText(b.dy)).toBe('one floor up');
+  });
+});

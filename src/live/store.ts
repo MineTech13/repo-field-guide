@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { decodeShareCode } from './decode';
+import { DEMO_LOOP, demoState } from './demo';
 import { isGameState, type GameStateV1 } from './schema';
 
 /**
@@ -16,7 +17,9 @@ export interface LiveSnapshot {
   status: LiveStatus;
   data: GameStateV1 | null;
   /** Where the current data came from. */
-  source: 'live' | 'code' | null;
+  source: 'live' | 'code' | 'demo' | null;
+  /** "Try the demo": made-up data, no game needed. Never saved, never touches your round. */
+  demo: boolean;
   receivedAt: number | null;
 }
 
@@ -34,7 +37,8 @@ function loadPrefs(): { enabled: boolean; port: number; followGame: boolean } {
   }
 }
 
-let snap: LiveSnapshot = { ...loadPrefs(), status: 'off', data: null, source: null, receivedAt: null };
+let snap: LiveSnapshot = { ...loadPrefs(), status: 'off', data: null, source: null, receivedAt: null, demo: false };
+let demoTimer: ReturnType<typeof setInterval> | null = null;
 const listeners = new Set<(s: LiveSnapshot) => void>();
 let timer: ReturnType<typeof setTimeout> | null = null;
 let failures = 0;
@@ -168,7 +172,23 @@ export const live = {
   clear() {
     set({ data: null, source: null, receivedAt: null });
   },
+  /** Play a made-up level (src/live/demo.ts) so you can see the Live page without the game. */
+  startDemo() {
+    disconnect();
+    if (demoTimer) clearInterval(demoTimer);
+    const start = Date.now();
+    const tick = () => set({ demo: true, status: 'live', data: demoState((Date.now() - start) / 1000), source: 'demo', receivedAt: Date.now() });
+    tick();
+    demoTimer = setInterval(tick, 1000);
+  },
+  stopDemo() {
+    if (demoTimer) clearInterval(demoTimer);
+    demoTimer = null;
+    set({ demo: false, data: null, source: null, receivedAt: null, status: snap.enabled ? 'connecting' : 'off' });
+    if (snap.enabled) live.setEnabled(true);
+  },
 };
+export { DEMO_LOOP };
 
 // Resume polling on load only if the user turned it on earlier.
 if (typeof window !== 'undefined' && snap.enabled) live.setEnabled(true);

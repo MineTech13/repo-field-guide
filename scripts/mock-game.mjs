@@ -41,7 +41,7 @@ const level = () => {
     team: [
       { name: 'You', isLocal: true, dead: false },
       { name: 'Alex', dead: false },
-      ...(t > 15 ? [{ name: 'Sam', dead: true, head: [6, 0, 22], headIn: t > 25 ? 'truck' : undefined }] : [{ name: 'Sam', dead: false }]),
+      ...(t > 15 ? [{ name: 'Sam', dead: true, head: [6, 0, 22], headIn: t > 60 ? 'truck' : undefined }] : [{ name: 'Sam', dead: false }]),
     ],
     layout: mockLayout(t),
   };

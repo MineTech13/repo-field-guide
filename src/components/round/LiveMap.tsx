@@ -14,6 +14,7 @@ export function LiveMap({
   plan,
   radius,
   minimap,
+  target,
 }: {
   live: GameStateV1;
   plan: ExtractionPlan;
@@ -21,6 +22,8 @@ export function LiveMap({
   radius?: number | null;
   /** Round minimap look, no caption. */
   minimap?: boolean;
+  /** Something you're looking for: drawn with a line from you. */
+  target?: Vec3 | null;
 }) {
   const L = live.layout;
   if (!L) return null;
@@ -149,6 +152,13 @@ export function LiveMap({
             🚚
             <title>Truck</title>
           </text>
+        )}
+
+        {target && me && (
+          <g class="lm-target">
+            <line x1={X(me)} y1={Y(me)} x2={X(target)} y2={Y(target)} vector-effect="non-scaling-stroke" />
+            <circle cx={X(target)} cy={Y(target)} r={unit * 4} vector-effect="non-scaling-stroke" />
+          </g>
         )}
 
         {me && (

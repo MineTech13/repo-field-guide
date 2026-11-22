@@ -6,7 +6,6 @@ import { MapsPage } from './components/MapsPage';
 import { MonsterDetail } from './components/MonsterDetail';
 import { LivePage } from './components/LivePage';
 import { LivePill } from './components/LivePill';
-import { useLive } from './live/store';
 import { RoundPage } from './components/RoundPage';
 import { ShopPage } from './components/shop/ShopPage';
 import { SpawnsPage } from './components/SpawnsPage';
@@ -14,6 +13,7 @@ import { WikiPage } from './components/WikiPage';
 
 const NAV = [
   { href: '#/', label: 'Round', match: [''] },
+  { href: '#/live', label: 'Live', match: ['live'] },
   { href: '#/shop', label: 'Shop', match: ['shop'] },
   { href: '#/wiki', label: 'Wiki', match: ['wiki', 'monsters', 'maps', 'spawns'] },
   { href: '#/about', label: 'About', match: ['about'] },
@@ -30,9 +30,7 @@ export function App() {
   const route = useRoute();
   const [theme, toggleTheme] = useTheme();
   const top = route[0] ?? '';
-  const snap = useLive();
-  // "Live" only shows up once you've turned on the optional game companion.
-  const nav = snap.enabled ? [...NAV.slice(0, 1), { href: '#/live', label: 'Live', match: ['live'] }, ...NAV.slice(1)] : NAV;
+  const nav = NAV;
   const inWiki = ['wiki', 'monsters', 'maps', 'spawns'].includes(top);
 
   let page;
