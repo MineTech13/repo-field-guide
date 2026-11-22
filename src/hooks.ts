@@ -76,3 +76,19 @@ export function useStored<T>(key: string, initial: T): [T, (v: T | ((p: T) => T)
   }, [key, val]);
   return [val, setVal];
 }
+
+/** Big screens (e.g. a second monitor) show everything at once instead of folding it away. */
+export const WIDE_QUERY = '(min-width: 1280px)';
+
+export function useWide(): boolean {
+  const get = () => typeof window !== 'undefined' && !!window.matchMedia?.(WIDE_QUERY).matches;
+  const [wide, setWide] = useState(get);
+  useEffect(() => {
+    const mq = window.matchMedia?.(WIDE_QUERY);
+    if (!mq) return;
+    const on = () => setWide(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  return wide;
+}

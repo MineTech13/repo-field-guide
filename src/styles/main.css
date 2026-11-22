@@ -2008,3 +2008,57 @@ a.chip:hover {
     max-width: 180px;
   }
 }
+
+/* ---------- big screens: use the space, show everything ---------- */
+.focus-top,
+.focus-cols,
+.focus-main,
+.focus-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+@media (min-width: 1280px) {
+  .page {
+    max-width: min(1880px, 100%);
+    padding-inline: 24px;
+  }
+  .topbar {
+    padding-inline: max(24px, calc((100vw - 1880px) / 2));
+  }
+  .focus {
+    max-width: none;
+  }
+  /* threat call next to the monster chips */
+  .focus-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  /* playbook on the left, everything else beside it */
+  .focus-cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: start;
+  }
+  .shop-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (min-width: 1700px) {
+  .focus-cols {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+  /* shop picks two side by side (still in ranked order, row by row) */
+  .shop-result .picks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  }
+  /* playbook cards two side by side */
+  .focus-main .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    align-items: start;
+  }
+}

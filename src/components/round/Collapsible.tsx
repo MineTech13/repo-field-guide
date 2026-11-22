@@ -1,11 +1,15 @@
 import type { ComponentChildren } from 'preact';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
+import { useWide } from '../../hooks';
 
+// Big and small screens remember open/closed separately: on a big screen everything
+// starts open, on a small one only the essentials do.
 const KEY = 'repo-field-guide:sections:v1';
+const WIDE_KEY = 'repo-field-guide:sections-wide:v1';
 
-function loadOpen(): Record<string, boolean> {
+function loadOpen(key: string): Record<string, boolean> {
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    return JSON.parse(localStorage.getItem(key) ?? '{}');
   } catch {
     return {};
   }
@@ -22,12 +26,17 @@ export function Collapsible(props: {
   tone?: 'warn' | 'danger';
   children: ComponentChildren;
 }) {
-  const [open, setOpen] = useState(() => loadOpen()[props.id] ?? !!props.defaultOpen);
+  const wide = useWide();
+  const key = wide ? WIDE_KEY : KEY;
+  const initial = () => loadOpen(key)[props.id] ?? (wide || !!props.defaultOpen);
+  const [open, setOpen] = useState(initial);
+  // Moving the window to another screen (or resizing) switches to that screen's layout.
+  useEffect(() => setOpen(initial()), [wide]); // eslint-disable-line react-hooks/exhaustive-deps
   const toggle = () => {
     const next = !open;
     setOpen(next);
     try {
-      localStorage.setItem(KEY, JSON.stringify({ ...loadOpen(), [props.id]: next }));
+      localStorage.setItem(key, JSON.stringify({ ...loadOpen(key), [props.id]: next }));
     } catch {
       /* ignore */
     }
