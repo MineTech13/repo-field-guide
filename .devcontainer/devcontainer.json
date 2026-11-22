@@ -24,6 +24,9 @@
     // Game assemblies, read-only: used to check game data and to build the mod.
     // Change the source path here if your Steam library lives elsewhere.
     "source=${localEnv:HOME}/.local/share/Steam/steamapps/common/REPO/REPO_Data/Managed,target=/game/Managed,type=bind,readonly",
+    // GitHub CLI login lives in a named volume so it survives container rebuilds
+    // (the host keeps its token in the system keyring, which the container can't read).
+    "source=repoguide-gh-config,target=/home/vscode/.config/gh,type=volume",
     // r2modman profiles, so `npm run mod:install` can drop a fresh build into a profile.
     "source=${localEnv:HOME}/.config/r2modmanPlus-local/REPO/profiles,target=/r2modman/profiles,type=bind"
   ],
