@@ -5,6 +5,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# BepInEx rejects some characters in config names (the plugin then fails to load).
+python3 tools/check-config-keys.py src/*.cs
+
 dotnet build -c Release --nologo -v q
 version=$(jq -r .version_number thunderstore/manifest.json)
 python3 tools/make-icon.py thunderstore/icon.png

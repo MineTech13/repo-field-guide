@@ -48,7 +48,7 @@ namespace RepoFieldGuide.Companion
                 "Record monsters once they've been on your screen or have spotted you. Monsters you haven't met are never shown.");
             ShopReader = Config.Bind("Features", "Shop reader", true,
                 "In the Service Station, read the shelf (each copy's price), your surplus and upgrades.");
-            IncludeTeammates = Config.Bind("Features", "Include teammates' upgrades", true,
+            IncludeTeammates = Config.Bind("Features", "Include teammates upgrades", true,
                 "Also share each teammate's upgrades so the website can suggest who should buy what.");
             ShowRespawnTimers = Config.Bind("Features", "Respawn timers", true,
                 "For monsters you've met: show the real time until they respawn.");
