@@ -10,6 +10,7 @@
       "ducky",
       "quack"
     ],
+    "gameKey": "ENEMY.DUCK",
     "emoji": "🦆",
     "tier": 1,
     "threat": "low",
@@ -61,6 +62,7 @@
       "bell girl",
       "bike kid"
     ],
+    "gameKey": "ENEMY.TRICYCLE",
     "emoji": "🔔",
     "tier": 1,
     "threat": "low",
@@ -109,6 +111,7 @@
       "balloon boy",
       "balloon guy"
     ],
+    "gameKey": "ENEMY.BIRTHDAY_BOY",
     "emoji": "🎈",
     "tier": 1,
     "threat": "low",
@@ -158,6 +161,7 @@
       "doggo",
       "puppy"
     ],
+    "gameKey": "ENEMY.ELSA",
     "emoji": "🐕",
     "tier": 1,
     "threat": "medium",
@@ -207,6 +211,7 @@
       "gnomes",
       "pickaxe gnomes"
     ],
+    "gameKey": "ENEMY.GNOME",
     "emoji": "⛏️",
     "tier": 1,
     "threat": "low",
@@ -255,6 +260,7 @@
       "eyeball",
       "eye"
     ],
+    "gameKey": "ENEMY.CEILING_EYE",
     "emoji": "👁️",
     "tier": 1,
     "threat": "medium",
@@ -301,6 +307,7 @@
       "shadow kid",
       "ghost kid"
     ],
+    "gameKey": "ENEMY.THIN_MAN",
     "emoji": "🌑",
     "tier": 1,
     "threat": "medium",
@@ -350,6 +357,7 @@
       "vomit frog",
       "face hugger"
     ],
+    "gameKey": "ENEMY.SLOW_MOUTH",
     "emoji": "🤮",
     "tier": 1,
     "threat": "low",
@@ -399,6 +407,7 @@
       "bug",
       "leech"
     ],
+    "gameKey": "ENEMY.TICK",
     "emoji": "🪲",
     "tier": 1,
     "threat": "low",
@@ -446,6 +455,7 @@
       "runner",
       "crazy animal"
     ],
+    "gameKey": "ENEMY.ANIMAL",
     "emoji": "🐾",
     "tier": 2,
     "threat": "low",
@@ -497,6 +507,7 @@
       "bomb guys",
       "fuse guy"
     ],
+    "gameKey": "ENEMY.BANG",
     "emoji": "💣",
     "tier": 2,
     "threat": "medium",
@@ -544,6 +555,7 @@
       "gust guy",
       "wind guy"
     ],
+    "gameKey": "ENEMY.BOWTIE",
     "emoji": "🎀",
     "tier": 2,
     "threat": "medium",
@@ -593,6 +605,7 @@
       "frog chef",
       "knife frog"
     ],
+    "gameKey": "ENEMY.TUMBLER",
     "emoji": "🔪",
     "tier": 2,
     "threat": "medium",
@@ -642,6 +655,7 @@
       "wheel guy",
       "casino"
     ],
+    "gameKey": "ENEMY.SPINNY",
     "emoji": "🎰",
     "tier": 2,
     "threat": "medium",
@@ -692,6 +706,7 @@
       "head thief",
       "head stealer"
     ],
+    "gameKey": "ENEMY.HEAD_GRABBER",
     "emoji": "🫳",
     "tier": 2,
     "threat": "medium",
@@ -741,6 +756,7 @@
       "heart plant",
       "pink gas"
     ],
+    "gameKey": "ENEMY.HEART_HUGGER",
     "emoji": "💗",
     "tier": 2,
     "threat": "high",
@@ -793,6 +809,7 @@
       "breather",
       "footprints"
     ],
+    "gameKey": "ENEMY.HIDDEN",
     "emoji": "👣",
     "tier": 2,
     "threat": "medium",
@@ -845,6 +862,7 @@
       "gravity alien",
       "floaty"
     ],
+    "gameKey": "ENEMY.FLOATER",
     "emoji": "🧠",
     "tier": 2,
     "threat": "high",
@@ -899,6 +917,7 @@
       "flyer",
       "light thing"
     ],
+    "gameKey": "ENEMY.OOGLY",
     "emoji": "🔦",
     "tier": 2,
     "threat": "medium",
@@ -951,6 +970,7 @@
       "baby",
       "big baby"
     ],
+    "gameKey": "ENEMY.VALUABLE_THROWER",
     "emoji": "👶",
     "tier": 2,
     "threat": "medium",
@@ -997,6 +1017,7 @@
       "screamer",
       "thrower"
     ],
+    "gameKey": "ENEMY.UPSCREAM",
     "emoji": "📢",
     "tier": 2,
     "threat": "medium",
@@ -1050,6 +1071,7 @@
       "head thrower",
       "radiation guy"
     ],
+    "gameKey": "ENEMY.BOMB_THROWER",
     "emoji": "☢️",
     "tier": 3,
     "threat": "lethal",
@@ -1104,6 +1126,7 @@
       "laser clown",
       "laser guy"
     ],
+    "gameKey": "ENEMY.BEAMER",
     "emoji": "🤡",
     "tier": 3,
     "threat": "lethal",
@@ -1155,6 +1178,7 @@
       "floating head",
       "big head"
     ],
+    "gameKey": "ENEMY.HEAD",
     "emoji": "🗿",
     "tier": 3,
     "threat": "high",
@@ -1205,6 +1229,7 @@
       "blind guy",
       "cowboy"
     ],
+    "gameKey": "ENEMY.HUNTER",
     "emoji": "🎯",
     "tier": 3,
     "threat": "lethal",
@@ -1256,6 +1281,7 @@
       "clapper",
       "hands"
     ],
+    "gameKey": "ENEMY.SHADOW",
     "emoji": "👏",
     "tier": 3,
     "threat": "lethal",
@@ -1304,6 +1330,7 @@
       "ceiling horse",
       "tongue horse"
     ],
+    "gameKey": "ENEMY.SNATCHER",
     "emoji": "🐴",
     "tier": 3,
     "threat": "high",
@@ -1358,6 +1385,7 @@
       "blade guy",
       "spinner"
     ],
+    "gameKey": "ENEMY.RUNNER",
     "emoji": "⚔️",
     "tier": 3,
     "threat": "high",
@@ -1405,6 +1433,7 @@
       "robe guy",
       "don't look guy"
     ],
+    "gameKey": "ENEMY.ROBE",
     "emoji": "👻",
     "tier": 3,
     "threat": "lethal",
@@ -1456,6 +1485,7 @@
       "mace guy",
       "big mace"
     ],
+    "gameKey": "ENEMY.SLOW_WALKER",
     "emoji": "🔨",
     "tier": 3,
     "threat": "lethal",

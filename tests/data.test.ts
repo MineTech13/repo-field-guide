@@ -19,6 +19,12 @@ describe('monsters.json', () => {
     for (const m of MONSTERS) expect(m.id, m.id).toMatch(ID);
   });
 
+  it('every monster has a unique game key for the companion mod', () => {
+    const keys = MONSTERS.map((m) => m.gameKey);
+    for (const k of keys) expect(k, 'gameKey').toMatch(/^ENEMY\.[A-Z0-9_]+$/);
+    expect(unique(keys)).toBe(true);
+  });
+
   it('names, aliases and callouts never point at two monsters', () => {
     const seen = new Map<string, string>();
     for (const m of MONSTERS)

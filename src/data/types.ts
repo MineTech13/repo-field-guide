@@ -38,6 +38,8 @@ export interface Monster {
   aliases: string[];
   /** Short descriptive callouts players use in voice chat ("ceiling eye", "shotgun guy"). Searchable. */
   nicknames: string[];
+  /** The game's internal key (EnemyParent.enemyNameLocalized), e.g. "ENEMY.BEAMER". Used by the companion mod. */
+  gameKey: string;
   emoji: string;
   /** In-game star rating 1–3 (higher spawns as the "big" monster of a level). */
   tier: 1 | 2 | 3;

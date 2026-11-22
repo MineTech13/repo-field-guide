@@ -27,7 +27,7 @@ RUN set -eux; \
     chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg; \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" > /etc/apt/sources.list.d/github-cli.list; \
     apt-get update; \
-    apt-get install -y --no-install-recommends gh zip unzip jq; \
+    apt-get install -y --no-install-recommends gh zip unzip jq python3; \
     rm -rf /var/lib/apt/lists/*
 
 # Login shells reset PATH, so put the per-user tool folders back on it there too.
