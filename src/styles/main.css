@@ -1780,3 +1780,150 @@ a.chip:hover {
     display: none;
   }
 }
+
+/* ================= Shop advisor v2 ================= */
+.game-fill {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 10px 14px;
+}
+.game-fill.on {
+  border-color: var(--ok);
+  background: color-mix(in srgb, var(--ok-soft) 60%, var(--surface));
+}
+.num-out {
+  font: 700 1.15rem var(--mono);
+  padding: 6px 2px;
+}
+.style-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px;
+}
+.style-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: var(--radius-s);
+  padding: 8px 10px;
+}
+.style-btn.on {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.bias-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bias-row input {
+  flex: 1;
+  accent-color: var(--accent);
+}
+.nudge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nudge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.nudge-row.banned .nudge-name {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.nudge-name {
+  flex: 1 1 150px;
+  font-size: 0.9rem;
+}
+.nudge-seg button {
+  min-width: 30px;
+  padding: 4px 6px;
+  font-family: var(--mono);
+}
+.pinban {
+  display: inline-flex;
+  gap: 4px;
+}
+.pinban.compact {
+  margin-top: 4px;
+}
+.team-line {
+  margin: 10px 0 0;
+}
+.shelf-read {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.copy-chip {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+.copy-chip strong {
+  font-family: var(--mono);
+  color: var(--accent);
+  margin-left: 4px;
+}
+.copy-chip.unknown {
+  color: var(--muted);
+  border-style: dashed;
+}
+.shelf-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 5px 6px;
+  border-radius: var(--radius-s);
+}
+.shelf-row.active {
+  background: var(--accent-soft);
+}
+.shelf-name {
+  font-size: 0.9rem;
+}
+.copies {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.copy-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+.copy-edit input {
+  width: 48px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 6px;
+  padding: 3px 4px;
+  font: inherit;
+}
+.pick-why {
+  color: var(--ok);
+}
+.pick-give {
+  color: var(--info);
+}
+.follow {
+  display: flex;
+  margin-top: 8px;
+  font-weight: 500;
+}

@@ -46,6 +46,12 @@ export function CompanionPanel({ snap }: { snap: LiveSnapshot }) {
         </p>
       )}
       {snap.enabled && (
+        <label class="switch small follow">
+          <input type="checkbox" checked={snap.followGame} onChange={(e) => live.setFollowGame((e.target as HTMLInputElement).checked)} />
+          <span>Follow the game: show the Shop advisor in the shop and this page in a level</span>
+        </label>
+      )}
+      {snap.enabled && (
         <label class="small muted port">
           Port{' '}
           <input

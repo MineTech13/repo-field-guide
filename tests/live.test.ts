@@ -94,3 +94,14 @@ describe('applyLive', () => {
     expect(killed.respawn).toEqual({ clown: 120 });
   });
 });
+
+describe('follow the game', () => {
+  it('switches pages only when the phase changes', async () => {
+    const { routeForPhaseChange } = await import('../src/live/store');
+    expect(routeForPhaseChange(null, 'shop')).toBeNull(); // first update after connecting: stay put
+    expect(routeForPhaseChange('level', 'level')).toBeNull();
+    expect(routeForPhaseChange('level', 'shop')).toBe('#/shop/advisor');
+    expect(routeForPhaseChange('shop', 'level')).toBe('#/');
+    expect(routeForPhaseChange('level', 'lobby')).toBeNull();
+  });
+});
