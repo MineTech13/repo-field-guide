@@ -26,6 +26,8 @@ namespace RepoFieldGuide.Companion
         public volatile bool Running;
         public volatile int Requests;
         public string Error;
+        /// <summary>Retries after a failed start: only log when it finally works.</summary>
+        public bool Quiet;
         public int Port => port;
 
         public LocalServer(int port, Func<string> allowedOrigins)
@@ -44,13 +46,13 @@ namespace RepoFieldGuide.Companion
                 Running = true;
                 thread = new Thread(Loop) { IsBackground = true, Name = "RepoFieldGuide.LocalServer" };
                 thread.Start();
-                Plugin.Log.LogInfo($"Live link on http://127.0.0.1:{port}/state");
+                Plugin.Log.LogInfo($"Live link on http://127.0.0.1:{port}/state" + (Quiet ? " (port was busy before, now free)" : ""));
             }
             catch (Exception e)
             {
                 Error = e.Message;
                 Running = false;
-                Plugin.Log.LogWarning($"Live link could not start on port {port}: {e.Message}");
+                if (!Quiet) Plugin.Log.LogWarning($"Live link could not start on port {port} (is another program using it?). Retrying every 5 s. {e.Message}");
             }
         }
 

@@ -36,10 +36,13 @@
     "R2MODMAN_PROFILES": "/r2modman/profiles"
   },
 
-  "forwardPorts": [5173, 47380],
+  // Never forward 47380: that's the real companion mod's port on the host, and a
+  // forward would block the mod from starting its live link. The mock uses 47381.
+  "forwardPorts": [5173],
   "portsAttributes": {
     "5173": { "label": "Website (Vite)" },
-    "47380": { "label": "Mock game server", "onAutoForward": "silent" }
+    "47380": { "label": "Reserved for the game companion (do not forward)", "onAutoForward": "ignore" },
+    "47381": { "label": "Mock game server", "onAutoForward": "ignore" }
   },
 
   "postCreateCommand": "bash .devcontainer/post-create.sh",

@@ -1,0 +1,1498 @@
+{
+  "gameVersion": "0.5.2",
+  "writtenAt": "2026-11-22T17:29:13.2583900Z",
+  "note": "Dumped with the companion mod (Ctrl+Shift+F10) from a modded profile; spawn-manager mods may affect enemy data.",
+  "shop": {
+    "itemValueMultiplier": 4,
+    "upgradeValueIncrease": 0.5,
+    "healthPackValueIncrease": 0.05,
+    "crystalValueIncrease": 0.2,
+    "slots": {
+      "items": 8,
+      "consumables": 6,
+      "upgrades": 10,
+      "healthPacks": 6
+    }
+  },
+  "enemyDirector": {
+    "perLevel": [
+      {
+        "level": 1,
+        "t1": 1,
+        "t2": 0,
+        "t3": 1,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 2,
+        "t1": 1,
+        "t2": 0,
+        "t3": 1,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 3,
+        "t1": 1,
+        "t2": 1,
+        "t3": 1,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 4,
+        "t1": 1,
+        "t2": 1,
+        "t3": 1,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 5,
+        "t1": 1,
+        "t2": 1,
+        "t3": 1,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 6,
+        "t1": 2,
+        "t2": 2,
+        "t3": 2,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 7,
+        "t1": 2,
+        "t2": 2,
+        "t3": 2,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 8,
+        "t1": 2,
+        "t2": 2,
+        "t3": 2,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 9,
+        "t1": 2,
+        "t2": 3,
+        "t3": 2,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 10,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 11,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 12,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 13,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 14,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 15,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 16,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 17,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 18,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 19,
+        "t1": 2,
+        "t2": 3,
+        "t3": 3,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 20,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 21,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 22,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 23,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 24,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 25,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 26,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 27,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 28,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 29,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 30,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      },
+      {
+        "level": 31,
+        "t1": 3,
+        "t2": 4,
+        "t3": 4,
+        "respawnTimeMultiplier": 1
+      }
+    ],
+    "despawnedDecreaseMinutes": 10,
+    "despawnedDecreasePercent": 0.2
+  },
+  "enemies": [
+    {
+      "tier": 1,
+      "setup": "Enemy - Elsa",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Elsa",
+          "key": "ENEMY.ELSA",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Tick",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Tick",
+          "key": "ENEMY.TICK",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Birthday Boy",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Birthday Boy",
+          "key": "ENEMY.BIRTHDAY_BOY",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Ceiling Eye",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Peeper",
+          "key": "ENEMY.CEILING_EYE",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "setup": "Enemy - Slow Mouth",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Spewer",
+          "key": "ENEMY.SLOW_MOUTH",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Hidden",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Hidden",
+          "key": "ENEMY.HIDDEN",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Tumbler",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Chef",
+          "key": "ENEMY.TUMBLER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Bowtie",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Bowtie",
+          "key": "ENEMY.BOWTIE",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Floater",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Mentalist",
+          "key": "ENEMY.FLOATER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Bang",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Banger",
+          "key": "ENEMY.BANG",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "setup": "Enemy - Spinny",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Gambit",
+          "key": "ENEMY.SPINNY",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 6 Bangs",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Banger",
+          "key": "ENEMY.BANG",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Shadow",
+      "rarity": 100,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 2,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Loom",
+          "key": "ENEMY.SHADOW",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 2 Spinny",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Gambit",
+          "key": "ENEMY.SPINNY",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Snatcher",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Snatcher",
+          "key": "ENEMY.SNATCHER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Floaters",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Mentalist",
+          "key": "ENEMY.FLOATER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Bowties",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Bowtie",
+          "key": "ENEMY.BOWTIE",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 2 Hidden",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Hidden",
+          "key": "ENEMY.HIDDEN",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Elsas",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Elsa",
+          "key": "ENEMY.ELSA",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 4 Ceiling Eyes",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Peeper",
+          "key": "ENEMY.CEILING_EYE",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 4 Slow Mouths",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Spewer",
+          "key": "ENEMY.SLOW_MOUTH",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Tumblers",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Chef",
+          "key": "ENEMY.TUMBLER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Robe",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Robe",
+          "key": "ENEMY.ROBE",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Hunter",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Huntsman",
+          "key": "ENEMY.HUNTER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy - Runner",
+      "rarity": 100,
+      "levelsCompletedCondition": false,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 0,
+      "monsters": [
+        {
+          "name": "Reaper",
+          "key": "ENEMY.RUNNER",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 5 Ticks",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Tick",
+          "key": "ENEMY.TICK",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "setup": "Enemy Group - 3 Birthday Boys",
+      "rarity": 60,
+      "levelsCompletedCondition": true,
+      "levelsCompletedMin": 0,
+      "runsPlayed": 5,
+      "monsters": [
+        {
+          "name": "Birthday Boy",
+          "key": "ENEMY.BIRTHDAY_BOY",
+          "respawnSec": [
+            240,
+            300
+          ]
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "asset": "Item Cart Medium",
+      "name": "C.A.R.T.",
+      "type": "cart",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 4,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Drone Battery",
+      "name": "Recharge Drone",
+      "type": "drone",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Drone Feather",
+      "name": "Feather Drone",
+      "type": "drone",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Drone Indestructible",
+      "name": "Indestructible Drone",
+      "type": "drone",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Drone Torque",
+      "name": "Roll Drone",
+      "type": "drone",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Drone Zero Gravity",
+      "name": "Zero Gravity Drone",
+      "type": "drone",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Grenade Duct Taped",
+      "name": "Duct Taped Grenades",
+      "type": "grenade",
+      "valueMin": 300,
+      "valueMax": 450,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "shop_attic"
+    },
+    {
+      "asset": "Item Grenade Explosive",
+      "name": "Grenade",
+      "type": "grenade",
+      "valueMin": 500,
+      "valueMax": 650,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Grenade Human",
+      "name": "Human Grenade",
+      "type": "grenade",
+      "valueMin": 250,
+      "valueMax": 500,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "shop_attic"
+    },
+    {
+      "asset": "Item Grenade Shockwave",
+      "name": "Shockwave Grenade",
+      "type": "grenade",
+      "valueMin": 300,
+      "valueMax": 450,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Grenade Stun",
+      "name": "Stun Grenade",
+      "type": "grenade",
+      "valueMin": 300,
+      "valueMax": 450,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Rubber Duck",
+      "name": "Rubber Duck",
+      "type": "grenade",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Cart Cannon",
+      "name": "C.A.R.T. Cannon",
+      "type": "gun",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Cart Laser",
+      "name": "C.A.R.T. Laser",
+      "type": "gun",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Gun Handgun",
+      "name": "Gun",
+      "type": "gun",
+      "valueMin": 4500,
+      "valueMax": 5000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Gun Laser",
+      "name": "Photon Blaster",
+      "type": "gun",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Gun Revolver",
+      "name": "Human Gun",
+      "type": "gun",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "shop_attic"
+    },
+    {
+      "asset": "Item Gun Shockwave",
+      "name": "Pulse Pistol",
+      "type": "gun",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Gun Shotgun",
+      "name": "Shotgun",
+      "type": "gun",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Gun Stun",
+      "name": "Boltzap",
+      "type": "gun",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Gun Tranq",
+      "name": "Tranq Gun",
+      "type": "gun",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Health Pack Large",
+      "name": "Large Health Pack (100)",
+      "type": "healthPack",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Health Pack Medium",
+      "name": "Medium Health Pack (50)",
+      "type": "healthPack",
+      "valueMin": 1000,
+      "valueMax": 1500,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Health Pack Small",
+      "name": "Small Health Pack (25)",
+      "type": "healthPack",
+      "valueMin": 500,
+      "valueMax": 750,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Death Head Battery",
+      "name": "Death Head Battery Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 2,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Map Player Count",
+      "name": "Map Player Count Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 2,
+      "maxPurchase": true,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Crouch Rest",
+      "name": "Crouch Rest Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Energy",
+      "name": "Stamina Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 300,
+      "valueMax": 450,
+      "maxAmountInShop": 4,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Extra Jump",
+      "name": "Extra Jump Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Grab Range",
+      "name": "Range Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Grab Strength",
+      "name": "Strength Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 2,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Health",
+      "name": "Health Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 850,
+      "valueMax": 1100,
+      "maxAmountInShop": 2,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Sprint Speed",
+      "name": "Sprint Speed Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Tumble Climb",
+      "name": "Tumble Climb Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 4500,
+      "valueMax": 5000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Tumble Launch",
+      "name": "Tumble Launch Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 850,
+      "valueMax": 1100,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Upgrade Player Tumble Wings",
+      "name": "Tumble Wings Upgrade",
+      "type": "item_upgrade",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "PingAnywhere",
+      "name": "Ping Anywhere",
+      "type": "item_upgrade",
+      "valueMin": 850,
+      "valueMax": 1100,
+      "maxAmountInShop": 2,
+      "minPlayerCount": 1,
+      "maxPurchase": true,
+      "maxPurchaseAmount": 4,
+      "secretShop": "none"
+    },
+    {
+      "asset": "PingInfoUpgrade",
+      "name": "Ping Info",
+      "type": "item_upgrade",
+      "valueMin": 500,
+      "valueMax": 650,
+      "maxAmountInShop": 2,
+      "minPlayerCount": 1,
+      "maxPurchase": true,
+      "maxPurchaseAmount": 4,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Staff Torque",
+      "name": "Roll Staff",
+      "type": "launcher",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Staff Void",
+      "name": "Void Staff",
+      "type": "launcher",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Staff Zero Gravity",
+      "name": "Zero Gravity Staff",
+      "type": "launcher",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Baseball Bat",
+      "name": "Baseball Bat",
+      "type": "melee",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Frying Pan",
+      "name": "Frying Pan",
+      "type": "melee",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Inflatable Hammer",
+      "name": "Inflatable Hammer",
+      "type": "melee",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Sledge Hammer",
+      "name": "Sledge Hammer",
+      "type": "melee",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Stun Baton",
+      "name": "Prodzap",
+      "type": "melee",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Sword",
+      "name": "Sword",
+      "type": "melee",
+      "valueMin": 4500,
+      "valueMax": 5000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Melee Whip",
+      "name": "Human Adventure Cable",
+      "type": "melee",
+      "valueMin": 4500,
+      "valueMax": 5000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "shop_attic"
+    },
+    {
+      "asset": "Item Mine Explosive",
+      "name": "Explosive Mine",
+      "type": "mine",
+      "valueMin": 500,
+      "valueMax": 650,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Mine Shockwave",
+      "name": "Shockwave Mine",
+      "type": "mine",
+      "valueMin": 500,
+      "valueMax": 650,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Mine Stun",
+      "name": "Trapzap",
+      "type": "mine",
+      "valueMin": 500,
+      "valueMax": 650,
+      "maxAmountInShop": 3,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Orb Battery",
+      "name": "Recharge Orb",
+      "type": "orb",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Orb Zero Gravity",
+      "name": "Zero Gravity Orb",
+      "type": "orb",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Cart Small",
+      "name": "POCKET C.A.R.T.",
+      "type": "pocket_cart",
+      "valueMin": 3500,
+      "valueMax": 4500,
+      "maxAmountInShop": 2,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 3,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Power Crystal",
+      "name": "Energy Crystal",
+      "type": "power_crystal",
+      "valueMin": 1000,
+      "valueMax": 1500,
+      "maxAmountInShop": 10,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 6,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Leaf Blower",
+      "name": "Leaf Blower",
+      "type": "tool",
+      "valueMin": 2000,
+      "valueMax": 3000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Phase Bridge",
+      "name": "Phase Bridge",
+      "type": "tool",
+      "valueMin": 4500,
+      "valueMax": 5000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item ReviveItem",
+      "name": "Defibro",
+      "type": "tool",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item WalkieTalkieBox",
+      "name": "Semibot Walkies",
+      "type": "tool",
+      "valueMin": 5500,
+      "valueMax": 7500,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Duck Bucket",
+      "name": "Duck Bucket",
+      "type": "tracker",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "shop_attic"
+    },
+    {
+      "asset": "Item Extraction Tracker",
+      "name": "Extraction Tracker",
+      "type": "tracker",
+      "valueMin": 850,
+      "valueMax": 1100,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Valuable Tracker",
+      "name": "Valuable Tracker",
+      "type": "tracker",
+      "valueMin": 1200,
+      "valueMax": 2000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Vehicle Semiscooter",
+      "name": "Hauler",
+      "type": "vehicle",
+      "valueMin": 9500,
+      "valueMax": 12000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    },
+    {
+      "asset": "Item Vehicle Semiscooter Small",
+      "name": "Scout",
+      "type": "vehicle",
+      "valueMin": 4500,
+      "valueMax": 5000,
+      "maxAmountInShop": 1,
+      "minPlayerCount": 1,
+      "maxPurchase": false,
+      "maxPurchaseAmount": 1,
+      "secretShop": "none"
+    }
+  ]
+}

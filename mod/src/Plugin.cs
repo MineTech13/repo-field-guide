@@ -17,7 +17,7 @@ namespace RepoFieldGuide.Companion
     {
         public const string Guid = "minetech13.repofieldguide.companion";
         public const string Name = "R.E.P.O. Field Guide Companion";
-        public const string Version = "0.1.1";
+        public const string Version = "0.1.2";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -38,6 +38,7 @@ namespace RepoFieldGuide.Companion
         private LocalServer server;
         private Panel panel;
         private float nextSnapshot;
+        private float nextServerRetry;
 
         private void Awake()
         {
@@ -83,10 +84,10 @@ namespace RepoFieldGuide.Companion
             Log.LogInfo($"{Name} {Version} loaded (read-only).");
         }
 
-        private void StartServer()
+        private void StartServer(bool quiet = false)
         {
             StopServer();
-            server = new LocalServer(Port.Value, () => AllowedOrigins.Value);
+            server = new LocalServer(Port.Value, () => AllowedOrigins.Value) { Quiet = quiet };
             server.Start();
         }
 
@@ -101,6 +102,13 @@ namespace RepoFieldGuide.Companion
             try
             {
                 Tracker.Tick();
+
+                // If the port was busy (e.g. another program), keep retrying quietly.
+                if (LiveLink.Value && (server == null || !server.Running) && Time.unscaledTime >= nextServerRetry)
+                {
+                    nextServerRetry = Time.unscaledTime + 5f;
+                    StartServer(quiet: true);
+                }
 
                 if (Time.unscaledTime >= nextSnapshot)
                 {

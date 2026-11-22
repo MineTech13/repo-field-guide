@@ -2,10 +2,12 @@
 // Fake companion mod for testing the website without the game.
 //   node scripts/mock-game.mjs            → cycles level → shop every 20 s
 //   node scripts/mock-game.mjs level|shop → stays on one phase
-// Serves http://127.0.0.1:47380/state with the same CORS rules as the mod.
+// Serves http://127.0.0.1:47381/state with the same CORS rules as the mod.
+// To test the site against it, set the port to 47381 in the Game companion section.
 import { createServer } from 'node:http';
 
-const PORT = Number(process.env.PORT ?? 47380);
+// 47381, not 47380: the real companion mod owns 47380 on your PC.
+const PORT = Number(process.env.PORT ?? 47381);
 const ALLOWED = [/^https:\/\/([a-z0-9-]+\.)?repoguide\.pages\.dev$/, /^https:\/\/minetech13\.github\.io$/, /^http:\/\/(localhost|127\.0\.0\.1):\d+$/];
 const fixed = process.argv[2];
 const start = Date.now();
