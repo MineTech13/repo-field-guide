@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { advise } from '../engine/advise';
-import { useRound, useWide } from '../hooks';
+import { useRound } from '../hooks';
 import { applyLive, emptyMemo, type ApplyMemo } from '../live/apply';
 import { useLive } from '../live/store';
 import { defaultRound } from '../state/round';
@@ -33,7 +33,6 @@ export function RoundPage() {
   const [state, update, replace] = useRound();
   const advice = useMemo(() => advise(state), [state]);
   const snap = useLive();
-  const wide = useWide();
 
   // ---- optional game companion: merge its data in, never take over
   const memo = useRef<ApplyMemo>(loadMemo());
@@ -154,15 +153,8 @@ export function RoundPage() {
                 <p class="muted small">Add monsters you've seen to get their rules here.</p>
               ) : (
                 <div class="cards">
-                  {monsters.map((ma, i) => (
-                    <MonsterCard
-                      key={`${ma.monster.id}-${wide ? 'w' : 'n'}`}
-                      monster={ma.monster}
-                      spotted={ma.spotted}
-                      usableItems={ma.usableItems}
-                      noAnswer={ma.noAnswer}
-                      defaultOpen={!ma.spotted.killed && (wide || i === 0)}
-                    />
+                  {monsters.map((ma) => (
+                    <MonsterCard key={ma.monster.id} monster={ma.monster} spotted={ma.spotted} usableItems={ma.usableItems} noAnswer={ma.noAnswer} />
                   ))}
                 </div>
               )}

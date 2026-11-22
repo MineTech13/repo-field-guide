@@ -16,7 +16,7 @@ export function ThreatBadge({ threat }: { threat: Threat }) {
   return <span class={`badge threat-${threat}`}>{THREAT_TEXT[threat]}</span>;
 }
 
-const DETECTION_TEXT: Record<Detection, string> = {
+export const DETECTION_TEXT: Record<Detection, string> = {
   sight: '👀 Sight',
   sound: '👂 Sound',
   light: '🔦 Light',

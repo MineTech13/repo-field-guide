@@ -810,6 +810,42 @@ select {
   border-radius: var(--radius-s);
   font-size: 0.93rem;
 }
+.quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: -4px 14px 12px;
+}
+.qtag {
+  font-size: 0.74rem;
+  line-height: 1.5;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: default;
+}
+.qtag-detect {
+  color: var(--text);
+  font-weight: 600;
+}
+.qtag-good {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 40%, var(--border));
+}
+.qtag-bad {
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 40%, var(--border));
+}
+.qtag-counters span {
+  margin-right: 1px;
+}
+.qtag-owned {
+  outline: 1.5px solid var(--ok);
+  border-radius: 4px;
+}
 .golden-noanswer {
   background: var(--danger-soft);
 }
