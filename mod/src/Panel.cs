@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RepoFieldGuide.Companion
 {
     /// <summary>
-    /// Simple fallback panel (F7). The polished MenuLib page and HUD come later;
+    /// Simple fallback panel (default F10). The polished MenuLib page and HUD come later;
     /// this one is mainly for checking that the companion reads the game correctly.
     /// </summary>
     internal sealed class Panel
@@ -72,7 +72,7 @@ namespace RepoFieldGuide.Companion
             }
             GUILayout.EndScrollView();
 
-            GUILayout.Label($"F8 copy code · F9 data dump · snapshot {LatestJsonLength} bytes");
+            GUILayout.Label($"{p.CopyCodeKey.Value} copy code · {p.DumpKey.Value} data dump · snapshot {LatestJsonLength} bytes");
             GUI.DragWindow();
         }
     }

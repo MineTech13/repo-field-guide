@@ -9,7 +9,7 @@ using UnityEngine;
 namespace RepoFieldGuide.Companion
 {
     /// <summary>
-    /// F9: writes the game's own data (items, prices, monsters, spawn curves) to
+    /// Data dump hotkey (default Ctrl+Shift+F10): writes the game's own data (items, prices, monsters, spawn curves) to
     /// BepInEx/config/RepoFieldGuide.dump.json so the website's data can be checked
     /// against the real game. Read-only; only runs when you press the key.
     /// </summary>

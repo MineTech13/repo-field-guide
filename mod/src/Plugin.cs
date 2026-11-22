@@ -17,7 +17,7 @@ namespace RepoFieldGuide.Companion
     {
         public const string Guid = "minetech13.repofieldguide.companion";
         public const string Name = "R.E.P.O. Field Guide Companion";
-        public const string Version = "0.1.0";
+        public const string Version = "0.1.1";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -61,10 +61,16 @@ namespace RepoFieldGuide.Companion
                 "https://repoguide.pages.dev,https://*.repoguide.pages.dev,https://minetech13.github.io,http://localhost:5173",
                 "Comma-separated list of websites allowed to read the live link. * matches a subdomain.");
 
-            PanelKey = Config.Bind("Hotkeys", "Toggle panel", new KeyboardShortcut(KeyCode.F7), "Show or hide the companion panel.");
-            CopyCodeKey = Config.Bind("Hotkeys", "Copy game code", new KeyboardShortcut(KeyCode.F8), "Copy an RFG1: code to paste into the website.");
-            DumpKey = Config.Bind("Hotkeys", "Write data dump", new KeyboardShortcut(KeyCode.F9),
-                "Write game data (items, prices, monsters, spawn curves) to BepInEx/config/RepoFieldGuide.dump.json.");
+            // Defaults avoid keys popular mods already use (F7/F9 NoSaveDelete, F8 SpawnBrowser).
+            // A shortcut only fires when exactly its modifiers are held, so these three never overlap.
+            const string keys = "Keys";
+            const string keyHint = " Change it if another mod uses the same key. Format: Key or Key + Modifier, e.g. F10 + LeftControl.";
+            PanelKey = Config.Bind(keys, "Toggle panel", new KeyboardShortcut(KeyCode.F10),
+                "Show or hide the companion panel." + keyHint);
+            CopyCodeKey = Config.Bind(keys, "Copy game code", new KeyboardShortcut(KeyCode.F10, KeyCode.LeftControl),
+                "Copy an RFG1: code to paste into the website." + keyHint);
+            DumpKey = Config.Bind(keys, "Write data dump", new KeyboardShortcut(KeyCode.F10, KeyCode.LeftControl, KeyCode.LeftShift),
+                "Write game data (items, prices, monsters, spawn curves) to BepInEx/config/RepoFieldGuide.dump.json." + keyHint);
 
             Tracker = new Tracker();
             panel = new Panel();
