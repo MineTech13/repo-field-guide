@@ -17,6 +17,10 @@ Notes for continuing work (by a person or a new Claude Code session) inside the 
   - Hook: a Harmony postfix on `PingIt.PingIt:Spawn(PhysGrabObject physGrab, PingTarget type, string locationPrefix, int? sender)`. It is `internal static`, so resolve it with `AccessTools.Method("PingIt.PingIt:Spawn")` and skip it if Ping_It isn't installed (soft dependency, no compile reference).
   - It runs for local pings and for teammates' pings, which arrive through REPOLib `NetworkedEvent "PingIt_TriggerPing"`. `sender` is the Photon actor number.
   - In the postfix: when `type.ToString() == "Enemy"`, take `physGrab.GetComponentInParent<EnemyParent>()` and mark it in `Tracker` as seen, with a new `Pinged` flag (plus who pinged it).
+  - **Only with the Ping Info upgrade.** Without it, a ping doesn't tell you which enemy it is: the name and HP label only shows when the local player has Ping Info.
+    - Check that through reflection with `PingIt.PingIt:LocalHasPingInfo()` (internal static, returns bool).
+    - It already covers the host turning the upgrade requirement off (Ping Info is then free for everyone), and SharedUpgradesPlus.
+    - Without Ping Info, a pinged enemy isn't counted.
   - On the site, show a "📍 pinged" mark on the chip. Add a config toggle "Count pinged monsters as seen", default on.
   - This stays within the "only what you know" rule, because a ping is shown to you in-game.
 
