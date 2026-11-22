@@ -161,7 +161,7 @@ export interface ShopAdviceV2 {
   haggle: {
     attemptsLeft: number | null;
     /** Best copy to show the shopkeeper (most expensive planned buy). */
-    best: { id: string; name: string; priceK: number; save: [number, number] } | null;
+    best: { id: string; name: string; priceK: number; save: [number, number]; /** No spare copy: if he turns it down, you lose this pick for the visit. */ risky: boolean } | null;
     /** Planned buys of $5K or less: free if he likes them. */
     freebies: string[];
   } | null;
@@ -244,7 +244,8 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
 
   // Copies available: from the shelf (fixed prices), or estimated in planning mode.
   const shelfLeft = new Map<string, ShelfCopy[]>();
-  for (const c of input.shelf) shelfLeft.set(c.id, [...(shelfLeft.get(c.id) ?? []), c].sort((a, b) => a.priceK - b.priceK));
+  // A copy the shopkeeper turned down is pulled from the shop for the rest of this visit.
+  for (const c of input.shelf) if (!c.rejected) shelfLeft.set(c.id, [...(shelfLeft.get(c.id) ?? []), c].sort((a, b) => a.priceK - b.priceK));
 
   // The basket is as good as bought: pay for it, take those copies off the shelf.
   const basket = (input.basket ?? []).map((c) => ({ id: c.id, name: nameOf(c.id), priceK: c.priceK }));
@@ -415,11 +416,15 @@ export function adviseShopV2(input: AdvisorInput): ShopAdviceV2 {
   // cheap planned buys (≤ $5K) would become free.
   let haggle: ShopAdviceV2['haggle'] = null;
   if (!planning && input.haggleAttemptsLeft !== 0) {
+    // He turns an item down 2 times in 3, and a turned-down copy leaves the shop for this
+    // visit. So prefer showing a planned buy that has a spare copy on the shelf.
     const candidates = input.shelf.filter((c) => bought[c.id] && !c.discounted && !c.rejected);
-    const best = [...candidates].sort((a, b) => b.priceK - a.priceK)[0];
+    const spare = (id: string) => input.shelf.filter((c) => c.id === id && !c.rejected).length - bought[id].length;
+    const byPrice = [...candidates].sort((a, b) => b.priceK - a.priceK);
+    const best = byPrice.find((c) => spare(c.id) > 0) ?? byPrice[0];
     haggle = {
       attemptsLeft: input.haggleAttemptsLeft ?? null,
-      best: best ? { id: best.id, name: nameOf(best.id), priceK: best.priceK, save: haggleSaving(best.priceK) } : null,
+      best: best ? { id: best.id, name: nameOf(best.id), priceK: best.priceK, save: haggleSaving(best.priceK), risky: spare(best.id) <= 0 } : null,
       freebies: [...new Set(candidates.filter((c) => c.priceK <= HAGGLE.minOffK && c !== best).map((c) => nameOf(c.id)))],
     };
   }

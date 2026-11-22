@@ -266,12 +266,12 @@ export function ShopAdvisor() {
                 return (
                   <span
                     class={`copy-chip ${known ? '' : 'unknown'} ${state}`}
-                    title={c.discounted ? 'The shopkeeper gave a discount on this copy' : c.rejected ? 'The shopkeeper turned this copy down' : known ? '' : 'From another mod'}
+                    title={c.discounted ? 'The shopkeeper gave a discount on this copy' : c.rejected ? 'The shopkeeper turned this copy down, so it’s removed from the shop for this visit' : known ? '' : 'From another mod'}
                   >
                     {known ? '' : '🧩 '}
                     {label(c.id)} <strong>${c.priceK}K</strong>
                     {c.discounted && <small> 🤝 discounted</small>}
-                    {c.rejected && <small> ✗ turned down</small>}
+                    {c.rejected && <small> ✗ turned down · gone this visit</small>}
                   </span>
                 );
               })}
@@ -355,7 +355,12 @@ export function ShopAdvisor() {
                   ${advice.haggle.best.save[0]}
                   {advice.haggle.best.save[1] !== advice.haggle.best.save[0] ? `–${advice.haggle.best.save[1]}` : ''}K
                 </strong>
-                .
+                .{' '}
+                {advice.haggle.best.risky ? (
+                  <strong class="warn-text">It’s your only copy: if he turns it down (2 in 3) it’s gone for this visit.</strong>
+                ) : (
+                  <span class="muted">There’s a spare copy if he turns this one down.</span>
+                )}
               </p>
             )}
             {advice.haggle.freebies.length > 0 && (
@@ -364,7 +369,7 @@ export function ShopAdvisor() {
               </p>
             )}
             <p class="muted small">
-              {advice.haggle.attemptsLeft != null ? `${advice.haggle.attemptsLeft} of ${HAGGLE.attempts} tries left this visit.` : `${HAGGLE.attempts} tries per shop visit.`} Hold the item up to his face; a copy he turns down stays at full price.
+              {advice.haggle.attemptsLeft != null ? `${advice.haggle.attemptsLeft} of ${HAGGLE.attempts} tries left this visit.` : `${HAGGLE.attempts} tries per shop visit.`} Hold the item up to his face. A copy he turns down is removed from the shop for the rest of this visit.
             </p>
           </section>
         )}
