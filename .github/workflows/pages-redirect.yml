@@ -1,0 +1,32 @@
+# The site now lives on Cloudflare Pages: https://repo-field-guide.pages.dev
+# GitHub Pages only serves a tiny forwarder, so old links (including #/routes) keep working.
+name: GitHub Pages redirect
+
+on:
+  push:
+    branches: [main]
+    paths: [redirect/**, .github/workflows/pages-redirect.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: redirect
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -57,15 +57,13 @@ npm run dev        # http://localhost:5173
 
 ## Deploy
 
-The site is hosted on **GitHub Pages**: <https://minetech13.github.io/repo-field-guide/>
+The site is hosted on **Cloudflare Pages**: <https://repo-field-guide.pages.dev>
 
-`.github/workflows/pages.yml` runs the checks, builds, and deploys on every push to `main`. It also sets `VITE_REPO_URL` to this repo, which turns on the "Contribute / Edit on GitHub" links. In a fork, turn it on under **Settings → Pages → Source: GitHub Actions**.
+Cloudflare builds it straight from this repo (dashboard Git integration) on every push to `main`, and pull requests get preview links. Settings: preset **Vite**, build command `npm run build`, output `dist`, environment variable `VITE_REPO_URL=https://github.com/MineTech13/repo-field-guide` (turns on the "Contribute / Edit on GitHub" links). Node comes from `.nvmrc`. `public/_headers` sets the cache headers.
 
-The build uses relative paths and hash routing (`#/shop`), so the same `dist/` works at a domain root or under a sub-path with no redirect rules.
+The old address, <https://minetech13.github.io/repo-field-guide/>, still works: `.github/workflows/pages-redirect.yml` deploys `redirect/` there, which forwards to the new site and keeps the `#/page` you were on.
 
-### Other hosts (optional)
-
-`dist/` is a plain static site, so any static host works. On Cloudflare Pages, for example: connect the repo, choose the **Vite** preset, set the build command to `npm run build` and the output directory to `dist`, and optionally set `VITE_REPO_URL`. `public/_headers` sets long cache headers on hosts that support it (GitHub Pages ignores it).
+The build uses relative paths and hash routing (`#/shop`), so `dist/` also works on any other static host, at a domain root or under a sub-path.
 
 ## Project layout
 
