@@ -52,6 +52,12 @@ namespace RepoFieldGuide.Companion
             try { state["surplusK"] = SemiFunc.StatGetRunCurrency(); } catch { /* not in a run */ }
 
             if (plugin.TrackMonsters.Value) state["seen"] = Seen(tracker, plugin.ShowRespawnTimers.Value);
+            if (plugin.TeamStatus.Value && SemiFunc.RunIsLevel())
+            {
+                state["me"] = MapData.Me();
+                state["team"] = MapData.Team();
+            }
+            if (plugin.ShareMap.Value && SemiFunc.RunIsLevel()) state["layout"] = MapData.Map(tracker);
             if (plugin.ShopReader.Value && SemiFunc.RunIsShop())
             {
                 state["shelf"] = Shelf();

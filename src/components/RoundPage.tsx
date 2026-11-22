@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { advise } from '../engine/advise';
+import { planExtraction } from '../engine/extraction';
 import { useRound } from '../hooks';
 import { applyLive, emptyMemo, type ApplyMemo } from '../live/apply';
 import { useLive } from '../live/store';
@@ -7,6 +8,8 @@ import { defaultRound } from '../state/round';
 import { MonsterCard } from './MonsterCard';
 import { Collapsible } from './round/Collapsible';
 import { CompanionPanel } from './round/CompanionPanel';
+import { ExtractionPlanner } from './round/ExtractionPlanner';
+import { LiveMap } from './round/LiveMap';
 import { RoundBar } from './round/RoundBar';
 import { SeenMonsters } from './round/SeenMonsters';
 import { ThreatCard } from './round/ThreatCard';
@@ -64,6 +67,12 @@ export function RoundPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snap.data]);
 
+  const live = snap.data;
+  const layout = live?.phase === 'level' ? live.layout : undefined;
+  const plan = useMemo(() => planExtraction(layout), [layout]);
+  const team = live?.phase === 'level' ? live.team : undefined;
+  const deadMates = (team ?? []).filter((p) => p.dead && !p.isLocal);
+
   const { map, phase, combos, monsters, modifiers } = advice;
   const memoryBullets = modifiers.filter((m) => m.severity !== 'danger');
   const memFilled = [state.memory.teamSize, state.memory.alive, state.memory.health, state.memory.quotaPct].filter((v) => v != null).length + (state.memory.items.length ? 1 : 0);
@@ -90,12 +99,19 @@ export function RoundPage() {
           <div class="slot" style={{ order: 2 }}>
             <SeenMonsters state={state} update={update} fromGame={liveInfo.monsters} respawn={liveInfo.respawn} unknown={liveInfo.unknown} />
           </div>
-          <div class="slot" style={{ order: 6 }}>
+          {layout && (
+            <div class="slot" style={{ order: 4 }}>
+              <Collapsible id="extraction" title="Extraction planner" badge={`🎮 ${plan.points.length} found`} defaultOpen>
+                <ExtractionPlanner plan={plan} total={layout.extraction?.total} completed={layout.extraction?.completed} />
+              </Collapsible>
+            </div>
+          )}
+          <div class="slot" style={{ order: 7 }}>
             <Collapsible id="spawns" title="What's still out there?">
               <SpawnCheckPanel state={state} bare />
             </Collapsible>
           </div>
-          <div class="slot" style={{ order: 7 }}>
+          <div class="slot" style={{ order: 8 }}>
             <Collapsible id="map" title={map ? `${map.emoji} ${map.name} hazards` : 'Map hazards'} badge={map ? phase : undefined}>
               {!map ? (
                 <p class="muted small">Pick the map in the bar above.</p>
@@ -125,7 +141,7 @@ export function RoundPage() {
               )}
             </Collapsible>
           </div>
-          <div class="slot" style={{ order: 8 }}>
+          <div class="slot" style={{ order: 9 }}>
             <Collapsible id="memory" title="Round memory" badge={memFilled ? `${memFilled} set` : 'optional'}>
               {memoryBullets.length > 0 && (
                 <ul class="bullets" style={{ marginBottom: '12px' }}>
@@ -137,17 +153,32 @@ export function RoundPage() {
                   ))}
                 </ul>
               )}
+              {team && (
+                <p class="game-status small">
+                  🎮 {team.length - deadMates.length - (live?.me?.dead ? 1 : 0)} of {team.length} alive
+                  {state.memory.health ? ` · you: ${state.memory.health}` : ''}
+                  {deadMates.length > 0 && ` · found heads: ${deadMates.map((p) => `${p.name}${p.headIn === 'truck' ? ' (in truck)' : ''}`).join(', ')}`}
+                  <span class="muted"> · teammates count as down once their head is found. Edit below to correct.</span>
+                </p>
+              )}
               <RoundMemory state={state} update={update} bare />
             </Collapsible>
           </div>
-          <div class="slot" style={{ order: 9 }}>
+          <div class="slot" style={{ order: 10 }}>
             <Collapsible id="companion" title="Game companion" badge={snap.enabled ? (snap.status === 'live' ? '🟢 live' : '⚪ on') : 'optional'}>
               <CompanionPanel snap={snap} />
             </Collapsible>
           </div>
         </div>
         <div class="focus-main">
-          <div class="slot" style={{ order: 3 }}>
+          {layout && (
+            <div class="slot" style={{ order: 3 }}>
+              <Collapsible id="livemap" title="Map" badge="🎮 discovered only" defaultOpen>
+                <LiveMap live={live!} plan={plan} />
+              </Collapsible>
+            </div>
+          )}
+          <div class="slot" style={{ order: 5 }}>
             <Collapsible id="playbook" title="Monster playbook" badge={monsters.length || undefined} defaultOpen>
               {monsters.length === 0 ? (
                 <p class="muted small">Add monsters you've seen to get their rules here.</p>
@@ -160,7 +191,7 @@ export function RoundPage() {
               )}
             </Collapsible>
           </div>
-          <div class="slot" style={{ order: 4 }}>
+          <div class="slot" style={{ order: 6 }}>
             {combos.length > 0 && (
               <Collapsible id="combos" title="Dangerous combos" badge={combos.length} tone={combos.some((c) => c.severity === 'danger') ? 'danger' : 'warn'} defaultOpen>
                 <ul class="bullets">

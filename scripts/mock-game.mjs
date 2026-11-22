@@ -35,8 +35,58 @@ const level = () => {
       { name: 'You', isLocal: true, upgrades: { Health: 2, Stamina: 3, Strength: 1 } },
       { name: 'Alex', isLocal: false, upgrades: { Strength: 3, Range: 1 } },
     ],
+    playerCount: 3,
+    owned: { 'Item Gun Tranq': 1, 'Item Grenade Explosive': 2 },
+    me: { dead: false, health: Math.max(20, 100 - Math.round(t * 3)), maxHealth: 100 },
+    team: [
+      { name: 'You', isLocal: true, dead: false },
+      { name: 'Alex', dead: false },
+      ...(t > 15 ? [{ name: 'Sam', dead: true, head: [6, 0, 22], headIn: t > 25 ? 'truck' : undefined }] : [{ name: 'Sam', dead: false }]),
+    ],
+    layout: mockLayout(t),
   };
 };
+
+// A small two-floor level: rooms grow as you "explore".
+function mockLayout(t) {
+  const rooms = [
+    [0, 0, 0, 12, 4, 10],
+    [0, 0, 12, 6, 4, 14],
+    [10, 0, 22, 14, 4, 8],
+    [-10, 0, 20, 10, 4, 10],
+    [-12, 4.5, 4, 10, 4, 12],
+    [18, 0, 8, 8, 4, 14],
+    [26, 0, 26, 10, 4, 10],
+  ].slice(0, 3 + Math.min(4, Math.floor(t / 4)));
+  const meZ = Math.min(24, t * 1.2);
+  return {
+    me: [Math.sin(t / 3) * 3, 0, meZ],
+    yaw: Math.round((t * 25) % 360),
+    rooms,
+    extraction: {
+      goalPerPoint: 6000,
+      total: 3,
+      completed: 1,
+      points: [
+        { at: [0, 0, -2], state: 'Complete', current: false },
+        { at: [12, 0, 24], state: 'Active', current: true },
+        ...(t > 10 ? [{ at: [-12, 4.5, 6], state: 'Idle', current: false }] : []),
+      ],
+    },
+    valuables: [
+      { name: 'Diamond', value: 4200, at: [-8, 0, 18], size: 'Tiny' },
+      { name: 'Grandfather Clock', value: 8800, at: [6, 0, 14], size: 'VeryTall' },
+      { name: 'Vase', value: 1300, at: [14, 0, 20], size: 'Small' },
+      { name: 'Piano', value: 11200, at: [-14, 4.5, 2], size: 'Wide' },
+      { name: 'Painting', value: 2500, at: [11, 0, 25], size: 'Medium', inHaul: true },
+      ...(t > 8 ? [{ name: 'Golden Statue', value: 6300, at: [18, 0, 6], size: 'Big' }] : []),
+    ],
+    monsters: [
+      { key: 'ENEMY.HUNTER', name: 'Huntsman', at: [16, 0, 10], agoSec: Math.round(t), killed: false },
+      ...(t > 6 ? [{ key: 'ENEMY.BANG', name: 'Banger', at: [-6, 0, 22], agoSec: Math.round(t - 6), killed: t > 12 }] : []),
+    ],
+  };
+}
 
 const shop = () => ({
   v: 1,

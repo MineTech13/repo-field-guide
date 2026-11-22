@@ -1,3 +1,4 @@
+import { idForAsset } from '../engine/shopAdvisor';
 import { MAPS, MONSTERS } from '../data';
 import type { RoundState } from '../engine/types';
 import type { GameStateV1, LiveEncounter } from './schema';
@@ -38,9 +39,64 @@ export interface ApplyMemo {
   levelSig: string | null;
   /** Monster ids already added from the game this level. */
   added: string[];
+  /** Round-memory values last taken from the game. A field is only overwritten when the game's value changes. */
+  lastMem?: Partial<Record<'teamSize' | 'alive' | 'health' | 'items', unknown>>;
 }
 
-export const emptyMemo = (): ApplyMemo => ({ levelSig: null, added: [] });
+export const emptyMemo = (): ApplyMemo => ({ levelSig: null, added: [], lastMem: {} });
+
+/** Shop item → the item groups the round memory uses (src/data/items.json). */
+const ITEM_GROUP: Record<string, string> = {
+  'tranq-gun': 'tranq',
+  'stun-grenade': 'stun',
+  'shockwave-grenade': 'stun',
+  prodzap: 'stun',
+  gun: 'firearm',
+  shotgun: 'firearm',
+  'human-gun': 'firearm',
+  'pulse-pistol': 'firearm',
+  boltzap: 'firearm',
+  'photon-blaster': 'firearm',
+  'cart-laser': 'firearm',
+  'cart-cannon': 'firearm',
+  grenade: 'grenade',
+  'duct-taped-grenades': 'grenade',
+  'human-grenade': 'grenade',
+  'explosive-mine': 'mine',
+  'shockwave-mine': 'mine',
+  'trap-zap': 'mine',
+  sword: 'melee',
+  'baseball-bat': 'melee',
+  'frying-pan': 'melee',
+  'inflatable-hammer': 'melee',
+  'health-small': 'health',
+  'health-medium': 'health',
+  'health-large': 'health',
+};
+
+/** What the game says about the round-memory fields (only the ones it knows). */
+export function memoryFromGame(live: GameStateV1): Partial<RoundState['memory']> {
+  const out: Partial<RoundState['memory']> = {};
+  if (live.playerCount && live.playerCount > 0) out.teamSize = live.playerCount;
+  if (live.team?.length) out.alive = live.team.filter((p) => !p.dead).length;
+  if (live.me?.dead) out.health = 'critical';
+  else if (live.me?.health != null && live.me.maxHealth) {
+    const pct = live.me.health / live.me.maxHealth;
+    out.health = pct >= 0.7 ? 'full' : pct >= 0.35 ? 'hurt' : 'critical';
+  }
+  if (live.owned || live.players) {
+    const groups = new Set<string>();
+    for (const [asset, n] of Object.entries(live.owned ?? {})) {
+      const g = n > 0 ? ITEM_GROUP[idForAsset(asset) ?? ''] : undefined;
+      if (g) groups.add(g);
+    }
+    const me = live.players?.find((p) => p.isLocal);
+    if ((me?.upgrades?.Strength ?? 0) > 0) groups.add('strength');
+    if ((me?.upgrades?.Range ?? 0) > 0) groups.add('grabRange');
+    out.items = [...groups].sort();
+  }
+  return out;
+}
 
 export interface ApplyResult {
   state: RoundState;
@@ -50,7 +106,7 @@ export interface ApplyResult {
   /** Respawn countdowns by monster id. */
   respawn: Record<string, number>;
   /** Fields that came from the game this time. */
-  fromGame: { map: boolean; level: boolean; monsters: string[]; quota: boolean };
+  fromGame: { map: boolean; level: boolean; monsters: string[]; quota: boolean; memory: string[] };
 }
 
 /**
@@ -61,8 +117,8 @@ export interface ApplyResult {
  */
 export function applyLive(round: RoundState, live: GameStateV1, memo: ApplyMemo): ApplyResult {
   let state = round;
-  const nextMemo: ApplyMemo = { levelSig: memo.levelSig, added: [...memo.added] };
-  const fromGame: ApplyResult['fromGame'] = { map: false, level: false, monsters: [], quota: false };
+  const nextMemo: ApplyMemo = { levelSig: memo.levelSig, added: [...memo.added], lastMem: { ...(memo.lastMem ?? {}) } };
+  const fromGame: ApplyResult['fromGame'] = { map: false, level: false, monsters: [], quota: false, memory: [] };
   const unknown: string[] = [];
   const respawn: Record<string, number> = {};
 
@@ -108,6 +164,18 @@ export function applyLive(round: RoundState, live: GameStateV1, memo: ApplyMemo)
       state = { ...state, memory: { ...state.memory, quotaPct: Math.max(0, Math.min(200, pct)) } };
       fromGame.quota = true;
     }
+  }
+
+  // Team size, alive, health, items: take the game's value when it changes; edits by hand stay until then.
+  const mem = memoryFromGame(live);
+  for (const key of ['teamSize', 'alive', 'health', 'items'] as const) {
+    if (!(key in mem)) continue;
+    const value = mem[key];
+    const sigVal = JSON.stringify(value);
+    if (JSON.stringify(nextMemo.lastMem![key]) === sigVal) continue;
+    nextMemo.lastMem![key] = value;
+    if (JSON.stringify(state.memory[key]) !== sigVal) state = { ...state, memory: { ...state.memory, [key]: value } };
+    fromGame.memory.push(key);
   }
 
   return { state, memo: nextMemo, unknown, respawn, fromGame };

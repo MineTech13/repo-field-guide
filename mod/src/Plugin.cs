@@ -17,7 +17,7 @@ namespace RepoFieldGuide.Companion
     {
         public const string Guid = "minetech13.repofieldguide.companion";
         public const string Name = "R.E.P.O. Field Guide Companion";
-        public const string Version = "0.2.3";
+        public const string Version = "0.2.4";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -27,6 +27,8 @@ namespace RepoFieldGuide.Companion
         internal ConfigEntry<bool> ShopReader;
         internal ConfigEntry<bool> IncludeTeammates;
         internal ConfigEntry<bool> ShowRespawnTimers;
+        internal ConfigEntry<bool> TeamStatus;
+        internal ConfigEntry<bool> ShareMap;
         internal ConfigEntry<bool> LiveLink;
         internal ConfigEntry<int> Port;
         internal ConfigEntry<string> AllowedOrigins;
@@ -53,6 +55,10 @@ namespace RepoFieldGuide.Companion
                 "Also share each teammate's upgrades so the website can suggest who should buy what.");
             ShowRespawnTimers = Config.Bind("Features", "Respawn timers", true,
                 "For monsters you've met: show the real time until they respawn.");
+            TeamStatus = Config.Bind("Features", "Team status", true,
+                "Your health, and teammates who died (only once someone has found their head, like in the game).");
+            ShareMap = Config.Bind("Features", "Map and extraction planner", true,
+                "Explored rooms, extraction points, discovered valuables, where you last saw each monster. Only what the in-game map would show you.");
 
             LiveLink = Config.Bind("Live link", "Enabled", true,
                 "Serve read-only game data on this PC for the website (http://127.0.0.1:<port>/state). Nothing leaves your PC.");

@@ -2104,3 +2104,120 @@ a.chip:hover {
 .warn-text {
   color: var(--warn);
 }
+
+/* ---------- live map + extraction planner (companion) ---------- */
+.live-map {
+  margin: 0;
+}
+.live-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 72vh;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+}
+.live-map figcaption {
+  margin-top: 6px;
+}
+.lm-room {
+  fill: color-mix(in srgb, var(--text) 7%, transparent);
+  stroke: color-mix(in srgb, var(--text) 25%, transparent);
+  stroke-width: 1;
+}
+.lm-route {
+  stroke: var(--accent);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+}
+.lm-val {
+  fill: #f5c542;
+  stroke: #7a5a00;
+  stroke-width: 0.15;
+}
+.lm-val.in-haul {
+  fill: var(--ok);
+}
+.lm-ext {
+  fill: var(--surface);
+  stroke: var(--muted);
+  stroke-width: 2;
+}
+.lm-ext.current {
+  stroke: var(--accent);
+  fill: color-mix(in srgb, var(--accent) 25%, var(--surface));
+}
+.lm-ext.done {
+  stroke: var(--ok);
+  opacity: 0.6;
+}
+.lm-label {
+  fill: var(--text);
+  font-family: var(--mono);
+  font-weight: 700;
+}
+.lm-me {
+  fill: #4fc3ff;
+  stroke: #002b40;
+  stroke-width: 1.5;
+}
+.ext-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ext-plan > p {
+  margin: 0;
+}
+.ext-point {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  padding: 8px 10px;
+  background: var(--surface-2);
+}
+.ext-point.current {
+  border-color: var(--accent);
+}
+.ext-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ext-sum {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-weight: 700;
+}
+.ext-bar {
+  height: 5px;
+  margin: 6px 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  overflow: hidden;
+}
+.ext-bar span {
+  display: block;
+  height: 100%;
+  background: var(--warn);
+}
+.ext-bar span.full {
+  background: var(--ok);
+}
+.ext-items {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  font-size: 0.88rem;
+}
+.ext-items li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: baseline;
+}
+.game-status {
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  border-radius: var(--radius-s);
+  background: var(--surface-2);
+}

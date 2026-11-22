@@ -31,6 +31,42 @@ export interface GameStateV1 {
   /** Team inventory by item asset: owned items and bought-but-unused upgrades. */
   owned?: Record<string, number>;
   players?: LivePlayer[];
+  /** Only in a level: your own status. */
+  me?: { dead?: boolean; health?: number; maxHealth?: number };
+  /** Only in a level: everyone in the game. Teammates count as dead only once their head was found. */
+  team?: LiveTeammate[];
+  /** Only in a level: what the in-game map would show you. Positions are [x, y, z] in metres (y = up). */
+  layout?: LiveLayout;
+}
+
+export type Vec3 = [number, number, number];
+
+export interface LiveTeammate {
+  name: string;
+  isLocal?: boolean;
+  dead?: boolean;
+  head?: Vec3;
+  headIn?: 'truck' | 'extraction';
+}
+
+export interface LiveLayout {
+  me?: Vec3;
+  /** Camera heading in degrees. */
+  yaw?: number;
+  /** Explored rooms as boxes [cx, cy, cz, sx, sy, sz]. */
+  rooms?: [number, number, number, number, number, number][];
+  extraction?: {
+    /** Each extraction point's goal in $ (the level quota split evenly). */
+    goalPerPoint?: number;
+    total?: number;
+    completed?: number;
+    /** Only points that have been found. */
+    points?: { at: Vec3; state?: string; current?: boolean }[];
+  };
+  /** Only discovered valuables. Value in $. */
+  valuables?: { name: string; value: number; at: Vec3; size?: string; inHaul?: boolean }[];
+  /** Where you last saw each monster. */
+  monsters?: { key?: string | null; name?: string; at: Vec3; agoSec?: number; killed?: boolean }[];
 }
 
 export interface LiveCatalogItem {

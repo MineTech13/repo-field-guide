@@ -14,6 +14,8 @@ namespace RepoFieldGuide.Companion
         public bool OnScreen;     // was on the local player's screen
         public bool SpottedYou;   // its vision triggered on the local player
         public bool Killed;
+        public Vector3? LastSeenPos; // where it was the last time it was on your screen
+        public float LastSeenAt;     // seconds since the level started
     }
 
     /// <summary>
@@ -59,7 +61,13 @@ namespace RepoFieldGuide.Companion
                 if (enemy == null) continue;
 
                 bool onScreen = parent.Spawned && enemy.HasOnScreen && enemy.OnScreen != null && enemy.OnScreen.OnScreenLocal;
-                if (onScreen) Get(parent).OnScreen = true;
+                if (onScreen)
+                {
+                    var e0 = Get(parent);
+                    e0.OnScreen = true;
+                    e0.LastSeenPos = enemy.CenterTransform != null ? enemy.CenterTransform.position : enemy.transform.position;
+                    e0.LastSeenAt = LevelTime;
+                }
 
                 if (encounters.TryGetValue(parent.GetInstanceID(), out var e))
                 {

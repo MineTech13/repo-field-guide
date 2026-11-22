@@ -11,7 +11,7 @@
     <RootNamespace>RepoFieldGuide.Companion</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
-    <Version>0.2.3</Version>
+    <Version>0.2.4</Version>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <DebugType>embedded</DebugType>
     <RestoreAdditionalProjectSources>https://nuget.bepinex.dev/v3/index.json</RestoreAdditionalProjectSources>
@@ -35,6 +35,7 @@
     <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(REPOGamePath)/UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.TextRenderingModule"><HintPath>$(REPOGamePath)/UnityEngine.TextRenderingModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.AnimationModule"><HintPath>$(REPOGamePath)/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(REPOGamePath)/UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="Newtonsoft.Json"><HintPath>$(REPOGamePath)/Newtonsoft.Json.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="PhotonUnityNetworking"><HintPath>$(REPOGamePath)/PhotonUnityNetworking.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="Photon3Unity3D"><HintPath>$(REPOGamePath)/Photon3Unity3D.dll</HintPath><Private>false</Private></Reference>
