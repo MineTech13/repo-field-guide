@@ -64,6 +64,7 @@ namespace RepoFieldGuide.Companion
         // ---------------- map ----------------
 
         private static List<object> roomCache = new List<object>();
+        private static Vector3? truckPos; // you always know where the truck is: you start there
         private static float nextRooms;
 
         public static Dictionary<string, object> Map(Tracker tracker)
@@ -77,6 +78,7 @@ namespace RepoFieldGuide.Companion
                 if (cam != null) map["yaw"] = Mathf.Round(cam.transform.eulerAngles.y);
             }
             map["rooms"] = Rooms();
+            if (truckPos != null) map["truck"] = P(truckPos.Value);
             map["extraction"] = Extraction();
             map["valuables"] = Valuables();
             var seen = new List<object>();
@@ -102,9 +104,16 @@ namespace RepoFieldGuide.Companion
             if (Time.time < nextRooms) return roomCache;
             nextRooms = Time.time + 2f;
             var list = new List<object>();
+            truckPos = null;
             foreach (var rv in UnityEngine.Object.FindObjectsByType<RoomVolume>(FindObjectsSortMode.None))
             {
-                if (rv == null || !rv.Explored) continue;
+                if (rv == null) continue;
+                if (rv.Truck && truckPos == null)
+                {
+                    var tc = rv.GetComponentInChildren<Collider>();
+                    truckPos = tc != null ? tc.bounds.center : rv.transform.position;
+                }
+                if (!rv.Explored) continue;
                 foreach (var col in rv.GetComponentsInChildren<Collider>())
                 {
                     var b = col.bounds;

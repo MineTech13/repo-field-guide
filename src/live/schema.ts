@@ -53,6 +53,8 @@ export interface LiveLayout {
   me?: Vec3;
   /** Camera heading in degrees. */
   yaw?: number;
+  /** Where the truck is (you start there, so it's always known). */
+  truck?: Vec3;
   /** Explored rooms as boxes [cx, cy, cz, sx, sy, sz]. */
   rooms?: [number, number, number, number, number, number][];
   extraction?: {

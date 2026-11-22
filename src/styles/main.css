@@ -2180,8 +2180,28 @@ a.chip:hover {
   padding: 8px 10px;
   background: var(--surface-2);
 }
-.ext-point.current {
+.ext-point.role-now {
   border-color: var(--accent);
+}
+.ext-point.role-last {
+  border-style: dashed;
+}
+.ext-order {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #1a0f05;
+  font: 800 0.8rem var(--mono);
+}
+.ext-topup {
+  margin: 6px 0 0;
+}
+.ext-short {
+  margin: 6px 0 0;
+  color: var(--warn);
 }
 .ext-head {
   display: flex;

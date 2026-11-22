@@ -36,7 +36,13 @@ export function LiveMap({
     xs.push(r[0] - r[3] / 2, r[0] + r[3] / 2);
     zs.push(r[2] - r[5] / 2, r[2] + r[5] / 2);
   }
-  const marks: Vec3[] = [...(me ? [me] : []), ...(L.extraction?.points ?? []).map((p) => p.at), ...(L.valuables ?? []).map((v) => v.at), ...(L.monsters ?? []).map((m) => m.at)];
+  const marks: Vec3[] = [
+    ...(me ? [me] : []),
+    ...(L.extraction?.points ?? []).map((p) => p.at),
+    ...(L.truck ? [L.truck] : []),
+    ...(L.valuables ?? []).map((v) => v.at),
+    ...(L.monsters ?? []).map((m) => m.at),
+  ];
   for (const m of marks) {
     xs.push(m[0]);
     zs.push(m[2]);
@@ -79,9 +85,7 @@ export function LiveMap({
         ))}
 
         {/* planned routes: big items to their extraction */}
-        {plan.points.map((p) =>
-          p.items.slice(0, 8).map((it) => <line class="lm-route" x1={X(it.at)} y1={Y(it.at)} x2={X(p.at)} y2={Y(p.at)} vector-effect="non-scaling-stroke" opacity={fade(it.at[1]) * 0.8} />),
-        )}
+        {plan.points.map((p) => p.big.map((it) => <line class="lm-route" x1={X(it.at)} y1={Y(it.at)} x2={X(p.at)} y2={Y(p.at)} vector-effect="non-scaling-stroke" opacity={fade(it.at[1]) * 0.8} />))}
 
         {(L.valuables ?? []).map((v) => {
           const r = unit * (0.6 + Math.sqrt(v.value) / 80);
@@ -108,10 +112,10 @@ export function LiveMap({
               vector-effect="non-scaling-stroke"
             />
             <text class="lm-label" x={X(p.at)} y={Y(p.at) + unit * 0.9} font-size={unit * 2.4} text-anchor="middle">
-              E{p.index + 1}
+              {p.done ? '✓' : p.order}
             </text>
             <title>
-              Extraction {p.index + 1}
+              Extraction #{p.order}
               {p.done ? ' · done' : p.current ? ' · active' : ''} · planned {dollarsK(p.planned)}
               {p.goal ? ` of ${dollarsK(p.goal)}` : ''}
             </title>
@@ -139,6 +143,13 @@ export function LiveMap({
             </title>
           </text>
         ))}
+
+        {L.truck && (
+          <text x={X(L.truck)} y={Y(L.truck)} font-size={unit * 4} text-anchor="middle" dominant-baseline="central" opacity={fade(L.truck[1])}>
+            🚚
+            <title>Truck</title>
+          </text>
+        )}
 
         {me && (
           <g transform={`translate(${X(me)} ${Y(me)}) rotate(${L.yaw ?? 0})`}>

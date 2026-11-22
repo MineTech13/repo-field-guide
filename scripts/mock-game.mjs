@@ -62,6 +62,7 @@ function mockLayout(t) {
   return {
     me: [Math.sin(t / 3) * 3, 0, meZ],
     yaw: Math.round((t * 25) % 360),
+    truck: [0, 0, -6],
     rooms,
     extraction: {
       goalPerPoint: 6000,
