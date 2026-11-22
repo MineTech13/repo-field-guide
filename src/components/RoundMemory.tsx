@@ -6,6 +6,8 @@ import { emptyMemory, updateMemory } from '../state/round';
 interface Props {
   state: RoundState;
   update: (fn: (s: RoundState) => RoundState) => void;
+  /** Render only the form (used inside a collapsible section). */
+  bare?: boolean;
 }
 
 const HEALTH: { id: Health; label: string }[] = [
@@ -14,22 +16,23 @@ const HEALTH: { id: Health; label: string }[] = [
   { id: 'critical', label: '❤️ Critical' },
 ];
 
-export function RoundMemory({ state, update }: Props) {
+export function RoundMemory({ state, update, bare }: Props) {
   const mem = state.memory;
   const filled = [mem.teamSize, mem.alive, mem.health, mem.quotaPct].filter((v) => v != null).length + (mem.items.length ? 1 : 0);
-  const [open, setOpen] = useState(filled > 0);
+  const [openState, setOpen] = useState(filled > 0);
+  const open = bare || openState;
   const set = (patch: Partial<typeof mem>) => update((s) => updateMemory(s, patch));
 
   return (
-    <section class="panel memory">
-      <button class="memory-toggle" aria-expanded={open} onClick={() => setOpen(!open)}>
+    <section class={bare ? "memory bare" : "panel memory"}>
+      {!bare && <button class="memory-toggle" aria-expanded={open} onClick={() => setOpen(!open)}>
         <span>
           <span class="memory-title">Round memory</span> <span class="muted small">optional · {filled ? `${filled} set` : 'refines the advice'}</span>
         </span>
         <span class={`chev ${open ? 'up' : ''}`} aria-hidden="true">
           ▾
         </span>
-      </button>
+      </button>}
 
       {open && (
         <div class="memory-body">

@@ -1,3 +1,4 @@
+import type { ComponentChildren } from 'preact';
 import { useState } from 'preact/hooks';
 import { SPAWNS } from '../data';
 import type { RoundState } from '../engine/types';
@@ -5,12 +6,12 @@ import { bandLabel, spawnCheck } from '../engine/spawns';
 import { Section } from './ui';
 
 /** "What's still out there?": compares logged monsters against the per-level spawn table. */
-export function SpawnCheckPanel({ state }: { state: RoundState }) {
+export function SpawnCheckPanel({ state, bare }: { state: RoundState; bare?: boolean }) {
   const c = spawnCheck(state.level, state.spotted);
   const [openTier, setOpenTier] = useState<number | null>(null);
 
   return (
-    <Section title="What's still out there?" aside={<a class="small" href="#/spawns">spawn rules</a>}>
+    <Wrap bare={bare}>
       <p class="muted small" style={{ marginTop: 0 }}>
         {bandLabel(c.band)} normally spawns <strong>{c.totalExpected}</strong> monster types. You've logged {c.totalFound}.
       </p>
@@ -71,6 +72,15 @@ export function SpawnCheckPanel({ state }: { state: RoundState }) {
           </li>
         )}
       </ul>
+    </Wrap>
+  );
+}
+
+function Wrap({ bare, children }: { bare?: boolean; children: ComponentChildren }) {
+  if (bare) return <div>{children}</div>;
+  return (
+    <Section title={"What's still out there?"} aside={<a class="small" href="#/spawns">spawn rules</a>}>
+      {children}
     </Section>
   );
 }
