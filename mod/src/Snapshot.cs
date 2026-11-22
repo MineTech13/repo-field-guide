@@ -26,7 +26,6 @@ namespace RepoFieldGuide.Companion
                 ["v"] = 1,
                 ["mod"] = Plugin.Version,
                 ["phase"] = Phase(),
-                ["updatedAt"] = DateTime.UtcNow.ToString("o"),
             };
 
             var run = RunManager.instance;

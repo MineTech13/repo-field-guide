@@ -61,24 +61,76 @@ function savePrefs() {
   }
 }
 
+function receive(json: unknown) {
+  if (!isGameState(json)) return;
+  failures = 0;
+  set({ status: 'live', data: json, source: 'live', receivedAt: Date.now() });
+  const route = routeForPhaseChange(lastPhase, json.phase);
+  lastPhase = json.phase ?? lastPhase;
+  if (route && snap.followGame && typeof location !== 'undefined' && location.hash.split('?')[0] !== route) location.hash = route;
+}
+
+let stream: EventSource | null = null;
+
+/**
+ * Preferred: one Server-Sent Events stream (mod 0.2+). The mod only sends when
+ * something changes, so it's far lighter than polling. Older mods without /events
+ * fail before the stream opens, and we fall back to polling.
+ */
+function connect() {
+  disconnect();
+  if (!snap.enabled) return;
+  if (typeof EventSource === 'undefined') return void poll();
+  let opened = false;
+  const es = new EventSource(`http://127.0.0.1:${snap.port}/events`);
+  stream = es;
+  es.onopen = () => {
+    opened = true;
+    if (snap.status !== 'live') set({ status: 'live' });
+  };
+  es.onmessage = (e) => {
+    try {
+      receive(JSON.parse(e.data));
+    } catch {
+      /* ignore a bad message */
+    }
+  };
+  es.onerror = () => {
+    if (!opened) {
+      // No stream support (older mod) or the game isn't running: poll instead.
+      es.close();
+      if (stream === es) stream = null;
+      void poll();
+      return;
+    }
+    // The browser reconnects by itself (the mod asks for 3 s).
+    set({ status: 'not-found' });
+  };
+}
+
+function disconnect() {
+  stream?.close();
+  stream = null;
+  if (timer) clearTimeout(timer);
+  timer = null;
+}
+
 async function poll() {
   timer = null;
-  if (!snap.enabled) return;
+  if (!snap.enabled || stream) return;
   try {
     const res = await fetch(`http://127.0.0.1:${snap.port}/state`, { cache: 'no-store' });
-    const json: unknown = await res.json();
-    if (!isGameState(json)) throw new Error('bad payload');
-    failures = 0;
-    set({ status: 'live', data: json, source: 'live', receivedAt: Date.now() });
-    const route = routeForPhaseChange(lastPhase, json.phase);
-    lastPhase = json.phase ?? lastPhase;
-    if (route && snap.followGame && typeof location !== 'undefined' && location.hash.split('?')[0] !== route) location.hash = route;
+    receive(await res.json());
+    if (snap.status !== 'live') set({ status: 'live' });
   } catch {
     failures++;
     // Keep the last data; just report that the game isn't answering right now.
     set({ status: snap.status === 'live' && failures < 3 ? 'live' : 'not-found' });
   }
-  if (snap.enabled) timer = setTimeout(poll, failures > 3 ? POLL_MS * 4 : POLL_MS);
+  if (!snap.enabled || stream) return;
+  // Game not found for a while: retry the stream now and then (the mod may have been updated/started).
+  if (failures > 0 && failures % 10 === 0) return connect();
+  timer = setTimeout(poll, failures > 3 ? POLL_MS * 4 : POLL_MS);
 }
 
 export const live = {
@@ -91,10 +143,9 @@ export const live = {
     set({ enabled, status: enabled ? 'connecting' : 'off' });
     lastPhase = null;
     savePrefs();
-    if (timer) clearTimeout(timer);
-    timer = null;
     failures = 0;
-    if (enabled) void poll();
+    if (enabled) connect();
+    else disconnect();
   },
   setPort(port: number) {
     if (!(port >= 1024 && port <= 65535)) return;

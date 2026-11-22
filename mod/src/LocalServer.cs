@@ -22,7 +22,23 @@ namespace RepoFieldGuide.Companion
         private Thread thread;
         private volatile bool running;
 
-        public volatile string Latest = "{}";
+        private string latest = "{}";
+        private int version;
+        private int streams;
+        private const int MaxStreams = 8;
+
+        /// <summary>Latest snapshot JSON. Setting a different value bumps the version so streams push it.</summary>
+        public string Latest
+        {
+            get => latest;
+            set
+            {
+                if (value == null || value == latest) return;
+                latest = value;
+                Interlocked.Increment(ref version);
+            }
+        }
+        public int Streams => streams;
         public volatile bool Running;
         public volatile int Requests;
         public string Error;
@@ -67,22 +83,34 @@ namespace RepoFieldGuide.Companion
         {
             while (running)
             {
-                TcpClient client = null;
+                TcpClient client;
                 try
                 {
                     client = listener.AcceptTcpClient();
-                    client.ReceiveTimeout = 2000;
-                    client.SendTimeout = 2000;
-                    Handle(client);
                 }
                 catch (Exception e)
                 {
-                    if (running) Plugin.Log.LogDebug("Live link request failed: " + e.Message);
+                    if (running) Plugin.Log.LogDebug("Live link accept failed: " + e.Message);
+                    continue;
                 }
-                finally
+                // Each connection on its own worker so a long-lived event stream never blocks others.
+                ThreadPool.QueueUserWorkItem(_ =>
                 {
-                    try { client?.Close(); } catch { }
-                }
+                    try
+                    {
+                        client.ReceiveTimeout = 2000;
+                        client.SendTimeout = 5000;
+                        Handle(client);
+                    }
+                    catch (Exception e)
+                    {
+                        if (running) Plugin.Log.LogDebug("Live link request failed: " + e.Message);
+                    }
+                    finally
+                    {
+                        try { client.Close(); } catch { }
+                    }
+                });
             }
         }
 
@@ -134,6 +162,9 @@ namespace RepoFieldGuide.Companion
                 case "/state":
                     Write(stream, "200 OK", cors.ToString(), "application/json", Latest);
                     break;
+                case "/events":
+                    Stream(stream, cors.ToString());
+                    break;
                 case "/":
                 case "/health":
                     Write(stream, "200 OK", cors.ToString(), "application/json",
@@ -143,6 +174,54 @@ namespace RepoFieldGuide.Companion
                     Write(stream, "404 Not Found", cors.ToString(), "text/plain", "not found");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Server-Sent Events: one long-lived connection; a message is sent only when the
+        /// snapshot changes, plus a tiny keep-alive every 15 s. Far fewer requests than polling.
+        /// </summary>
+        private void Stream(NetworkStream stream, string cors)
+        {
+            if (Interlocked.Increment(ref streams) > MaxStreams)
+            {
+                Interlocked.Decrement(ref streams);
+                Write(stream, "503 Service Unavailable", cors, "text/plain", "too many streams");
+                return;
+            }
+            try
+            {
+                var head = "HTTP/1.1 200 OK\r\nContent-Type: text/event-stream; charset=utf-8\r\nCache-Control: no-store\r\nConnection: keep-alive\r\n" + cors + "\r\nretry: 3000\n\n";
+                Send(stream, head);
+                int sent = -1;
+                var lastWrite = DateTime.UtcNow;
+                while (running)
+                {
+                    int v = version;
+                    if (v != sent)
+                    {
+                        sent = v;
+                        Send(stream, "data: " + latest + "\n\n");
+                        lastWrite = DateTime.UtcNow;
+                    }
+                    else if ((DateTime.UtcNow - lastWrite).TotalSeconds >= 15)
+                    {
+                        Send(stream, ": ping\n\n");
+                        lastWrite = DateTime.UtcNow;
+                    }
+                    Thread.Sleep(150);
+                }
+            }
+            finally
+            {
+                Interlocked.Decrement(ref streams);
+            }
+        }
+
+        private static void Send(NetworkStream stream, string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush();
         }
 
         private bool IsAllowed(string origin)

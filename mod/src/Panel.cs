@@ -39,7 +39,7 @@ namespace RepoFieldGuide.Companion
             var p = Plugin.Instance;
             GUILayout.Label(server == null
                 ? "Live link: off"
-                : server.Running ? $"Live link: http://127.0.0.1:{server.Port}/state  ({server.Requests} requests)" : "Live link failed: " + server.Error);
+                : server.Running ? $"Live link: http://127.0.0.1:{server.Port}/state  ({server.Streams} live, {server.Requests} requests)" : "Live link failed: " + server.Error);
 
             var run = RunManager.instance;
             if (run != null)

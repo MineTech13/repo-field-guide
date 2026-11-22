@@ -2,6 +2,7 @@
 // Fake companion mod for testing the website without the game.
 //   node scripts/mock-game.mjs            → cycles level → shop every 20 s
 //   node scripts/mock-game.mjs level|shop → stays on one phase
+//   add --no-stream to act like an older mod without the event stream
 // Serves http://127.0.0.1:47381/state with the same CORS rules as the mod.
 // To test the site against it, set the port to 47381 in the Game companion section.
 import { createServer } from 'node:http';
@@ -9,7 +10,10 @@ import { createServer } from 'node:http';
 // 47381, not 47380: the real companion mod owns 47380 on your PC.
 const PORT = Number(process.env.PORT ?? 47381);
 const ALLOWED = [/^https:\/\/([a-z0-9-]+\.)?repoguide\.pages\.dev$/, /^https:\/\/minetech13\.github\.io$/, /^http:\/\/(localhost|127\.0\.0\.1):\d+$/];
-const fixed = process.argv[2];
+const args = process.argv.slice(2);
+const fixed = args.find((a) => a === 'level' || a === 'shop');
+// --no-stream: behave like companion 0.1.x (no /events), to test the polling fallback.
+const noStream = args.includes('--no-stream');
 const start = Date.now();
 
 const level = () => {
@@ -68,9 +72,22 @@ createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Private-Network', 'true');
   }
   if (req.method === 'OPTIONS') return res.writeHead(204).end();
+  if (req.url?.startsWith('/events') && !noStream) {
+    res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
+    res.write('retry: 3000\n\n');
+    let last = '';
+    const tick = () => {
+      const json = JSON.stringify(state());
+      if (json !== last) res.write(`data: ${(last = json)}\n\n`);
+    };
+    tick();
+    const t = setInterval(tick, 500);
+    req.on('close', () => clearInterval(t));
+    return;
+  }
   if (req.url?.startsWith('/state')) {
     res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
     return res.end(JSON.stringify(state()));
   }
   res.writeHead(404).end('not found');
-}).listen(PORT, '127.0.0.1', () => console.log(`mock companion on http://127.0.0.1:${PORT}/state (${fixed ?? 'cycling'})`));
+}).listen(PORT, '127.0.0.1', () => console.log(`mock companion on http://127.0.0.1:${PORT}/state (${fixed ?? 'cycling'}${noStream ? ', no stream' : ''})`));
