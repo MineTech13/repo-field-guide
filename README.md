@@ -12,7 +12,32 @@ An unofficial, interactive helper for **R.E.P.O.** Keep it open on a second scre
 
 Built with Vite, TypeScript and Preact. No backend: everything runs in the browser, and your round is saved in `localStorage`.
 
-## Run it locally
+## Development
+
+### Dev container (recommended)
+
+Everything you need (Node 22, the .NET 8 SDK, `ilspycmd`, the `gh` CLI, Claude Code) is inside a dev container, so nothing has to be installed on your machine. It works with rootless **Podman** or Docker.
+
+1. Install VS Code's **Dev Containers** extension.
+2. If you use Podman, add this to your VS Code settings: `"dev.containers.dockerPath": "podman"`.
+3. Open this folder and run **Dev Containers: Reopen in Container** from the Command Palette.
+
+The first build takes a few minutes. After that, `npm ci` runs automatically.
+
+The container mounts:
+
+| Host | Container | Why |
+|---|---|---|
+| this repo | same path | Edit files; tools see the same project path |
+| `~/.claude`, `~/.claude.json` | `/home/vscode/…` | Claude Code login, settings and sessions |
+| `…/REPO/REPO_Data/Managed` | `/game/Managed` (read-only) | Check game data, build the mod against the real game |
+| `~/.config/r2modmanPlus-local/REPO/profiles` | `/r2modman/profiles` | Drop a fresh mod build into a profile |
+
+If your Steam library or r2modman folder is somewhere else, change the paths in `.devcontainer/devcontainer.json`. Nothing from the game is ever copied into the repo.
+
+To continue a Claude Code session inside the container, open the integrated terminal and run `claude --resume`.
+
+### Without a container
 
 Needs Node 20+ (22 recommended, see `.nvmrc`).
 
