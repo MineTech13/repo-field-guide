@@ -17,7 +17,7 @@ namespace RepoFieldGuide.Companion
     {
         public const string Guid = "minetech13.repofieldguide.companion";
         public const string Name = "R.E.P.O. Field Guide Companion";
-        public const string Version = "0.2.2";
+        public const string Version = "0.2.3";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -58,9 +58,8 @@ namespace RepoFieldGuide.Companion
                 "Serve read-only game data on this PC for the website (http://127.0.0.1:<port>/state). Nothing leaves your PC.");
             Port = Config.Bind("Live link", "Port", 47380,
                 new ConfigDescription("Local port for the live link.", new AcceptableValueRange<int>(1024, 65535)));
-            AllowedOrigins = Config.Bind("Live link", "Allowed websites",
-                "https://repoguide.pages.dev,https://*.repoguide.pages.dev,https://minetech13.github.io,http://localhost:5173",
-                "Comma-separated list of websites allowed to read the live link. * matches a subdomain.");
+            AllowedOrigins = Config.Bind("Live link", "Extra allowed websites", "",
+                "Comma-separated list of extra websites allowed to read the live link. * matches a subdomain. The official Field Guide sites are always allowed.");
 
             // Defaults avoid keys popular mods already use (F7/F9 NoSaveDelete, F8 SpawnBrowser).
             // A shortcut only fires when exactly its modifiers are held, so these three never overlap.

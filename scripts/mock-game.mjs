@@ -9,7 +9,7 @@ import { createServer } from 'node:http';
 
 // 47381, not 47380: the real companion mod owns 47380 on your PC.
 const PORT = Number(process.env.PORT ?? 47381);
-const ALLOWED = [/^https:\/\/([a-z0-9-]+\.)?repoguide\.pages\.dev$/, /^https:\/\/minetech13\.github\.io$/, /^http:\/\/(localhost|127\.0\.0\.1):\d+$/];
+const ALLOWED = [/^https:\/\/([a-z0-9-]+\.)?repo-field-guide\.pages\.dev$/, /^https:\/\/minetech13\.github\.io$/, /^http:\/\/(localhost|127\.0\.0\.1):\d+$/];
 const args = process.argv.slice(2);
 const fixed = args.find((a) => ['level', 'shop', 'lobbyMenu', 'mainMenu', 'lobby', 'arena'].includes(a));
 // --no-stream: behave like companion 0.1.x (no /events), to test the polling fallback.

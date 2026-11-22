@@ -224,9 +224,16 @@ namespace RepoFieldGuide.Companion
             stream.Flush();
         }
 
+        /// <summary>
+        /// The official guide sites are always allowed, so an old config file never locks them out.
+        /// The "Allowed websites" setting adds more (e.g. a self-hosted copy).
+        /// </summary>
+        internal const string BuiltInOrigins =
+            "https://repo-field-guide.pages.dev,https://*.repo-field-guide.pages.dev,https://minetech13.github.io,http://localhost:5173";
+
         private bool IsAllowed(string origin)
         {
-            foreach (var raw in (allowedOrigins() ?? "").Split(','))
+            foreach (var raw in (BuiltInOrigins + "," + (allowedOrigins() ?? "")).Split(','))
             {
                 var pattern = raw.Trim();
                 if (pattern.Length == 0) continue;

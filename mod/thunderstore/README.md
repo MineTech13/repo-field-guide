@@ -1,6 +1,6 @@
 # R.E.P.O. Field Guide Companion
 
-An **optional**, **read-only**, **client-side** companion for the [R.E.P.O. Field Guide](https://repoguide.pages.dev) website. It fills the guide in for you, so you don't have to type anything.
+An **optional**, **read-only**, **client-side** companion for the [R.E.P.O. Field Guide](https://repo-field-guide.pages.dev) website. It fills the guide in for you, so you don't have to type anything.
 
 - **Monsters you've met:** a monster is recorded once it has been on *your* screen or has spotted *you*. Monsters you haven't met are never revealed.
 - **Shop reader:** in the Service Station it reads every copy on the shelf with its real price, your surplus, and everyone's upgrades.
