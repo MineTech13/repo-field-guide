@@ -13,10 +13,10 @@ const round = (patch: Partial<RoundState> = {}, monsters: string[] = []): RoundS
 describe('phases', () => {
   it('buckets levels', () => {
     expect(phaseFor(1)).toBe('early');
-    expect(phaseFor(3)).toBe('early');
-    expect(phaseFor(4)).toBe('mid');
-    expect(phaseFor(7)).toBe('mid');
-    expect(phaseFor(8)).toBe('late');
+    expect(phaseFor(5)).toBe('early');
+    expect(phaseFor(6)).toBe('mid');
+    expect(phaseFor(9)).toBe('mid');
+    expect(phaseFor(10)).toBe('late');
     expect(phaseFor(40)).toBe('late');
   });
 });
@@ -67,7 +67,7 @@ describe('advise', () => {
   });
 
   it('says extract when quota met on a dangerous level', () => {
-    const s = round({ level: 8, memory: { ...defaultRound().memory, quotaPct: 110 } }, ['clown', 'trudge', 'robe']);
+    const s = round({ level: 10, memory: { ...defaultRound().memory, quotaPct: 110 } }, ['clown', 'trudge', 'robe']);
     expect(advise(s).call.title).toBe('Extract now');
   });
 

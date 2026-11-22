@@ -1,47 +1,149 @@
 {
   "bands": [
-    { "from": 1, "to": 2, "t1": 1, "t2": 0, "t3": 1 },
-    { "from": 3, "to": 5, "t1": 1, "t2": 1, "t3": 1 },
-    { "from": 6, "to": 8, "t1": 2, "t2": 2, "t3": 2 },
-    { "from": 9, "to": 10, "t1": 2, "t2": 3, "t3": 2 },
-    { "from": 11, "to": null, "t1": 2, "t2": 3, "t3": 3 }
+    {
+      "from": 1,
+      "to": 2,
+      "t1": 1,
+      "t2": 0,
+      "t3": 1
+    },
+    {
+      "from": 3,
+      "to": 5,
+      "t1": 1,
+      "t2": 1,
+      "t3": 1
+    },
+    {
+      "from": 6,
+      "to": 8,
+      "t1": 2,
+      "t2": 2,
+      "t3": 2
+    },
+    {
+      "from": 9,
+      "to": 9,
+      "t1": 2,
+      "t2": 3,
+      "t3": 2
+    },
+    {
+      "from": 10,
+      "to": 19,
+      "t1": 2,
+      "t2": 3,
+      "t3": 3
+    },
+    {
+      "from": 20,
+      "to": null,
+      "t1": 3,
+      "t2": 4,
+      "t3": 4
+    }
   ],
   "groupSwap": {
     "chancePct": 4.67,
-    "text": "About 4.7% of the time, a tier-3 slot is replaced by a fixed group of smaller monsters. Groups are never mixed.",
+    "text": "Some tier-3 slots can be filled by a group of smaller monsters instead (e.g. 6 Bangers or 4 Peepers). In the game data these groups are ordinary tier-3 entries with a lower weight (60 vs 100).",
     "groups": [
-      { "id": "gnome", "count": 10 },
-      { "id": "banger", "count": 6 },
-      { "id": "apex-predator", "count": 4 },
-      { "id": "shadow-child", "count": 4 },
-      { "id": "spewer", "count": 4 },
-      { "id": "animal", "count": 3 },
-      { "id": "bowtie", "count": 3 },
-      { "id": "chef", "count": 3 },
-      { "id": "mentalist", "count": 3 },
-      { "id": "peeper", "count": 3 },
-      { "id": "rugrat", "count": 3 },
-      { "id": "upscream", "count": 3 },
-      { "id": "hidden", "count": 2 }
+      {
+        "id": "gnome",
+        "count": 10
+      },
+      {
+        "id": "banger",
+        "count": 6
+      },
+      {
+        "id": "apex-predator",
+        "count": 4
+      },
+      {
+        "id": "shadow-child",
+        "count": 4
+      },
+      {
+        "id": "spewer",
+        "count": 4
+      },
+      {
+        "id": "animal",
+        "count": 3
+      },
+      {
+        "id": "bowtie",
+        "count": 3
+      },
+      {
+        "id": "chef",
+        "count": 3
+      },
+      {
+        "id": "mentalist",
+        "count": 3
+      },
+      {
+        "id": "peeper",
+        "count": 3
+      },
+      {
+        "id": "rugrat",
+        "count": 3
+      },
+      {
+        "id": "upscream",
+        "count": 3
+      },
+      {
+        "id": "hidden",
+        "count": 2
+      }
     ]
   },
   "respawn": [
-    { "fromMin": 0, "toMin": 10, "time": "4–5 min" },
-    { "fromMin": 10, "toMin": 20, "time": "3.2–4 min" },
-    { "fromMin": 20, "toMin": 30, "time": "2.4–3 min" },
-    { "fromMin": 30, "toMin": 40, "time": "1.6–2 min" },
-    { "fromMin": 40, "toMin": 50, "time": "0.8–1 min" },
-    { "fromMin": 50, "toMin": null, "time": "~1 second" }
+    {
+      "fromMin": 0,
+      "toMin": 10,
+      "time": "4–5 min"
+    },
+    {
+      "fromMin": 10,
+      "toMin": 20,
+      "time": "3.2–4 min"
+    },
+    {
+      "fromMin": 20,
+      "toMin": 30,
+      "time": "2.4–3 min"
+    },
+    {
+      "fromMin": 30,
+      "toMin": 40,
+      "time": "1.6–2 min"
+    },
+    {
+      "fromMin": 40,
+      "toMin": 50,
+      "time": "0.8–1 min"
+    },
+    {
+      "fromMin": 50,
+      "toMin": null,
+      "time": "almost instant"
+    }
   ],
   "rules": [
-    "Each monster in a tier is equally likely to be picked. Tier counts are rolled per map load.",
-    "Monsters get a grace period of about 4–5 minutes after spawning. After that, a monster that is far (20+ units) from every player despawns in 20–40 seconds. Being near it pauses that timer.",
-    "Killing a monster roughly triples its respawn time. Gnomes and Bangers seem to be exempt.",
-    "Loud things (instruments, gunfire, explosions, animal crates) shave about 5 seconds off respawn timers per noise.",
-    "The longer you stay in a level, the faster monsters come back. Don't linger once the quota is done.",
-    "At most 10 monster orbs can lie on the map (the oldest explodes). Each monster drops at most 3 orbs per session. Gnomes and Bangers drop none.",
-    "When final extraction starts, monsters converge on the truck, so have your exit route clear."
+    "Monster counts per tier come from the game's difficulty curves (checked against the game, v0.5.2). The big steps are at levels 3, 6, 9, 10 and 20.",
+    "Within a tier, each monster has a weight. A monster you met in recent levels gets a lower weight, so you see a bit more variety from level to level.",
+    "Some monsters have a minimum level: Loom only from level 3 on.",
+    "A despawned monster comes back after 4–5 minutes. Every 10 minutes you stay in a level, that time shrinks by 20%, and after about 50 minutes respawns are almost instant.",
+    "Once all extraction points are done, despawned monsters come back right away, so don't linger after the last extraction.",
+    "At most 10 monster orbs can lie on the map (the oldest explodes). Gnomes and Bangers drop none."
   ],
-  "notes": "Spawn table and respawn timers come from community datamining and testing (Fantime Horror, Haplo's Substack). Older guides give slightly different grace periods.",
-  "sources": ["fantime-monsters", "substack-spawns"]
+  "notes": "Monster counts and respawn timing are read from the game itself with the companion mod's data dump (v0.5.2). Group details come from a modded profile and will be re-checked against a vanilla dump.",
+  "sources": [
+    "game-dump",
+    "fantime-monsters"
+  ]
 }

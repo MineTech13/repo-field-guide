@@ -74,5 +74,10 @@
   "gamesgg-secret": {
     "name": "games.gg: secret shop",
     "url": "https://games.gg/r-e-p-o/guides/repo-secret-shop-location/"
+  },
+  "game-dump": {
+    "name": "Game data dump (companion mod, v0.5.2)",
+    "url": "https://github.com/MineTech13/repo-field-guide/blob/main/docs/game-data/dump-0.5.2-merged.json",
+    "note": "Read directly from the game"
   }
 }

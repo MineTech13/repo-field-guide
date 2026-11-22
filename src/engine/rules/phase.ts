@@ -1,14 +1,13 @@
 import type { Phase } from '../../data/types';
 
 /**
- * Rough phase buckets. The game doesn't publish exact thresholds: hazards
- * (pits, lava, bigger monster groups) ramp up as the level/quota climbs.
- * These are guide approximations; tweak here if the community finds better ones.
+ * Phase buckets follow the game's own difficulty steps (checked with a data dump, v0.5.2):
+ * levels 1–5 have at most one big (tier-3) monster, 6–9 have two, and from 10 on three or more.
  */
 export const PHASES: { phase: Phase; from: number; label: string }[] = [
-  { phase: 'early', from: 1, label: 'Early (levels 1–3)' },
-  { phase: 'mid', from: 4, label: 'Mid (levels 4–7)' },
-  { phase: 'late', from: 8, label: 'Late (level 8+)' },
+  { phase: 'early', from: 1, label: 'Early (levels 1–5)' },
+  { phase: 'mid', from: 6, label: 'Mid (levels 6–9)' },
+  { phase: 'late', from: 10, label: 'Late (level 10+)' },
 ];
 
 export const PHASE_MULTIPLIER: Record<Phase, number> = { early: 1, mid: 1.15, late: 1.3 };

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { adviseShop, decodeBuild, encodeBuild, summarizeBuild, upgradeScore, type ShopInput } from '../src/engine/shop';
 import { bandFor, respawnTimeAt, spawnCheck } from '../src/engine/spawns';
-import { upgradeById } from '../src/data';
+import { shopItemById, upgradeById } from '../src/data';
 
 const base = (patch: Partial<ShopInput> = {}): ShopInput => ({
   budgetK: 30,
@@ -19,8 +19,10 @@ describe('spawn table', () => {
     expect(bandFor(1)).toMatchObject({ t1: 1, t2: 0, t3: 1 });
     expect(bandFor(4)).toMatchObject({ t1: 1, t2: 1, t3: 1 });
     expect(bandFor(7)).toMatchObject({ t1: 2, t2: 2, t3: 2 });
-    expect(bandFor(10)).toMatchObject({ t1: 2, t2: 3, t3: 2 });
-    expect(bandFor(25)).toMatchObject({ t1: 2, t2: 3, t3: 3 });
+    expect(bandFor(9)).toMatchObject({ t1: 2, t2: 3, t3: 2 });
+    expect(bandFor(10)).toMatchObject({ t1: 2, t2: 3, t3: 3 });
+    expect(bandFor(19)).toMatchObject({ t1: 2, t2: 3, t3: 3 });
+    expect(bandFor(25)).toMatchObject({ t1: 3, t2: 4, t3: 4 });
   });
 
   it('counts what is still unaccounted for', () => {
@@ -46,7 +48,7 @@ describe('spawn table', () => {
 
   it('respawn speeds up over time', () => {
     expect(respawnTimeAt(5)).toBe('4–5 min');
-    expect(respawnTimeAt(55)).toBe('~1 second');
+    expect(respawnTimeAt(55)).toBe('almost instant');
   });
 });
 
@@ -89,7 +91,7 @@ describe('builder', () => {
 
   it('summarizes cost, stats and coverage', () => {
     const s = summarizeBuild({ upgrades: { health: 2 }, items: ['tranq-gun'] });
-    expect(s.costMinK).toBe(4 * 2 + 18);
+    expect(s.costMinK).toBe(upgradeById.get('health')!.price[0] * 2 + shopItemById.get('tranq-gun')!.price[0]);
     expect(s.stats.find((x) => x.label === 'Max HP')?.value).toBe('+40');
     expect(s.covered.some((m) => m.id === 'huntsman')).toBe(true);
     expect(s.warnings.some((w) => w.includes('No real damage'))).toBe(true);

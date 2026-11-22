@@ -86,6 +86,13 @@ describe('shop.json', () => {
       expect(i.phase.length, i.id).toBeGreaterThan(0);
     }
   });
+  it('every upgrade and item maps to a unique game asset', () => {
+    const assets = [...SHOP.upgrades, ...SHOP.items].map((x) => x.asset);
+    for (const a of assets) expect(a, 'asset').toMatch(/^Item /);
+    expect(unique(assets)).toBe(true);
+    for (const x of [...SHOP.upgrades, ...SHOP.items]) expect(x.maxInShop, x.id).toBeGreaterThan(0);
+  });
+
   it('secret shop stock and sources resolve', () => {
     for (const id of SHOP.secretShop.stock) expect(SHOP.items.map((i) => i.id)).toContain(id);
     for (const s of [...SHOP.sources, ...SHOP.secretShop.sources]) expect(Object.keys(SOURCES)).toContain(s);

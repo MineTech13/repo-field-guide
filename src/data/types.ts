@@ -104,8 +104,14 @@ export interface Upgrade {
   id: string;
   name: string;
   emoji: string;
-  /** Price range in $K. */
+  /** Base price range in $K for one player, before the per-purchase increase (from the game data). */
   price: [number, number];
+  /** Game item asset name, e.g. "Item Upgrade Player Energy" (what the companion reports). */
+  asset: string;
+  /** Most copies the shop can show at once (from the game data). */
+  maxInShop: number;
+  /** Sold in the secret shop. */
+  secretShop?: boolean;
   effect: string;
   stat: { label: string; per: number; unit: string } | null;
   priority: Record<TeamMode, number>;
@@ -123,7 +129,15 @@ export interface ShopItem {
   name: string;
   emoji: string;
   category: 'ranged' | 'melee' | 'explosive' | 'health' | 'utility' | 'cart' | 'drone';
+  /** Base price range in $K (from the game data). */
   price: [number, number];
+  /** Game item asset name, e.g. "Item Upgrade Player Energy" (what the companion reports). */
+  asset: string;
+  /** Most copies the shop can show at once (from the game data). */
+  maxInShop: number;
+  /** Sold in the secret shop. */
+  secretShop?: boolean;
+
   effect: string;
   gear: string | null;
   phase: Phase[];

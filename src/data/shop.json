@@ -6,7 +6,7 @@
       "emoji": "🫁",
       "price": [
         2,
-        3
+        2
       ],
       "effect": "+10 max stamina per upgrade.",
       "stat": {
@@ -21,7 +21,9 @@
       },
       "diminishAfter": 4,
       "gear": null,
-      "why": "The cheapest upgrade, and running is your main defence. Buy it on sight when it's cheap."
+      "why": "The cheapest upgrade, and running is your main defence. Buy it on sight when it's cheap.",
+      "asset": "Item Upgrade Player Energy",
+      "maxInShop": 4
     },
     {
       "id": "health",
@@ -44,7 +46,9 @@
       },
       "diminishAfter": 2,
       "gear": null,
-      "why": "Turns one-hit kills (100 dmg) into survivable hits. Gains taper off after a couple of stacks."
+      "why": "Turns one-hit kills (100 dmg) into survivable hits. Gains taper off after a couple of stacks.",
+      "asset": "Item Upgrade Player Health",
+      "maxInShop": 2
     },
     {
       "id": "strength",
@@ -67,7 +71,9 @@
       },
       "diminishAfter": 4,
       "gear": "strength",
-      "why": "Solo, nobody helps you lift. About 4 stacks lets you one-hand Rugrats, Birthday Boys and Upscreams."
+      "why": "Solo, nobody helps you lift. About 4 stacks lets you one-hand Rugrats, Birthday Boys and Upscreams.",
+      "asset": "Item Upgrade Player Grab Strength",
+      "maxInShop": 2
     },
     {
       "id": "range",
@@ -91,7 +97,9 @@
       "diminishAfter": 4,
       "cap": 8,
       "gear": "grabRange",
-      "why": "Grab teammates out of Heart Huggers or Hidden carries, and grab monsters from a safer distance. Stops working after 8 (scroll distance caps at 4)."
+      "why": "Grab teammates out of Heart Huggers or Hidden carries, and grab monsters from a safer distance. Stops working after 8 (scroll distance caps at 4).",
+      "asset": "Item Upgrade Player Grab Range",
+      "maxInShop": 3
     },
     {
       "id": "sprint",
@@ -114,7 +122,9 @@
       },
       "diminishAfter": 3,
       "gear": null,
-      "why": "Outrun Robes and Loom claps. Pair it with Stamina, because sprinting drains more."
+      "why": "Outrun Robes and Loom claps. Pair it with Stamina, because sprinting drains more.",
+      "asset": "Item Upgrade Player Sprint Speed",
+      "maxInShop": 3
     },
     {
       "id": "tumble-launch",
@@ -137,14 +147,16 @@
       },
       "diminishAfter": 3,
       "gear": null,
-      "why": "A cheap emergency escape, and tumbling also shakes off Spewers."
+      "why": "A cheap emergency escape, and tumbling also shakes off Spewers.",
+      "asset": "Item Upgrade Player Tumble Launch",
+      "maxInShop": 1
     },
     {
       "id": "crouch-rest",
       "name": "Crouch Rest",
       "emoji": "🧎",
       "price": [
-        6,
+        5,
         8
       ],
       "effect": "Faster stamina recovery while crouched (also while tumbled and still).",
@@ -160,14 +172,16 @@
       },
       "diminishAfter": 2,
       "gear": null,
-      "why": "Nice for stealth-heavy play around Huntsman and Robe."
+      "why": "Nice for stealth-heavy play around Huntsman and Robe.",
+      "asset": "Item Upgrade Player Crouch Rest",
+      "maxInShop": 3
     },
     {
       "id": "extra-jump",
       "name": "Extra Jump",
       "emoji": "🦘",
       "price": [
-        9,
+        8,
         12
       ],
       "effect": "+1 midair jump per upgrade.",
@@ -183,14 +197,16 @@
       },
       "diminishAfter": 2,
       "gear": null,
-      "why": "Great for pits and lava maps and reaching ledges, but pricey. Buy it later."
+      "why": "Great for pits and lava maps and reaching ledges, but pricey. Buy it later.",
+      "asset": "Item Upgrade Player Extra Jump",
+      "maxInShop": 1
     },
     {
       "id": "tumble-wings",
       "name": "Tumble Wings",
       "emoji": "🪽",
       "price": [
-        9,
+        8,
         12
       ],
       "effect": "Glide during a tumble, longer with more stacks.",
@@ -206,15 +222,17 @@
       },
       "diminishAfter": 2,
       "gear": null,
-      "why": "Recover from falls on vertical maps. A luxury pick."
+      "why": "Recover from falls on vertical maps. A luxury pick.",
+      "asset": "Item Upgrade Player Tumble Wings",
+      "maxInShop": 1
     },
     {
       "id": "tumble-climb",
       "name": "Tumble Climb",
       "emoji": "🧗",
       "price": [
-        4,
-        5
+        18,
+        20
       ],
       "effect": "Grabber clings to and climbs walls while tumbling. Stacks reduce stamina drain.",
       "stat": {
@@ -229,7 +247,9 @@
       },
       "diminishAfter": 1,
       "gear": null,
-      "why": "A movement toy. Useful on vertical maps once the basics are covered."
+      "why": "A movement toy. Useful on vertical maps once the basics are covered.",
+      "asset": "Item Upgrade Player Tumble Climb",
+      "maxInShop": 1
     },
     {
       "id": "map-player-count",
@@ -251,7 +271,9 @@
       "teamUnique": true,
       "coopOnly": true,
       "gear": null,
-      "why": "Know instantly who's down. Once anyone buys it, it stops appearing. Not sold in solo."
+      "why": "Know instantly who's down. Once anyone buys it, it stops appearing. Not sold in solo.",
+      "asset": "Item Upgrade Map Player Count",
+      "maxInShop": 1
     },
     {
       "id": "death-head-battery",
@@ -271,7 +293,9 @@
       "diminishAfter": 2,
       "coopOnly": true,
       "gear": null,
-      "why": "Lets dead players scout and call out monsters. Niche, and not sold in solo."
+      "why": "Lets dead players scout and call out monsters. Niche, and not sold in solo.",
+      "asset": "Item Upgrade Death Head Battery",
+      "maxInShop": 1
     }
   ],
   "items": [
@@ -281,7 +305,7 @@
       "emoji": "💉",
       "category": "ranged",
       "price": [
-        18,
+        14,
         18
       ],
       "effect": "8 shots, long stun. Best against large monsters.",
@@ -291,7 +315,9 @@
         "mid",
         "late"
       ],
-      "rating": 9
+      "rating": 9,
+      "asset": "Item Gun Tranq",
+      "maxInShop": 1
     },
     {
       "id": "gun",
@@ -299,8 +325,8 @@
       "emoji": "🔫",
       "category": "ranged",
       "price": [
-        19,
-        19
+        18,
+        20
       ],
       "effect": "80 dmg/shot, 15 shots. Steady at range.",
       "gear": "firearm",
@@ -308,7 +334,9 @@
         "mid",
         "late"
       ],
-      "rating": 8
+      "rating": 8,
+      "asset": "Item Gun Handgun",
+      "maxInShop": 1
     },
     {
       "id": "shotgun",
@@ -316,7 +344,7 @@
       "emoji": "🔫",
       "category": "ranged",
       "price": [
-        48,
+        38,
         48
       ],
       "effect": "50 per pellet (up to 300), 5 shots.",
@@ -324,7 +352,9 @@
       "phase": [
         "late"
       ],
-      "rating": 8
+      "rating": 8,
+      "asset": "Item Gun Shotgun",
+      "maxInShop": 1
     },
     {
       "id": "human-gun",
@@ -341,7 +371,10 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Gun Revolver",
+      "maxInShop": 1,
+      "secretShop": true
     },
     {
       "id": "pulse-pistol",
@@ -349,8 +382,8 @@
       "emoji": "🔫",
       "category": "ranged",
       "price": [
-        15,
-        15
+        14,
+        18
       ],
       "effect": "25 + 25 collision, 12 shots.",
       "gear": "firearm",
@@ -358,7 +391,9 @@
         "early",
         "mid"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Gun Shockwave",
+      "maxInShop": 1
     },
     {
       "id": "boltzap",
@@ -366,8 +401,8 @@
       "emoji": "⚡",
       "category": "ranged",
       "price": [
-        15,
-        15
+        14,
+        18
       ],
       "effect": "Weak damage, brief stun, 20 shots.",
       "gear": "stun",
@@ -375,7 +410,9 @@
         "early",
         "mid"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Gun Stun",
+      "maxInShop": 1
     },
     {
       "id": "photon-blaster",
@@ -383,15 +420,17 @@
       "emoji": "🌠",
       "category": "ranged",
       "price": [
-        47,
-        47
+        38,
+        48
       ],
       "effect": "~250–270 per beam, 5 charges. Huge burst.",
       "gear": "firearm",
       "phase": [
         "late"
       ],
-      "rating": 9
+      "rating": 9,
+      "asset": "Item Gun Laser",
+      "maxInShop": 1
     },
     {
       "id": "cart-laser",
@@ -399,15 +438,17 @@
       "emoji": "🛒",
       "category": "ranged",
       "price": [
-        45,
-        45
+        38,
+        48
       ],
       "effect": "100×8 per activation, 5 charges. Mounts on the cart.",
       "gear": "firearm",
       "phase": [
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Cart Laser",
+      "maxInShop": 1
     },
     {
       "id": "cart-cannon",
@@ -415,15 +456,17 @@
       "emoji": "🛒",
       "category": "ranged",
       "price": [
-        45,
-        45
+        38,
+        48
       ],
       "effect": "500 direct + 25 blast, 5 charges.",
       "gear": "firearm",
       "phase": [
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Cart Cannon",
+      "maxInShop": 1
     },
     {
       "id": "sledgehammer",
@@ -431,8 +474,8 @@
       "emoji": "🔨",
       "category": "melee",
       "price": [
-        46,
-        46
+        38,
+        48
       ],
       "effect": "150 per hit with strong stun, 10 charges. The best melee.",
       "gear": "sledgehammer",
@@ -440,7 +483,9 @@
         "mid",
         "late"
       ],
-      "rating": 9
+      "rating": 9,
+      "asset": "Item Melee Sledge Hammer",
+      "maxInShop": 1
     },
     {
       "id": "prodzap",
@@ -448,8 +493,8 @@
       "emoji": "🦯",
       "category": "melee",
       "price": [
-        28,
-        28
+        22,
+        30
       ],
       "effect": "Stun baton: 8/hit, ~3 s stun, 15 charges.",
       "gear": "stun",
@@ -458,7 +503,9 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Melee Stun Baton",
+      "maxInShop": 1
     },
     {
       "id": "sword",
@@ -466,8 +513,8 @@
       "emoji": "🗡️",
       "category": "melee",
       "price": [
-        19,
-        19
+        18,
+        20
       ],
       "effect": "50 per hit, 10 charges.",
       "gear": "melee",
@@ -475,7 +522,9 @@
         "early",
         "mid"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Melee Sword",
+      "maxInShop": 1
     },
     {
       "id": "baseball-bat",
@@ -483,15 +532,17 @@
       "emoji": "🏏",
       "category": "melee",
       "price": [
-        40,
-        40
+        38,
+        48
       ],
       "effect": "20 direct, 25–50 collision, 10 charges.",
       "gear": "melee",
       "phase": [
         "mid"
       ],
-      "rating": 4
+      "rating": 4,
+      "asset": "Item Melee Baseball Bat",
+      "maxInShop": 1
     },
     {
       "id": "frying-pan",
@@ -499,15 +550,17 @@
       "emoji": "🍳",
       "category": "melee",
       "price": [
-        15,
-        15
+        14,
+        18
       ],
       "effect": "18 per hit, 10 charges. Cheap starter melee.",
       "gear": "melee",
       "phase": [
         "early"
       ],
-      "rating": 4
+      "rating": 4,
+      "asset": "Item Melee Frying Pan",
+      "maxInShop": 1
     },
     {
       "id": "inflatable-hammer",
@@ -515,7 +568,7 @@
       "emoji": "🎈",
       "category": "melee",
       "price": [
-        12,
+        8,
         12
       ],
       "effect": "5 normal, 250 on its blast hit, 10 charges.",
@@ -524,7 +577,9 @@
         "early",
         "mid"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Melee Inflatable Hammer",
+      "maxInShop": 1
     },
     {
       "id": "grenade",
@@ -532,7 +587,7 @@
       "emoji": "💣",
       "category": "explosive",
       "price": [
-        3,
+        2,
         3
       ],
       "effect": "160 blast. Hits players too. Single use.",
@@ -542,7 +597,9 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Grenade Explosive",
+      "maxInShop": 3
     },
     {
       "id": "stun-grenade",
@@ -560,7 +617,9 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Grenade Stun",
+      "maxInShop": 3
     },
     {
       "id": "shockwave-grenade",
@@ -577,7 +636,9 @@
         "early",
         "mid"
       ],
-      "rating": 4
+      "rating": 4,
+      "asset": "Item Grenade Shockwave",
+      "maxInShop": 3
     },
     {
       "id": "duct-taped-grenades",
@@ -594,7 +655,10 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Grenade Duct Taped",
+      "maxInShop": 3,
+      "secretShop": true
     },
     {
       "id": "human-grenade",
@@ -602,7 +666,7 @@
       "emoji": "🧨",
       "category": "explosive",
       "price": [
-        2,
+        1,
         2
       ],
       "effect": "100 blast. Secret shop stock.",
@@ -611,7 +675,10 @@
         "early",
         "mid"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Grenade Human",
+      "maxInShop": 3,
+      "secretShop": true
     },
     {
       "id": "explosive-mine",
@@ -619,7 +686,7 @@
       "emoji": "🪤",
       "category": "explosive",
       "price": [
-        3,
+        2,
         3
       ],
       "effect": "200 blast. Place on patrol routes.",
@@ -629,7 +696,9 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Mine Explosive",
+      "maxInShop": 3
     },
     {
       "id": "shockwave-mine",
@@ -637,7 +706,7 @@
       "emoji": "🪤",
       "category": "explosive",
       "price": [
-        3,
+        2,
         3
       ],
       "effect": "Knockback trap.",
@@ -646,7 +715,9 @@
         "early",
         "mid"
       ],
-      "rating": 3
+      "rating": 3,
+      "asset": "Item Mine Shockwave",
+      "maxInShop": 3
     },
     {
       "id": "trap-zap",
@@ -654,7 +725,7 @@
       "emoji": "⚡",
       "category": "explosive",
       "price": [
-        3,
+        2,
         3
       ],
       "effect": "Zap trap: 30 total damage plus stun, one deployment.",
@@ -663,7 +734,9 @@
         "early",
         "mid"
       ],
-      "rating": 4
+      "rating": 4,
+      "asset": "Item Mine Stun",
+      "maxInShop": 3
     },
     {
       "id": "rubber-duck",
@@ -671,8 +744,8 @@
       "emoji": "🐤",
       "category": "explosive",
       "price": [
-        15,
-        20
+        14,
+        18
       ],
       "effect": "50 collision / 250 explosion, 6 battery pips.",
       "gear": "grenade",
@@ -680,7 +753,9 @@
         "mid",
         "late"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Rubber Duck",
+      "maxInShop": 1
     },
     {
       "id": "health-small",
@@ -688,8 +763,8 @@
       "emoji": "🩹",
       "category": "health",
       "price": [
-        3,
-        6
+        2,
+        3
       ],
       "effect": "Heals 25 HP.",
       "gear": "health",
@@ -698,7 +773,9 @@
         "mid",
         "late"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Health Pack Small",
+      "maxInShop": 3
     },
     {
       "id": "health-medium",
@@ -706,8 +783,8 @@
       "emoji": "🩹",
       "category": "health",
       "price": [
-        5,
-        11
+        4,
+        6
       ],
       "effect": "Heals 50 HP.",
       "gear": "health",
@@ -716,7 +793,9 @@
         "mid",
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Health Pack Medium",
+      "maxInShop": 3
     },
     {
       "id": "health-large",
@@ -724,8 +803,8 @@
       "emoji": "🩹",
       "category": "health",
       "price": [
-        9,
-        16
+        8,
+        12
       ],
       "effect": "Heals 100 HP.",
       "gear": "health",
@@ -733,7 +812,9 @@
         "mid",
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Health Pack Large",
+      "maxInShop": 3
     },
     {
       "id": "energy-crystal",
@@ -741,8 +822,8 @@
       "emoji": "💎",
       "category": "utility",
       "price": [
-        6,
-        20
+        4,
+        6
       ],
       "effect": "Recharges weapons and drones at the truck. Max 6 stored. Price climbs.",
       "gear": null,
@@ -750,7 +831,9 @@
         "mid",
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Power Crystal",
+      "maxInShop": 10
     },
     {
       "id": "pocket-cart",
@@ -767,7 +850,9 @@
         "early",
         "mid"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Cart Small",
+      "maxInShop": 2
     },
     {
       "id": "cart",
@@ -775,7 +860,7 @@
       "emoji": "🛒",
       "category": "cart",
       "price": [
-        39,
+        38,
         48
       ],
       "effect": "Big cart, twice the size of the pocket one. Max 2.",
@@ -784,7 +869,9 @@
         "mid",
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Cart Medium",
+      "maxInShop": 4
     },
     {
       "id": "feather-drone",
@@ -792,7 +879,7 @@
       "emoji": "🪶",
       "category": "drone",
       "price": [
-        15,
+        14,
         18
       ],
       "effect": "Makes held objects light.",
@@ -802,7 +889,9 @@
         "late"
       ],
       "rating": 5,
-      "unverified": true
+      "unverified": true,
+      "asset": "Item Drone Feather",
+      "maxInShop": 1
     },
     {
       "id": "indestructible-drone",
@@ -810,7 +899,7 @@
       "emoji": "🛡️",
       "category": "drone",
       "price": [
-        23,
+        22,
         30
       ],
       "effect": "Makes a valuable unbreakable while attached.",
@@ -819,7 +908,9 @@
         "mid",
         "late"
       ],
-      "rating": 7
+      "rating": 7,
+      "asset": "Item Drone Indestructible",
+      "maxInShop": 1
     },
     {
       "id": "recharge-drone",
@@ -827,7 +918,7 @@
       "emoji": "🔌",
       "category": "drone",
       "price": [
-        15,
+        14,
         18
       ],
       "effect": "Recharges your gear in the field.",
@@ -837,7 +928,9 @@
         "late"
       ],
       "rating": 5,
-      "unverified": true
+      "unverified": true,
+      "asset": "Item Drone Battery",
+      "maxInShop": 1
     },
     {
       "id": "roll-drone",
@@ -845,7 +938,7 @@
       "emoji": "⚪",
       "category": "drone",
       "price": [
-        9,
+        8,
         12
       ],
       "effect": "Rolls objects or monsters around.",
@@ -854,7 +947,9 @@
         "mid"
       ],
       "rating": 3,
-      "unverified": true
+      "unverified": true,
+      "asset": "Item Drone Torque",
+      "maxInShop": 1
     },
     {
       "id": "zero-gravity-drone",
@@ -862,8 +957,8 @@
       "emoji": "🪐",
       "category": "drone",
       "price": [
-        23,
-        29
+        22,
+        30
       ],
       "effect": "Zero-gravity on a target.",
       "gear": null,
@@ -872,7 +967,9 @@
         "late"
       ],
       "rating": 4,
-      "unverified": true
+      "unverified": true,
+      "asset": "Item Drone Zero Gravity",
+      "maxInShop": 1
     },
     {
       "id": "valuable-tracker",
@@ -880,8 +977,8 @@
       "emoji": "📡",
       "category": "utility",
       "price": [
-        15,
-        18
+        5,
+        8
       ],
       "effect": "Points toward valuables.",
       "gear": null,
@@ -889,7 +986,9 @@
         "mid",
         "late"
       ],
-      "rating": 6
+      "rating": 6,
+      "asset": "Item Valuable Tracker",
+      "maxInShop": 1
     },
     {
       "id": "extraction-tracker",
@@ -897,8 +996,8 @@
       "emoji": "🧭",
       "category": "utility",
       "price": [
-        8,
-        17
+        4,
+        5
       ],
       "effect": "Points to extraction points.",
       "gear": null,
@@ -906,7 +1005,9 @@
         "early",
         "mid"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Extraction Tracker",
+      "maxInShop": 1
     },
     {
       "id": "phase-bridge",
@@ -914,7 +1015,7 @@
       "emoji": "🌉",
       "category": "utility",
       "price": [
-        19,
+        18,
         20
       ],
       "effect": "Holds midair: a bridge, step or barricade.",
@@ -923,7 +1024,9 @@
         "mid",
         "late"
       ],
-      "rating": 5
+      "rating": 5,
+      "asset": "Item Phase Bridge",
+      "maxInShop": 1
     },
     {
       "id": "duck-bucket",
@@ -941,7 +1044,10 @@
         "mid",
         "late"
       ],
-      "rating": 4
+      "rating": 4,
+      "asset": "Item Duck Bucket",
+      "maxInShop": 1,
+      "secretShop": true
     },
     {
       "id": "leaf-blower",
@@ -949,8 +1055,8 @@
       "emoji": "🍃",
       "category": "utility",
       "price": [
-        10,
-        10
+        8,
+        12
       ],
       "effect": "Knocks back and stuns small monsters, 6 pips.",
       "gear": null,
@@ -959,16 +1065,267 @@
         "mid"
       ],
       "rating": 4,
-      "unverified": true
+      "unverified": true,
+      "asset": "Item Leaf Blower",
+      "maxInShop": 1
+    },
+    {
+      "id": "defibro",
+      "name": "Defibro",
+      "emoji": "⚡",
+      "category": "utility",
+      "asset": "Item ReviveItem",
+      "effect": "Revives a dead teammate.",
+      "gear": null,
+      "phase": [
+        "early",
+        "mid",
+        "late"
+      ],
+      "rating": 8,
+      "price": [
+        38,
+        48
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "semibot-walkies",
+      "name": "Semibot Walkies",
+      "emoji": "📻",
+      "category": "utility",
+      "asset": "Item WalkieTalkieBox",
+      "effect": "Walkie-talkies: talk to teammates across the map.",
+      "gear": null,
+      "phase": [
+        "early",
+        "mid",
+        "late"
+      ],
+      "rating": 4,
+      "price": [
+        22,
+        30
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "hauler",
+      "name": "Hauler",
+      "emoji": "🛵",
+      "category": "cart",
+      "asset": "Item Vehicle Semiscooter",
+      "effect": "Big scooter for hauling loot.",
+      "gear": null,
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 5,
+      "unverified": true,
+      "price": [
+        38,
+        48
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "scout",
+      "name": "Scout",
+      "emoji": "🛴",
+      "category": "cart",
+      "asset": "Item Vehicle Semiscooter Small",
+      "effect": "Small, fast scooter.",
+      "gear": null,
+      "phase": [
+        "early",
+        "mid"
+      ],
+      "rating": 4,
+      "unverified": true,
+      "price": [
+        18,
+        20
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "recharge-orb",
+      "name": "Recharge Orb",
+      "emoji": "🔋",
+      "category": "utility",
+      "asset": "Item Orb Battery",
+      "effect": "Charges several items at once (splits the charge).",
+      "gear": null,
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 5,
+      "unverified": true,
+      "price": [
+        22,
+        30
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "zero-gravity-orb",
+      "name": "Zero Gravity Orb",
+      "emoji": "🪐",
+      "category": "utility",
+      "asset": "Item Orb Zero Gravity",
+      "effect": "Creates a zero-gravity area.",
+      "gear": null,
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 3,
+      "unverified": true,
+      "price": [
+        38,
+        48
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "roll-staff",
+      "name": "Roll Staff",
+      "emoji": "🪄",
+      "category": "utility",
+      "asset": "Item Staff Torque",
+      "effect": "Magic staff, 6 charges.",
+      "gear": null,
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 3,
+      "unverified": true,
+      "price": [
+        22,
+        30
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "void-staff",
+      "name": "Void Staff",
+      "emoji": "🪄",
+      "category": "utility",
+      "asset": "Item Staff Void",
+      "effect": "Magic staff, 6 charges.",
+      "gear": null,
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 3,
+      "unverified": true,
+      "price": [
+        22,
+        30
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "zero-gravity-staff",
+      "name": "Zero Gravity Staff",
+      "emoji": "🪄",
+      "category": "utility",
+      "asset": "Item Staff Zero Gravity",
+      "effect": "Magic staff, 6 charges.",
+      "gear": null,
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 3,
+      "unverified": true,
+      "price": [
+        14,
+        18
+      ],
+      "maxInShop": 1
+    },
+    {
+      "id": "human-adventure-cable",
+      "name": "Human Adventure Cable",
+      "emoji": "🪢",
+      "category": "melee",
+      "asset": "Item Melee Whip",
+      "effect": "Whip, about 20 per hit. Secret shop stock.",
+      "gear": "melee",
+      "phase": [
+        "mid",
+        "late"
+      ],
+      "rating": 4,
+      "price": [
+        18,
+        20
+      ],
+      "maxInShop": 1,
+      "secretShop": true
     }
   ],
   "tips": [
     {
+      "id": "buy-together",
+      "title": "Buy copies of the same upgrade together",
+      "text": "Every upgrade of a type the team buys makes that type 50% more expensive (based on the original price). Copies already on the shelf keep the price they had when the shop was stocked. So if 3 Stamina upgrades are on the shelf, buying all 3 now is much cheaper than one per visit. Stamina can show up to 4 times, Range, Sprint and Crouch Rest 3 times, Health and Strength twice.",
+      "tag": "money",
+      "verified": true
+    },
+    {
+      "id": "team-count",
+      "title": "Upgrade prices are shared by the team",
+      "text": "The +50% counts every purchase of that upgrade by anyone on the team. If your friend buys Strength, your next Strength costs more too. Plan who gets what.",
+      "tag": "team",
+      "verified": true
+    },
+    {
       "id": "pool",
-      "title": "The upgrade pool trick",
-      "text": "The shop draws from a limited upgrade pool. Upgrades that exist in your run (on shelves or bought and stored but not used yet) take up slots. Hoarding duplicates you don't use can push other upgrades onto the shelf. Community tip: when several of the cheap Stamina upgrades show up (for example 3), buying them all clears them out of the pool and they're cheap value anyway.",
+      "title": "Unused upgrades block the shelf",
+      "text": "How many copies of an upgrade the shop can show = its shop limit minus the copies you own but haven't used yet. Holding unused copies keeps that upgrade off the shelf and leaves room for other upgrades; using them frees the slots again.",
       "tag": "trick",
-      "verified": false
+      "verified": true
+    },
+    {
+      "id": "slots",
+      "title": "What the shop can stock",
+      "text": "Each visit the shelf has room for up to 10 upgrades, 8 items, 6 health packs and a few energy crystals. Copies are picked at random from what you're allowed to see.",
+      "tag": "basics",
+      "verified": true
+    },
+    {
+      "id": "copy-prices",
+      "title": "Each copy has its own price",
+      "text": "Every copy rolls its own price between the item's minimum and maximum, so the same item can sit on the shelf at 6K and 8K. Always grab the cheaper copy first.",
+      "tag": "money",
+      "verified": true
+    },
+    {
+      "id": "team-discount",
+      "title": "Bigger teams pay less for upgrades",
+      "text": "Upgrades and health packs get 10% cheaper for each extra player (up to 6 players). A full lobby pays about half price.",
+      "tag": "team",
+      "verified": true
+    },
+    {
+      "id": "afford",
+      "title": "The shop mostly shows what you can afford",
+      "text": "Items that cost more than your current surplus are left out about 75% of the time. Saving up makes expensive items show up more often.",
+      "tag": "trick",
+      "verified": true
+    },
+    {
+      "id": "price-climb",
+      "title": "Health packs and crystals get pricier",
+      "text": "Health packs cost 5% more for every level completed and energy crystals 20% more (capped after 15 levels). Stock up early in a run.",
+      "tag": "money",
+      "verified": true
     },
     {
       "id": "per-player",
@@ -985,38 +1342,10 @@
       "verified": true
     },
     {
-      "id": "compare-prices",
-      "title": "Compare duplicate prices",
-      "text": "Identical items can sit side by side at different prices. Check every copy before you pay.",
-      "tag": "money",
-      "verified": true
-    },
-    {
-      "id": "price-bands",
-      "title": "Prices roll every level",
-      "text": "Each level the shop rolls a different price band, and prices trend upward as you go deeper. Cheap health packs and Stamina are worth grabbing early.",
-      "tag": "money",
-      "verified": true
-    },
-    {
       "id": "mpc-once",
       "title": "Map Player Count: once per team",
       "text": "Once anyone buys Map Player Count, it stops appearing. One purchase covers the save, so don't double-buy.",
       "tag": "team",
-      "verified": true
-    },
-    {
-      "id": "kept-items",
-      "title": "Most items are bought once",
-      "text": "Weapons, drones and carts stay with your run once bought. Energy Crystals are the consumable (max 6 stored), and you recharge gear at the truck.",
-      "tag": "basics",
-      "verified": true
-    },
-    {
-      "id": "cart-cap",
-      "title": "Cart limit",
-      "text": "You can own at most 4 carts: 2 Pocket C.A.R.T.s and 2 big C.A.R.T.s.",
-      "tag": "basics",
       "verified": true
     },
     {
@@ -1051,6 +1380,8 @@
   "secretShop": {
     "intro": "Since the Cosmetics Update, the Service Station spawns in several random layouts, and each can hide its secret shop in a different spot. Some layouts have none.",
     "stock": [
+      "human-gun",
+      "human-adventure-cable",
       "duct-taped-grenades",
       "human-grenade",
       "duck-bucket"
@@ -1130,6 +1461,7 @@
     ]
   },
   "sources": [
+    "game-dump",
     "bloxodes-upgrades",
     "bloxodes-weapons",
     "fantime-items",
