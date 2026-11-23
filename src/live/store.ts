@@ -20,6 +20,8 @@ export interface LiveSnapshot {
   source: 'live' | 'code' | 'demo' | null;
   /** "Try the demo": made-up data, no game needed. Never saved, never touches your round. */
   demo: boolean;
+  /** What's playing: "demo" or a recording's file name. */
+  demoLabel?: string;
   receivedAt: number | null;
 }
 
@@ -174,12 +176,20 @@ export const live = {
   },
   /** Play a made-up level (src/live/demo.ts) so you can see the Live page without the game. */
   startDemo() {
-    disconnect();
-    if (demoTimer) clearInterval(demoTimer);
-    const start = Date.now();
-    const tick = () => set({ demo: true, status: 'live', data: demoState((Date.now() - start) / 1000), source: 'demo', receivedAt: Date.now() });
-    tick();
-    demoTimer = setInterval(tick, 1000);
+    play(demoState, 'demo');
+  },
+  /** Play back a recording from the mod's debug mode (.jsonl: one {"t": seconds, "s": state} per line). */
+  playRecording(text: string, name: string): number {
+    const frames = parseRecording(text);
+    if (!frames.length) throw new Error('No game data found in this file.');
+    const end = frames[frames.length - 1].t + 2;
+    play((sec) => {
+      const t = sec % end;
+      let f = frames[0];
+      for (const fr of frames) if (fr.t <= t) f = fr;
+      return f.s;
+    }, name);
+    return frames.length;
   },
   stopDemo() {
     if (demoTimer) clearInterval(demoTimer);
@@ -189,6 +199,30 @@ export const live = {
   },
 };
 export { DEMO_LOOP };
+
+function play(frameAt: (sec: number) => GameStateV1, label: string) {
+  disconnect();
+  if (demoTimer) clearInterval(demoTimer);
+  const start = Date.now();
+  const tick = () => set({ demo: true, demoLabel: label, status: 'live', data: frameAt((Date.now() - start) / 1000), source: 'demo', receivedAt: Date.now() });
+  tick();
+  demoTimer = setInterval(tick, 1000);
+}
+
+/** Recording lines → frames sorted by time. Bad lines are skipped. */
+export function parseRecording(text: string): { t: number; s: GameStateV1 }[] {
+  const frames: { t: number; s: GameStateV1 }[] = [];
+  for (const line of text.split('\n')) {
+    if (!line.trim()) continue;
+    try {
+      const o = JSON.parse(line);
+      if (typeof o?.t === 'number' && isGameState(o.s)) frames.push({ t: o.t, s: o.s });
+    } catch {
+      /* skip */
+    }
+  }
+  return frames.sort((a, b) => a.t - b.t);
+}
 
 // Resume polling on load only if the user turned it on earlier.
 if (typeof window !== 'undefined' && snap.enabled) live.setEnabled(true);

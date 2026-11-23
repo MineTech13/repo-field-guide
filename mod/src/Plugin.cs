@@ -18,7 +18,7 @@ namespace RepoFieldGuide.Companion
     {
         public const string Guid = "minetech13.repofieldguide.companion";
         public const string Name = "R.E.P.O. Field Guide Companion";
-        public const string Version = "0.2.6";
+        public const string Version = "0.2.7";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -31,6 +31,9 @@ namespace RepoFieldGuide.Companion
         internal ConfigEntry<bool> TeamStatus;
         internal ConfigEntry<bool> ShareMap;
         internal ConfigEntry<bool> UsePings;
+        internal ConfigEntry<bool> RecordSessions;
+        internal ConfigEntry<float> RecordInterval;
+        internal ConfigEntry<int> KeepRecordings;
         internal ConfigEntry<bool> LiveLink;
         internal ConfigEntry<int> Port;
         internal ConfigEntry<string> AllowedOrigins;
@@ -61,6 +64,12 @@ namespace RepoFieldGuide.Companion
                 "Your health, and teammates who died (only once someone has found their head, like in the game).");
             ShareMap = Config.Bind("Features", "Map and extraction planner", true,
                 "Explored rooms, extraction points, discovered valuables, where you last saw each monster. Only what the in-game map would show you.");
+            RecordSessions = Config.Bind("Debug", "Record sessions", false,
+                "Debug / collect mode: save a recording of every level (what the live link sends) plus a full level dump to BepInEx/config/RepoFieldGuide/recordings. Stays on your PC. Replay it on the website's Live page or send it to the developer.");
+            RecordInterval = Config.Bind("Debug", "Record interval seconds", 2f,
+                new ConfigDescription("How often to save a frame while recording.", new AcceptableValueRange<float>(0.5f, 10f)));
+            KeepRecordings = Config.Bind("Debug", "Keep recordings", 20,
+                new ConfigDescription("Older recordings are deleted.", new AcceptableValueRange<int>(1, 200)));
             UsePings = Config.Bind("Features", "Use Ping_It pings", true,
                 "If Ping_It is installed: show pings on the map. Enemy pings count as seen only with the Ping Info upgrade (that's when the game shows the name).");
 
@@ -126,6 +135,7 @@ namespace RepoFieldGuide.Companion
                     nextSnapshot = Time.unscaledTime + 0.5f;
                     var json = Snapshot.BuildJson(Tracker);
                     if (server != null) server.Latest = json;
+                    Recorder.Tick(json);
                     panel.LatestJsonLength = json.Length;
                 }
 
@@ -150,6 +160,10 @@ namespace RepoFieldGuide.Companion
 
         private void OnGUI() => panel.Draw(Tracker, server);
 
-        private void OnDestroy() => StopServer();
+        private void OnDestroy()
+        {
+            StopServer();
+            Recorder.Close();
+        }
     }
 }

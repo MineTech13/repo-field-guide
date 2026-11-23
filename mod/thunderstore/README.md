@@ -22,3 +22,12 @@ All keys can be changed under **[Keys]** in the config or in-game with REPOConfi
 Every feature can be switched off in the config, or in-game with REPOConfig.
 
 Unofficial fan project, not affiliated with semiwork.
+
+## Debug / collect mode (off by default)
+
+Turn on **Debug → Record sessions** (in REPOConfig or the `.cfg` file) to save, for every level:
+
+- a **recording** (`.jsonl`): what the live link sends, every 2 seconds (adjustable). Play it back on the website's Live page with **▶ Play a recording…**, or send it to the developer to test the guide against real games.
+- a **level dump** (`_level.json`): the full map tiles, rooms, extraction points, spawned monsters and level values, for checking the guide's data and the map drawing.
+
+Files go to `BepInEx/config/RepoFieldGuide/recordings` and stay on your PC. Only the newest 20 are kept (adjustable). The level dump contains things you haven't discovered, so don't open it mid-game if you don't want spoilers. The website never reads it.

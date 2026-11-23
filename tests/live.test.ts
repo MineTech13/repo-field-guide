@@ -121,3 +121,15 @@ describe('phase labels', () => {
     expect(describePhase({ v: 1, phase: 'arena' })!.detail).toMatch(/run is over/);
   });
 });
+
+describe('recordings (mod debug mode)', () => {
+  it('parses frames, skips junk, sorts by time', async () => {
+    const { parseRecording } = await import('../src/live/store');
+    const text = ['{"t":4,"s":{"v":1,"phase":"level"}}', 'garbage', '', '{"t":0,"s":{"v":1,"phase":"lobby"}}', '{"t":2,"s":{"nope":true}}'].join('\n');
+    const frames = parseRecording(text);
+    expect(frames.map((f) => [f.t, f.s.phase])).toEqual([
+      [0, 'lobby'],
+      [4, 'level'],
+    ]);
+  });
+});

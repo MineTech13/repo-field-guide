@@ -68,6 +68,7 @@ export function LivePage() {
             </button>{' '}
             <span class="muted small">A made-up level, no game needed. Your own round isn't touched.</span>
           </p>
+          <RecordingPicker />
           <CompanionPanel snap={snap} />
         </section>
       </div>
@@ -88,7 +89,8 @@ export function LivePage() {
       {snap.demo && (
         <div class="demo-bar" role="status">
           <span>
-            <span class="demo-tag">DEMO</span> A made-up level to show what the Live page does with the companion mod. It loops every 2 minutes.
+            <span class="demo-tag">{snap.demoLabel === 'demo' ? 'DEMO' : 'REPLAY'}</span>{' '}
+            {snap.demoLabel === 'demo' ? 'A made-up level to show what the Live page does with the companion mod. It loops every 2 minutes.' : `Playing back ${snap.demoLabel}. It loops.`}
           </span>
           <button class="btn" onClick={() => liveStore.stopDemo()}>
             Stop demo
@@ -309,4 +311,32 @@ function fmt(sec: number): string {
 
 function monsterCount(n: number): string {
   return n === 0 ? 'no monsters met yet' : `${n} monster type${n === 1 ? '' : 's'} met`;
+}
+
+/** Load a recording from the mod's debug mode and play it back. Reads the file locally; nothing is uploaded. */
+function RecordingPicker() {
+  const [msg, setMsg] = useState<string | null>(null);
+  return (
+    <p>
+      <label class="btn">
+        ▶ Play a recording…
+        <input
+          type="file"
+          accept=".jsonl,.json,.txt"
+          class="sr-only"
+          onChange={async (e) => {
+            const file = (e.target as HTMLInputElement).files?.[0];
+            if (!file) return;
+            try {
+              const n = liveStore.playRecording(await file.text(), file.name);
+              setMsg(`${n} frames loaded.`);
+            } catch (err) {
+              setMsg(err instanceof Error ? err.message : 'Could not read that file.');
+            }
+          }}
+        />
+      </label>{' '}
+      <span class="muted small">{msg ?? 'A .jsonl file from the mod\'s "Record sessions" debug setting (BepInEx/config/RepoFieldGuide/recordings).'}</span>
+    </p>
+  );
 }

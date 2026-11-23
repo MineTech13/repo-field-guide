@@ -3,8 +3,10 @@
 //   node scripts/mock-game.mjs            → cycles level → shop every 20 s
 //   node scripts/mock-game.mjs level|shop → stays on one phase
 //   add --no-stream to act like an older mod without the event stream
+//   node scripts/mock-game.mjs --replay rec.jsonl → plays back a recording from the mod's debug mode
 // Serves http://127.0.0.1:47381/state with the same CORS rules as the mod.
 // To test the site against it, set the port to 47381 in the Game companion section.
+import { readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 
 // 47381, not 47380: the real companion mod owns 47380 on your PC.
@@ -113,7 +115,31 @@ const shop = () => ({
   players: level().players,
 });
 
+// --replay <file.jsonl>: play back a recording from the mod's "Record sessions" debug setting.
+const replayPath = args.includes('--replay') ? args[args.indexOf('--replay') + 1] : null;
+const frames = replayPath
+  ? readFileSync(replayPath, 'utf8')
+      .split('\n')
+      .filter((l) => l.trim())
+      .map((l) => {
+          try {
+            return JSON.parse(l);
+          } catch {
+            return null;
+          }
+        })
+      .filter((f) => f && typeof f.t === 'number' && f.s)
+      .sort((a, b) => a.t - b.t)
+  : null;
+if (frames) console.log(`replaying ${frames.length} frames from ${replayPath}`);
+
 const state = () => {
+  if (frames?.length) {
+    const t = ((Date.now() - start) / 1000) % (frames[frames.length - 1].t + 2);
+    let f = frames[0];
+    for (const fr of frames) if (fr.t <= t) f = fr;
+    return f.s;
+  }
   if (fixed === 'level') return level();
   if (fixed === 'shop') return shop();
   if (fixed) return { v: 1, mod: 'mock', phase: fixed, playerCount: 3, levelsCompleted: 2, surplusK: 12 };

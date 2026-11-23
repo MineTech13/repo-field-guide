@@ -18,7 +18,7 @@ export function LivePill() {
     <a class={`live-pill live-live ${info.waiting ? 'waiting' : ''}`} href={snap.demo ? '#/live' : info.href} title={`${info.title} · ${info.detail}`}>
       <span class="live-dot" aria-hidden="true" />
       <span class="live-pill-text">
-        {snap.demo && <span class="demo-tag">DEMO</span>} {info.icon} <strong>{info.title}</strong>
+        {snap.demo && <span class="demo-tag">{snap.demoLabel === 'demo' ? 'DEMO' : 'REPLAY'}</span>} {info.icon} <strong>{info.title}</strong>
         <span class="live-pill-detail"> · {info.detail}</span>
       </span>
     </a>
