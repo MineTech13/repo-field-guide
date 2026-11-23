@@ -115,6 +115,7 @@ namespace RepoFieldGuide.Companion
                     ["spottedYou"] = e.SpottedYou,
                     ["killed"] = e.Killed,
                 };
+                if (e.Pinged) item["pinged"] = true;
                 if (respawn && e.Parent != null && !e.Parent.Spawned)
                     item["respawnInSec"] = Math.Round(Mathf.Max(0f, e.Parent.DespawnedTimer), 0);
                 list.Add(item);

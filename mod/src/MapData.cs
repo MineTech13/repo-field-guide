@@ -31,6 +31,34 @@ namespace RepoFieldGuide.Companion
             return d;
         }
 
+        // Teammates' last known positions: only from seeing them on your screen, or from their pings.
+        private static readonly Dictionary<string, (Vector3 pos, float time, string how)> mates = new Dictionary<string, (Vector3, float, string)>();
+        private static int sightMask = -1;
+
+        public static void ClearMates() => mates.Clear();
+
+        /// <summary>Called when a teammate pings (Ping_It): you know where they were standing.</summary>
+        public static void MatePinged(PlayerAvatar p)
+        {
+            if (p == null || p.isLocal || p.isDisabled) return;
+            mates[p.playerName ?? "?"] = (p.transform.position, Time.time, "ping");
+        }
+
+        private static void UpdateMateSighting(PlayerAvatar p)
+        {
+            if (p == null || p.isLocal || p.isDisabled) return;
+            var cam = Camera.main;
+            if (cam == null) return;
+            var chest = p.transform.position + Vector3.up * 1.2f;
+            if (Vector3.Distance(cam.transform.position, chest) > 60f) return;
+            bool onScreen;
+            try { onScreen = SemiFunc.OnScreen(chest, -0.05f, -0.05f); } catch { var v = cam.WorldToViewportPoint(chest); onScreen = v.z > 0 && v.x > 0 && v.x < 1 && v.y > 0 && v.y < 1; }
+            if (!onScreen) return;
+            if (sightMask == -1) sightMask = LayerMask.GetMask("Default"); // level geometry only, not the teammate's own body
+            if (Physics.Linecast(cam.transform.position, chest, sightMask, QueryTriggerInteraction.Ignore)) return;
+            mates[p.playerName ?? "?"] = (p.transform.position, Time.time, "seen");
+        }
+
         /// <summary>Everyone in the game. A teammate only counts as dead once their head has been found.</summary>
         public static List<object> Team()
         {
@@ -50,6 +78,16 @@ namespace RepoFieldGuide.Companion
                     ["isLocal"] = p.isLocal,
                     ["dead"] = dead,
                 };
+                if (!p.isLocal && !dead)
+                {
+                    UpdateMateSighting(p);
+                    if (mates.TryGetValue(p.playerName ?? "?", out var m))
+                    {
+                        d["lastSeen"] = P(m.pos);
+                        d["lastSeenAgo"] = Mathf.Round(Time.time - m.time);
+                        d["lastSeenHow"] = m.how;
+                    }
+                }
                 if (dead && head != null && head.triggered)
                 {
                     d["head"] = P(head.transform.position);
@@ -67,6 +105,80 @@ namespace RepoFieldGuide.Companion
         private static Vector3? truckPos; // you always know where the truck is: you start there
         private static float nextRooms;
 
+        // The in-game map is built from these tiles (DirtFinderMapFloor/Wall). A fog cover hides
+        // each room until it's explored, so we only send tiles inside explored rooms.
+        private struct Tile { public Vector3 Pos; public int Layer; public float Yaw, Sx, Sz; public int Kind; public bool Truck; }
+        private static List<Tile> allFloors, allWalls;
+        private static Level tilesLevel;
+        private static int tilesLevelsCompleted = -1;
+        private static List<object> floorCache = new List<object>(), wallCache = new List<object>();
+        private const float LayerHeight = 4f; // Map.LayerHeight
+
+        private static int LayerOf(float y) => Mathf.FloorToInt((y + 0.1f) / LayerHeight);
+
+        private static void CollectTiles()
+        {
+            var run = RunManager.instance;
+            if (allFloors != null && run != null && run.levelCurrent == tilesLevel && run.levelsCompleted == tilesLevelsCompleted) return;
+            if (LevelGenerator.Instance == null || !LevelGenerator.Instance.Generated) return;
+            tilesLevel = run != null ? run.levelCurrent : null;
+            tilesLevelsCompleted = run != null ? run.levelsCompleted : -1;
+            allFloors = new List<Tile>();
+            allWalls = new List<Tile>();
+            foreach (var f in UnityEngine.Object.FindObjectsByType<DirtFinderMapFloor>(FindObjectsSortMode.None))
+            {
+                if (f == null) continue;
+                var t = f.Type;
+                int kind = t == DirtFinderMapFloor.FloorType.Floor_Stairs ? 2
+                    : t.ToString().Contains("Diagonal") ? 1
+                    : t == DirtFinderMapFloor.FloorType.Truck_Floor || t == DirtFinderMapFloor.FloorType.Truck_Wall ? 3
+                    : t.ToString().EndsWith("_Wall") ? 4 : 0;
+                float sz = t.ToString().Contains("1x05") ? 0.5f : t.ToString().Contains("1x025") ? 0.25f : 1f;
+                var sc = f.transform.lossyScale;
+                allFloors.Add(new Tile { Pos = f.transform.position, Layer = LayerOf(f.transform.position.y), Yaw = f.transform.eulerAngles.y, Sx = Mathf.Abs(sc.x), Sz = Mathf.Abs(sc.z) * sz, Kind = kind, Truck = kind == 3 });
+            }
+            foreach (var w in UnityEngine.Object.FindObjectsByType<DirtFinderMapWall>(FindObjectsSortMode.None))
+            {
+                if (w == null) continue;
+                var n = w.Type.ToString();
+                int kind = n.StartsWith("Door_Blocked") ? 2 : n.StartsWith("Door") ? 1 : n.StartsWith("Stairs") ? 3 : 0;
+                float len = n.Contains("1x05") ? 0.5f : n.Contains("1x025") ? 0.25f : n.Contains("1x2") ? 2f : 1f;
+                allWalls.Add(new Tile { Pos = w.transform.position, Layer = LayerOf(w.transform.position.y), Yaw = w.transform.eulerAngles.y, Sx = Mathf.Abs(w.transform.lossyScale.x) * len, Kind = kind });
+            }
+            Plugin.Log.LogInfo($"Map tiles: {allFloors.Count} floors, {allWalls.Count} walls (tile size {LevelGenerator.TileSize} m).");
+        }
+
+        /// <summary>
+        /// Tiles inside explored rooms. Floors: [x, z, layer, yaw, sizeX, sizeZ, kind] (kind 0 floor,
+        /// 1 diagonal, 2 stairs, 3 truck, 4 used/inactive). Walls: [x, z, layer, yaw, length, kind]
+        /// (kind 0 wall, 1 door, 2 blocked door, 3 stairs). Sizes are in tiles (1 = LevelGenerator.TileSize).
+        /// </summary>
+        private static void VisibleTiles(List<Bounds> explored)
+        {
+            CollectTiles();
+            var floors = new List<object>();
+            var walls = new List<object>();
+            if (allFloors == null) { floorCache = floors; wallCache = walls; return; }
+            bool Seen(Vector3 p)
+            {
+                foreach (var b in explored)
+                {
+                    var bb = b;
+                    bb.Expand(1.5f);
+                    if (bb.Contains(p)) return true;
+                }
+                return false;
+            }
+            foreach (var t in allFloors)
+                if (t.Truck || Seen(t.Pos))
+                    floors.Add(new object[] { R(t.Pos.x), R(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), Math.Round(t.Sz, 2), t.Kind });
+            foreach (var t in allWalls)
+                if (Seen(t.Pos))
+                    walls.Add(new object[] { R(t.Pos.x), R(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), t.Kind });
+            floorCache = floors;
+            wallCache = walls;
+        }
+
         public static Dictionary<string, object> Map(Tracker tracker)
         {
             var map = new Dictionary<string, object>();
@@ -78,6 +190,8 @@ namespace RepoFieldGuide.Companion
                 if (cam != null) map["yaw"] = Mathf.Round(cam.transform.eulerAngles.y);
             }
             map["rooms"] = Rooms();
+            map["floors"] = floorCache;
+            map["walls"] = wallCache;
             if (truckPos != null) map["truck"] = P(truckPos.Value);
             map["extraction"] = Extraction();
             map["valuables"] = Valuables();
@@ -95,15 +209,17 @@ namespace RepoFieldGuide.Companion
                 });
             }
             map["monsters"] = seen;
+            if (Pings.Installed && Plugin.Instance.UsePings.Value) map["pings"] = Pings.Snapshot();
             return map;
         }
 
-        /// <summary>Explored rooms as boxes [cx, cy, cz, sx, sy, sz]. Rebuilt every 2 s.</summary>
+        /// <summary>Explored rooms as boxes [cx, cy, cz, sx, sy, sz]. Rebuilt every 2 s, together with the tiles.</summary>
         private static List<object> Rooms()
         {
             if (Time.time < nextRooms) return roomCache;
             nextRooms = Time.time + 2f;
             var list = new List<object>();
+            var explored = new List<Bounds>();
             truckPos = null;
             foreach (var rv in UnityEngine.Object.FindObjectsByType<RoomVolume>(FindObjectsSortMode.None))
             {
@@ -117,10 +233,12 @@ namespace RepoFieldGuide.Companion
                 foreach (var col in rv.GetComponentsInChildren<Collider>())
                 {
                     var b = col.bounds;
+                    explored.Add(b);
                     list.Add(new[] { R(b.center.x), R(b.center.y), R(b.center.z), R(b.size.x), R(b.size.y), R(b.size.z) });
                 }
             }
             roomCache = list;
+            try { VisibleTiles(explored); } catch (Exception ex) { Plugin.Log.LogWarning("Map tiles: " + ex.Message); }
             return list;
         }
 

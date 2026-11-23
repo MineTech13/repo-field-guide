@@ -2,6 +2,7 @@ import { useMemo, useState } from 'preact/hooks';
 import { advise } from '../engine/advise';
 import { dollarsK, planExtraction } from '../engine/extraction';
 import { navTargets } from '../engine/navigate';
+import { buildGrid, findRoute } from '../engine/pathfind';
 import { describePhase } from '../live/phase';
 import { live as liveStore } from '../live/store';
 import { useLiveRound } from '../live/useLiveRound';
@@ -32,6 +33,10 @@ export function LivePage() {
   const targets = useMemo(() => (live ? navTargets(live, plan) : []), [live, plan]);
   const [findId, setFindId] = useState<string | null>(null);
   const findTarget = targets.find((t) => t.id === findId) ?? null;
+  // The walkable grid only changes when more of the map is explored.
+  const tileSig = `${layout?.floors?.length ?? 0}|${layout?.walls?.length ?? 0}`;
+  const grid = useMemo(() => (layout ? buildGrid(layout) : null), [tileSig]); // eslint-disable-line react-hooks/exhaustive-deps
+  const route = useMemo(() => (grid && findTarget && layout?.me ? findRoute(grid, layout.me, findTarget.at) : null), [grid, findTarget?.id, layout?.me?.join(',')]); // eslint-disable-line react-hooks/exhaustive-deps
   const [zoom, setZoom] = useState<number>(() => {
     try {
       return Number(localStorage.getItem(ZOOM_KEY) ?? 1);
@@ -174,7 +179,7 @@ export function LivePage() {
               </span>
             </div>
             {layout ? (
-              <LiveMap live={live} plan={plan} radius={ZOOMS[zoom]?.radius} minimap target={findTarget?.at} />
+              <LiveMap live={live} plan={plan} radius={ZOOMS[zoom]?.radius} minimap target={findTarget?.at} route={route} />
             ) : (
               <p class="muted small">Turn on "Map and extraction planner" in the mod settings.</p>
             )}
@@ -205,7 +210,7 @@ export function LivePage() {
             {layout && (
               <section class="panel live-find">
                 <h2>Find</h2>
-                <FindPanel targets={targets} selected={findTarget ? findId : null} onSelect={setFindId} me={layout.me} yaw={layout.yaw} />
+                <FindPanel targets={targets} selected={findTarget ? findId : null} onSelect={setFindId} me={layout.me} yaw={layout.yaw} route={route} hasTiles={!!grid} />
               </section>
             )}
 

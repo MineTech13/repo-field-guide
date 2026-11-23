@@ -5,7 +5,7 @@ import { dollarsK, type ExtractionPlan } from './extraction';
 /** Something discovered you can navigate to. */
 export interface NavTarget {
   id: string;
-  kind: 'extraction' | 'truck' | 'head' | 'valuable' | 'monster';
+  kind: 'extraction' | 'truck' | 'mate' | 'head' | 'valuable' | 'monster' | 'ping';
   icon: string;
   label: string;
   at: Vec3;
@@ -24,6 +24,10 @@ export function navTargets(live: GameStateV1, plan: ExtractionPlan): NavTarget[]
   }
   if (L.truck) out.push({ id: 'truck', kind: 'truck', icon: '🚚', label: 'Truck', at: L.truck });
   for (const p of live.team ?? []) {
+    if (!p.isLocal && !p.dead && p.lastSeen)
+      out.push({ id: `mate-${p.name}`, kind: 'mate', icon: '🙂', label: `${p.name} (${p.lastSeenAgo != null && p.lastSeenAgo < 5 ? 'now' : `${fmtAgo(p.lastSeenAgo ?? 0)} ago`})`, at: p.lastSeen });
+  }
+  for (const p of live.team ?? []) {
     if (p.dead && p.head && !p.isLocal && p.headIn !== 'truck') out.push({ id: `head-${p.name}`, kind: 'head', icon: '💀', label: `${p.name}'s head`, at: p.head });
   }
   for (const v of [...(L.valuables ?? [])].filter((v) => !v.inHaul).sort((a, b) => b.value - a.value)) {
@@ -34,7 +38,21 @@ export function navTargets(live: GameStateV1, plan: ExtractionPlan): NavTarget[]
     const info = m.key ? monsterByKey.get(m.key) : undefined;
     out.push({ id: `mon-${m.key ?? m.name}`, kind: 'monster', icon: info?.emoji ?? '❓', label: `${info?.name ?? m.name ?? 'Monster'} (last seen)`, at: m.at });
   }
+  for (const [i, p] of (L.pings ?? []).entries()) {
+    const what = p.kind === 'Enemy' ? (p.name ? `${p.name}` : 'Unknown enemy') : p.name ? p.name : p.kind.toLowerCase();
+    out.push({ id: `ping-${i}-${p.at.join(',')}`, kind: 'ping', icon: p.kind === 'Enemy' ? '❗' : '📍', label: `${what}${p.by ? ` (${p.by})` : ''}`, at: p.at });
+  }
   return out;
+}
+
+function fmtAgo(sec: number): string {
+  return sec < 60 ? `${Math.round(sec)} s` : `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, '0')}`;
+}
+
+/** Point to steer towards: the first route waypoint at least `ahead` metres away. */
+export function steerPoint(me: Vec3, points: Vec3[], ahead = 3): Vec3 {
+  for (const p of points.slice(1)) if (Math.hypot(p[0] - me[0], p[2] - me[2]) >= ahead) return p;
+  return points[points.length - 1];
 }
 
 export interface Heading {

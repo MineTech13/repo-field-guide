@@ -41,12 +41,25 @@ export interface GameStateV1 {
 
 export type Vec3 = [number, number, number];
 
+export interface LivePing {
+  kind: 'Valuable' | 'Enemy' | 'Item' | 'Location' | 'Cosmetic' | 'Cart' | string;
+  at: Vec3;
+  agoSec?: number;
+  by?: string;
+  name?: string;
+  value?: number;
+}
+
 export interface LiveTeammate {
   name: string;
   isLocal?: boolean;
   dead?: boolean;
   head?: Vec3;
   headIn?: 'truck' | 'extraction';
+  /** Last known position (alive teammates): when they were on your screen or pinged. */
+  lastSeen?: Vec3;
+  lastSeenAgo?: number;
+  lastSeenHow?: 'seen' | 'ping';
 }
 
 export interface LiveLayout {
@@ -55,6 +68,16 @@ export interface LiveLayout {
   yaw?: number;
   /** Where the truck is (you start there, so it's always known). */
   truck?: Vec3;
+  /**
+   * In-game map tiles inside explored rooms (what the Tab map shows). Sizes are in tiles
+   * (1 = 5 m). Floors: [x, z, layer, yaw, sizeX, sizeZ, kind] with kind 0 floor, 1 diagonal,
+   * 2 stairs, 3 truck, 4 used/inactive. Walls: [x, z, layer, yaw, length, kind] with kind
+   * 0 wall, 1 door, 2 blocked door, 3 stairs. A layer is 4 m of height.
+   */
+  floors?: [number, number, number, number, number, number, number][];
+  walls?: [number, number, number, number, number, number][];
+  /** Ping_It pings (if installed). Enemy pings only have a name with the Ping Info upgrade. */
+  pings?: LivePing[];
   /** Explored rooms as boxes [cx, cy, cz, sx, sy, sz]. */
   rooms?: [number, number, number, number, number, number][];
   extraction?: {
@@ -90,6 +113,8 @@ export interface LiveEncounter {
   onScreen?: boolean;
   spottedYou?: boolean;
   killed?: boolean;
+  /** Identified through a Ping_It ping with Ping Info. */
+  pinged?: boolean;
   /** Seconds until respawn, only while despawned. */
   respawnInSec?: number;
 }

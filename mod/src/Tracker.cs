@@ -14,6 +14,7 @@ namespace RepoFieldGuide.Companion
         public bool OnScreen;     // was on the local player's screen
         public bool SpottedYou;   // its vision triggered on the local player
         public bool Killed;
+        public bool Pinged;          // identified through a Ping_It ping with Ping Info
         public Vector3? LastSeenPos; // where it was the last time it was on your screen
         public float LastSeenAt;     // seconds since the level started
     }
@@ -44,6 +45,8 @@ namespace RepoFieldGuide.Companion
                 lastLevel = run.levelCurrent;
                 lastLevelsCompleted = run.levelsCompleted;
                 encounters.Clear();
+                Pings.Clear();
+                MapData.ClearMates();
                 levelStart = Time.time;
             }
 
@@ -75,6 +78,16 @@ namespace RepoFieldGuide.Companion
                     else if (parent.Spawned && e.Killed && enemy.HasHealth && enemy.Health != null && enemy.Health.healthCurrent > 0) e.Killed = false;
                 }
             }
+        }
+
+        /// <summary>Called from the Ping_It hook when an enemy ping shows its name (Ping Info).</summary>
+        public void MarkPinged(EnemyParent parent, Vector3 at)
+        {
+            if (parent == null || !Plugin.Instance.TrackMonsters.Value) return;
+            var e = Get(parent);
+            e.Pinged = true;
+            e.LastSeenPos = at;
+            e.LastSeenAt = LevelTime;
         }
 
         /// <summary>Called from the EnemyVision.VisionTrigger patch.</summary>

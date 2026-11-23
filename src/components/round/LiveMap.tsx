@@ -1,6 +1,9 @@
 import { MONSTERS } from '../../data';
 import { dollarsK, type ExtractionPlan } from '../../engine/extraction';
+import { floorCorners, layerOf, wallSegment, type Route } from '../../engine/pathfind';
 import type { GameStateV1, Vec3 } from '../../live/schema';
+
+const PING_ICON: Record<string, string> = { Valuable: '💰', Item: '🔧', Location: '📍', Cosmetic: '🎩', Cart: '🛒' };
 
 const monsterByKey = new Map(MONSTERS.map((m) => [m.gameKey, m]));
 
@@ -15,6 +18,7 @@ export function LiveMap({
   radius,
   minimap,
   target,
+  route,
 }: {
   live: GameStateV1;
   plan: ExtractionPlan;
@@ -24,20 +28,36 @@ export function LiveMap({
   minimap?: boolean;
   /** Something you're looking for: drawn with a line from you. */
   target?: Vec3 | null;
+  /** Walking route to the target over the explored map. */
+  route?: Route | null;
 }) {
   const L = live.layout;
   if (!L) return null;
   const rooms = L.rooms ?? [];
   const me = L.me;
   const floorY = me?.[1] ?? null;
+  const myLayer = me ? layerOf(me[1]) : null;
   const sameFloor = (y: number, halfHeight = 2.5) => floorY == null || Math.abs(y - floorY) <= Math.max(2.5, halfHeight);
+  const floors = L.floors ?? [];
+  const walls = L.walls ?? [];
+  const tiles = floors.length > 0;
+  const layerFade = (l: number) => (myLayer == null || l === myLayer ? 1 : 0.22);
+  const pings = L.pings ?? [];
 
   // Bounds over everything we draw.
   const xs: number[] = [];
   const zs: number[] = [];
-  for (const r of rooms) {
-    xs.push(r[0] - r[3] / 2, r[0] + r[3] / 2);
-    zs.push(r[2] - r[5] / 2, r[2] + r[5] / 2);
+  if (tiles) {
+    for (const f of floors)
+      for (const [x, z] of floorCorners(f)) {
+        xs.push(x);
+        zs.push(z);
+      }
+  } else {
+    for (const r of rooms) {
+      xs.push(r[0] - r[3] / 2, r[0] + r[3] / 2);
+      zs.push(r[2] - r[5] / 2, r[2] + r[5] / 2);
+    }
   }
   const marks: Vec3[] = [
     ...(me ? [me] : []),
@@ -45,6 +65,7 @@ export function LiveMap({
     ...(L.truck ? [L.truck] : []),
     ...(L.valuables ?? []).map((v) => v.at),
     ...(L.monsters ?? []).map((m) => m.at),
+    ...pings.map((p) => p.at),
   ];
   for (const m of marks) {
     xs.push(m[0]);
@@ -83,9 +104,28 @@ export function LiveMap({
   return (
     <figure class={`live-map ${minimap ? 'minimap' : ''}`}>
       <svg viewBox={`${minX} ${-maxZ} ${w} ${h}`} role="img" aria-label="Map of what you've explored">
-        {rooms.map((r) => (
-          <rect class="lm-room" x={r[0] - r[3] / 2} y={-(r[2] + r[5] / 2)} width={r[3]} height={r[5]} opacity={sameFloor(r[1], r[4] / 2) ? 1 : 0.25} vector-effect="non-scaling-stroke" />
-        ))}
+        {/* The in-game Tab map: floor tiles, walls, doors, stairs (explored rooms only). */}
+        {tiles &&
+          [...floors]
+            .sort((a, b) => (a[2] === myLayer ? 1 : 0) - (b[2] === myLayer ? 1 : 0))
+            .map((f) => (
+              <polygon
+                class={`lm-floor k${f[6]}`}
+                points={floorCorners(f)
+                  .map(([x, z]) => `${x},${-z}`)
+                  .join(' ')}
+                opacity={layerFade(f[2])}
+              />
+            ))}
+        {tiles &&
+          walls.map((w) => {
+            const [x1, z1, x2, z2] = wallSegment(w);
+            return <line class={`lm-wall k${w[5]}`} x1={x1} y1={-z1} x2={x2} y2={-z2} opacity={layerFade(w[2])} vector-effect="non-scaling-stroke" />;
+          })}
+        {!tiles &&
+          rooms.map((r) => (
+            <rect class="lm-room" x={r[0] - r[3] / 2} y={-(r[2] + r[5] / 2)} width={r[3]} height={r[5]} opacity={sameFloor(r[1], r[4] / 2) ? 1 : 0.25} vector-effect="non-scaling-stroke" />
+          ))}
 
         {/* planned routes: big items to their extraction */}
         {plan.points.map((p) => p.big.map((it) => <line class="lm-route" x1={X(it.at)} y1={Y(it.at)} x2={X(p.at)} y2={Y(p.at)} vector-effect="non-scaling-stroke" opacity={fade(it.at[1]) * 0.8} />))}
@@ -147,6 +187,20 @@ export function LiveMap({
           </text>
         ))}
 
+        {(live.team ?? [])
+          .filter((p) => !p.isLocal && !p.dead && p.lastSeen)
+          .map((p) => (
+            <g class="lm-mate" opacity={Math.max(0.35, 1 - (p.lastSeenAgo ?? 0) / 120) * fade(p.lastSeen![1])}>
+              <circle cx={X(p.lastSeen!)} cy={Y(p.lastSeen!)} r={unit * 1.8} vector-effect="non-scaling-stroke" />
+              <text x={X(p.lastSeen!)} y={Y(p.lastSeen!) - unit * 2.6} font-size={unit * 2.2} text-anchor="middle">
+                {p.name}
+              </text>
+              <title>
+                {p.name} · {p.lastSeenHow === 'ping' ? 'pinged from here' : 'last seen here'} {fmtAgo(p.lastSeenAgo)}
+              </title>
+            </g>
+          ))}
+
         {L.truck && (
           <text x={X(L.truck)} y={Y(L.truck)} font-size={unit * 4} text-anchor="middle" dominant-baseline="central" opacity={fade(L.truck[1])}>
             🚚
@@ -154,9 +208,30 @@ export function LiveMap({
           </text>
         )}
 
+        {pings.map((p) => (
+          <g class={`lm-ping k-${p.kind.toLowerCase()}`} opacity={Math.max(0.35, 1 - (p.agoSec ?? 0) / 90) * fade(p.at[1])}>
+            <circle cx={X(p.at)} cy={Y(p.at)} r={unit * 2.6} vector-effect="non-scaling-stroke" />
+            <text x={X(p.at)} y={Y(p.at)} font-size={unit * 2.8} text-anchor="middle" dominant-baseline="central">
+              {p.kind === 'Enemy' ? (p.name ? (MONSTERS.find((m) => m.name === p.name)?.emoji ?? '👾') : '❗') : (PING_ICON[p.kind] ?? '📍')}
+            </text>
+            <title>
+              {p.kind === 'Enemy'
+                ? p.name
+                  ? `${p.name} (pinged)`
+                  : 'Pinged enemy, unknown which (needs Ping Info)'
+                : `Pinged ${p.kind.toLowerCase()}${p.name ? `: ${p.name}` : ''}${p.value ? ` ${dollarsK(p.value)}` : ''}`}
+              {p.by ? ` · by ${p.by}` : ''} · {fmtAgo(p.agoSec)}
+            </title>
+          </g>
+        ))}
+
         {target && me && (
           <g class="lm-target">
-            <line x1={X(me)} y1={Y(me)} x2={X(target)} y2={Y(target)} vector-effect="non-scaling-stroke" />
+            {route ? (
+              <polyline points={route.points.map((p) => `${X(p)},${Y(p)}`).join(' ')} vector-effect="non-scaling-stroke" />
+            ) : (
+              <line x1={X(me)} y1={Y(me)} x2={X(target)} y2={Y(target)} vector-effect="non-scaling-stroke" class="straight" />
+            )}
             <circle cx={X(target)} cy={Y(target)} r={unit * 4} vector-effect="non-scaling-stroke" />
           </g>
         )}

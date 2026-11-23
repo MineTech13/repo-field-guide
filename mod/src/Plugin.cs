@@ -13,11 +13,12 @@ namespace RepoFieldGuide.Companion
     /// and shares it with the website on this PC (127.0.0.1) or as a copy code.
     /// </summary>
     [BepInPlugin(Guid, Name, Version)]
+    [BepInDependency("eberk30.pingit", BepInDependency.DependencyFlags.SoftDependency)] // load after Ping_It, if installed
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string Guid = "minetech13.repofieldguide.companion";
         public const string Name = "R.E.P.O. Field Guide Companion";
-        public const string Version = "0.2.5";
+        public const string Version = "0.2.6";
 
         internal static Plugin Instance { get; private set; }
         internal static ManualLogSource Log { get; private set; }
@@ -29,6 +30,7 @@ namespace RepoFieldGuide.Companion
         internal ConfigEntry<bool> ShowRespawnTimers;
         internal ConfigEntry<bool> TeamStatus;
         internal ConfigEntry<bool> ShareMap;
+        internal ConfigEntry<bool> UsePings;
         internal ConfigEntry<bool> LiveLink;
         internal ConfigEntry<int> Port;
         internal ConfigEntry<string> AllowedOrigins;
@@ -59,6 +61,8 @@ namespace RepoFieldGuide.Companion
                 "Your health, and teammates who died (only once someone has found their head, like in the game).");
             ShareMap = Config.Bind("Features", "Map and extraction planner", true,
                 "Explored rooms, extraction points, discovered valuables, where you last saw each monster. Only what the in-game map would show you.");
+            UsePings = Config.Bind("Features", "Use Ping_It pings", true,
+                "If Ping_It is installed: show pings on the map. Enemy pings count as seen only with the Ping Info upgrade (that's when the game shows the name).");
 
             LiveLink = Config.Bind("Live link", "Enabled", true,
                 "Serve read-only game data on this PC for the website (http://127.0.0.1:<port>/state). Nothing leaves your PC.");
@@ -80,7 +84,9 @@ namespace RepoFieldGuide.Companion
 
             Tracker = new Tracker();
             panel = new Panel();
-            Patches.Apply(new Harmony(Guid));
+            var harmony = new Harmony(Guid);
+            Patches.Apply(harmony);
+            Pings.Apply(harmony);
 
             if (LiveLink.Value) StartServer();
             LiveLink.SettingChanged += (_, __) => { if (LiveLink.Value) StartServer(); else StopServer(); };
