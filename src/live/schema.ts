@@ -67,6 +67,8 @@ export interface LiveLayout {
   me?: Vec3;
   /** You're dead and spectating: the map shows what the whole team can see. */
   spectating?: boolean;
+  /** While spectating: the player you're watching. The map centres on them. */
+  watching?: string;
   /** Camera heading in degrees. */
   yaw?: number;
   /** Where the truck is (you start there, so it's always known). */

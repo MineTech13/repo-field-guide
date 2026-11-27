@@ -141,7 +141,7 @@ export function LivePage() {
         )}
         {layout?.spectating && (
           <span class="ls-spectating" title="You're dead: you can watch everyone, so the map shows what the whole team can see.">
-            👻 Spectating: showing what the team sees
+            👻 Spectating{layout.watching ? ` ${layout.watching}` : ''}: showing what the team sees
           </span>
         )}
       </header>

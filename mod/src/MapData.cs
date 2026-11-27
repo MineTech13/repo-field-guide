@@ -226,9 +226,22 @@ namespace RepoFieldGuide.Companion
             if (me != null)
             {
                 var cam = Camera.main;
-                // While spectating, "you" are the camera following a teammate.
-                map["me"] = P(me.isDisabled && cam != null ? cam.transform.position : me.transform.position);
-                if (me.isDisabled) map["spectating"] = true;
+                var at = me.transform.position;
+                if (me.isDisabled)
+                {
+                    // Spectating: "you" are the player you're watching (or your head, right after dying).
+                    map["spectating"] = true;
+                    var sc = SpectateCamera.instance;
+                    var watched = sc != null ? sc.player : null;
+                    if (watched != null && !watched.isDisabled && !watched.isLocal)
+                    {
+                        at = watched.transform.position;
+                        map["watching"] = watched.playerName;
+                    }
+                    else if (me.playerDeathHead != null && me.playerDeathHead.triggered) at = me.playerDeathHead.transform.position;
+                    else if (cam != null) at = cam.transform.position;
+                }
+                map["me"] = P(at);
                 if (cam != null) map["yaw"] = Mathf.Round(cam.transform.eulerAngles.y);
             }
             map["rooms"] = Rooms();

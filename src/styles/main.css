@@ -2161,6 +2161,9 @@ a.chip:hover {
   font-family: var(--mono);
   font-weight: 700;
 }
+.lm-me.ghost {
+  fill: #a78bfa;
+}
 .lm-me {
   fill: #4fc3ff;
   stroke: #002b40;

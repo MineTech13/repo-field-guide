@@ -239,8 +239,8 @@ export function LiveMap({
 
         {me && (
           <g transform={`translate(${X(me)} ${Y(me)}) rotate(${L.yaw ?? 0})`}>
-            <polygon class="lm-me" points={`0,${-unit * 3} ${unit * 2},${unit * 2} 0,${unit * 1} ${-unit * 2},${unit * 2}`} vector-effect="non-scaling-stroke" />
-            <title>You</title>
+            <polygon class={`lm-me ${L.spectating ? 'ghost' : ''}`} points={`0,${-unit * 3} ${unit * 2},${unit * 2} 0,${unit * 1} ${-unit * 2},${unit * 2}`} vector-effect="non-scaling-stroke" />
+            <title>{L.spectating ? (L.watching ? `Watching ${L.watching}` : 'Spectating') : 'You'}</title>
           </g>
         )}
       </svg>
