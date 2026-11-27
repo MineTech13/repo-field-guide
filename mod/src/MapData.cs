@@ -107,7 +107,7 @@ namespace RepoFieldGuide.Companion
 
         // The in-game map is built from these tiles (DirtFinderMapFloor/Wall). A fog cover hides
         // each room until it's explored, so we only send tiles inside explored rooms.
-        private struct Tile { public Vector3 Pos; public int Layer; public float Yaw, Sx, Sz; public int Kind; public bool Truck; }
+        private struct Tile { public Vector3 Pos, Mid; public int Layer; public float Yaw, Sx, Sz; public int Kind; public bool Truck; }
         private static List<Tile> allFloors, allWalls;
         private static Level tilesLevel;
         private static int tilesLevelsCompleted = -1;
@@ -133,9 +133,11 @@ namespace RepoFieldGuide.Companion
                     : t.ToString().Contains("Diagonal") ? 1
                     : t == DirtFinderMapFloor.FloorType.Truck_Floor || t == DirtFinderMapFloor.FloorType.Truck_Wall ? 3
                     : t.ToString().EndsWith("_Wall") ? 4 : 0;
-                float sz = t.ToString().Contains("1x05") ? 0.5f : t.ToString().Contains("1x025") ? 0.25f : 1f;
+                if (t.ToString().EndsWith("_Wall")) continue; // truck/extraction walls, not floor
+                // Map pieces are squares (1x1, 0.5x0.5, 0.25x0.25) anchored at a corner, scaled by the transform.
+                float s = t.ToString().Contains("1x05") ? 0.5f : t.ToString().Contains("1x025") ? 0.25f : 1f;
                 var sc = f.transform.lossyScale;
-                allFloors.Add(new Tile { Pos = f.transform.position, Layer = LayerOf(f.transform.position.y), Yaw = f.transform.eulerAngles.y, Sx = Mathf.Abs(sc.x), Sz = Mathf.Abs(sc.z) * sz, Kind = kind, Truck = kind == 3 });
+                allFloors.Add(new Tile { Pos = f.transform.position, Mid = f.transform.position + (f.transform.right * Mathf.Abs(sc.x) * s + f.transform.forward * Mathf.Abs(sc.z) * s) * (LevelGenerator.TileSize / 2f), Layer = LayerOf(f.transform.position.y), Yaw = f.transform.eulerAngles.y, Sx = Mathf.Abs(sc.x) * s, Sz = Mathf.Abs(sc.z) * s, Kind = kind, Truck = kind == 3 });
             }
             foreach (var w in UnityEngine.Object.FindObjectsByType<DirtFinderMapWall>(FindObjectsSortMode.None))
             {
@@ -143,7 +145,9 @@ namespace RepoFieldGuide.Companion
                 var n = w.Type.ToString();
                 int kind = n.StartsWith("Door_Blocked") ? 2 : n.StartsWith("Door") ? 1 : n.StartsWith("Stairs") ? 3 : 0;
                 float len = n.Contains("1x05") ? 0.5f : n.Contains("1x025") ? 0.25f : n.Contains("1x2") ? 2f : 1f;
-                allWalls.Add(new Tile { Pos = w.transform.position, Layer = LayerOf(w.transform.position.y), Yaw = w.transform.eulerAngles.y, Sx = Mathf.Abs(w.transform.lossyScale.x) * len, Kind = kind });
+                float l = Mathf.Abs(w.transform.lossyScale.x) * len;
+                // Walls start at their pivot and run along local X.
+                allWalls.Add(new Tile { Pos = w.transform.position, Mid = w.transform.position + w.transform.right * l * (LevelGenerator.TileSize / 2f), Layer = LayerOf(w.transform.position.y), Yaw = w.transform.eulerAngles.y, Sx = Mathf.Abs(w.transform.lossyScale.x) * len, Kind = kind });
             }
             Plugin.Log.LogInfo($"Map tiles: {allFloors.Count} floors, {allWalls.Count} walls (tile size {LevelGenerator.TileSize} m).");
         }
@@ -170,10 +174,10 @@ namespace RepoFieldGuide.Companion
                 return false;
             }
             foreach (var t in allFloors)
-                if (t.Truck || Seen(t.Pos))
+                if (t.Truck || Seen(t.Mid))
                     floors.Add(new object[] { R(t.Pos.x), R(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), Math.Round(t.Sz, 2), t.Kind });
             foreach (var t in allWalls)
-                if (Seen(t.Pos))
+                if (Seen(t.Mid))
                     walls.Add(new object[] { R(t.Pos.x), R(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), t.Kind });
             floorCache = floors;
             wallCache = walls;

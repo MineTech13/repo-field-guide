@@ -24,7 +24,6 @@ const ROOMS: { name: string; i0: number; j0: number; i1: number; j1: number; lay
   { name: 'Upstairs west', i0: -8, j0: -1, i1: -5, j1: 2, layer: 1 },
 ];
 
-const c = (i: number) => i * T + T / 2;
 
 // Where "you" walk: seconds → position.
 const PATH: [number, Vec3][] = [
@@ -87,7 +86,7 @@ ROOMS.forEach((r, ri) => {
 });
 const floorsByRoom: FloorTile[][] = ROOMS.map((r) => {
   const out: FloorTile[] = [];
-  for (let i = r.i0; i < r.i1; i++) for (let j = r.j0; j < r.j1; j++) out.push([c(i), c(j), r.layer, 0, 1, 1, r.truck ? 3 : r.stairs && r.stairs[0] === i && r.stairs[1] === j ? 2 : 0]);
+  for (let i = r.i0; i < r.i1; i++) for (let j = r.j0; j < r.j1; j++) out.push([i * T, j * T, r.layer, 0, 1, 1, r.truck ? 3 : r.stairs && r.stairs[0] === i && r.stairs[1] === j ? 2 : 0]);
   return out;
 });
 // One door per pair of neighbouring rooms, in the middle of their shared wall.
@@ -127,9 +126,9 @@ for (const [k, edges] of shared) {
   });
 }
 function edge(layer: number, i: number, j: number, di: number, dj: number, kind: number): WallTile {
-  // yaw 0 = runs east-west, 90 = runs north-south
-  if (di !== 0) return [i * T + (di > 0 ? T : 0), c(j), layer, 90, 1, kind];
-  return [c(i), j * T + (dj > 0 ? T : 0), layer, 0, 1, kind];
+  // Walls start at their pivot: yaw 0 runs east (+x), yaw 90 runs south (-z).
+  if (di !== 0) return [i * T + (di > 0 ? T : 0), (j + 1) * T, layer, 90, 1, kind];
+  return [i * T, j * T + (dj > 0 ? T : 0), layer, 0, 1, kind];
 }
 
 function posAt(t: number): Vec3 {

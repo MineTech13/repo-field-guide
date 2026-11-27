@@ -23,36 +23,50 @@ export function axes(yaw: number): { right: [number, number]; forward: [number, 
   return { right: [Math.cos(r), -Math.sin(r)], forward: [Math.sin(r), Math.cos(r)] };
 }
 
-/** A wall's two ends on the floor plan [x1, z1, x2, z2]. */
+/**
+ * A wall's two ends on the floor plan [x1, z1, x2, z2]. Like the game's map pieces, a wall
+ * starts at its pivot and runs `len` tiles along its local X axis.
+ */
 export function wallSegment(w: Wall): [number, number, number, number] {
   const [x, z, , yaw, len] = w;
   const { right } = axes(yaw);
-  const h = (len * TILE) / 2;
-  return [x - right[0] * h, z - right[1] * h, x + right[0] * h, z + right[1] * h];
+  const l = len * TILE;
+  return [x, z, x + right[0] * l, z + right[1] * l];
 }
 
-/** A floor tile's four corners on the floor plan. */
+/**
+ * A floor tile's size in tiles [along X, along Z]. The pieces are squares (1x1, 0.5x0.5,
+ * 0.25x0.25); companion 0.2.6–0.2.7 sent the small ones as 1 by 0.5, so square those up.
+ */
+export function floorSize(f: Floor): [number, number] {
+  const [, , , , sx, sz, kind] = f;
+  return kind !== 3 && sz < sx ? [sz, sz] : [sx, sz];
+}
+
+/** A floor tile's four corners on the floor plan. Pieces are anchored at a corner and extend along local +X and +Z. */
 export function floorCorners(f: Floor): [number, number][] {
-  const [x, z, , yaw, sx, sz] = f;
+  const [x, z, , yaw] = f;
+  const [sx, sz] = floorSize(f);
   const { right, forward } = axes(yaw);
-  const hx = (sx * TILE) / 2;
-  const hz = (sz * TILE) / 2;
+  const a = sx * TILE;
+  const b = sz * TILE;
   return [
-    [x - right[0] * hx - forward[0] * hz, z - right[1] * hx - forward[1] * hz],
-    [x + right[0] * hx - forward[0] * hz, z + right[1] * hx - forward[1] * hz],
-    [x + right[0] * hx + forward[0] * hz, z + right[1] * hx + forward[1] * hz],
-    [x - right[0] * hx + forward[0] * hz, z - right[1] * hx + forward[1] * hz],
+    [x, z],
+    [x + right[0] * a, z + right[1] * a],
+    [x + right[0] * a + forward[0] * b, z + right[1] * a + forward[1] * b],
+    [x + forward[0] * b, z + forward[1] * b],
   ];
 }
 
 function insideTile(f: Floor, px: number, pz: number): boolean {
-  const [x, z, , yaw, sx, sz] = f;
+  const [x, z, , yaw] = f;
+  const [sx, sz] = floorSize(f);
   const { right, forward } = axes(yaw);
   const dx = px - x;
   const dz = pz - z;
   const u = dx * right[0] + dz * right[1];
   const v = dx * forward[0] + dz * forward[1];
-  return Math.abs(u) <= (sx * TILE) / 2 + 0.01 && Math.abs(v) <= (sz * TILE) / 2 + 0.01;
+  return u >= -0.01 && u <= sx * TILE + 0.01 && v >= -0.01 && v <= sz * TILE + 0.01;
 }
 
 function segmentsCross(a: number[], b: number[]): boolean {

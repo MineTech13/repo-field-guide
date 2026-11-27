@@ -1,20 +1,48 @@
 import { describe, expect, it } from 'vitest';
-import { buildGrid, findRoute, wallSegment } from '../src/engine/pathfind';
+import { buildGrid, findRoute, floorCorners, wallSegment } from '../src/engine/pathfind';
 import { demoState } from '../src/live/demo';
 import type { LiveLayout } from '../src/live/schema';
 
 type F = NonNullable<LiveLayout['floors']>[number];
 type W = NonNullable<LiveLayout['walls']>[number];
-const tile = (i: number, j: number, layer = 0, kind = 0): F => [i * 5 + 2.5, j * 5 + 2.5, layer, 0, 1, 1, kind];
+// Map pieces are anchored at a corner (like the game's DirtFinderMapFloor).
+const tile = (i: number, j: number, layer = 0, kind = 0): F => [i * 5, j * 5, layer, 0, 1, 1, kind];
 
 describe('route over the explored map', () => {
   // Two rooms side by side (x 0..10 and 10..20, z 0..5), wall between them at x = 10.
   const floors = [tile(0, 0), tile(1, 0), tile(2, 0), tile(3, 0)];
-  const wallAt = (kind: number): W => [10, 2.5, 0, 90, 1, kind];
+  const wallAt = (kind: number): W => [10, 5, 0, 90, 1, kind]; // runs from z 5 to z 0
 
-  it('wall segments follow the yaw', () => {
-    expect(wallSegment([10, 2.5, 0, 90, 1, 0]).map((n) => Math.round(n * 10) / 10)).toEqual([10, 5, 10, 0]);
-    expect(wallSegment([2.5, 5, 0, 0, 1, 0]).map((n) => Math.round(n * 10) / 10)).toEqual([0, 5, 5, 5]);
+  it('wall segments start at the pivot and follow the yaw', () => {
+    expect(wallSegment([10, 5, 0, 90, 1, 0]).map((n) => Math.round(n * 10) / 10)).toEqual([10, 5, 10, 0]);
+    expect(wallSegment([0, 5, 0, 0, 1, 0]).map((n) => Math.round(n * 10) / 10)).toEqual([0, 5, 5, 5]);
+    // Real Museum wall: Wall_1x1 at (22.5, 20), yaw 270 → runs north from z 20 to z 25.
+    expect(wallSegment([22.5, 20, 0, 270, 1, 0]).map((n) => Math.round(n * 10) / 10)).toEqual([22.5, 20, 22.5, 25]);
+  });
+
+  it('floor pieces are squares anchored at a corner', () => {
+    const r = (c: [number, number][]) => c.map(([x, z]) => [Math.round(x * 10) / 10, Math.round(z * 10) / 10]);
+    // Real Museum 1x1 at (2.5, -5), yaw 180 → covers x -2.5..2.5, z -10..-5.
+    expect(r(floorCorners([2.5, -5, 0, 180, 1, 1, 0]))).toEqual([
+      [2.5, -5],
+      [-2.5, -5],
+      [-2.5, -10],
+      [2.5, -10],
+    ]);
+    // Companion 0.2.7 sent a 0.5x0.5 piece as 1 by 0.5: drawn as a 2.5 m square.
+    expect(r(floorCorners([-2.5, 17.5, 0, 0, 1, 0.5, 0]))).toEqual([
+      [-2.5, 17.5],
+      [0, 17.5],
+      [0, 20],
+      [-2.5, 20],
+    ]);
+    // The truck floor keeps its real proportions.
+    expect(r(floorCorners([2.3, -26.59, 0, 270, 2.84, 0.9, 3]))).toEqual([
+      [2.3, -26.6],
+      [2.3, -12.4],
+      [-2.2, -12.4],
+      [-2.2, -26.6],
+    ]);
   });
 
   it('goes through a door', () => {

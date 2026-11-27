@@ -41,8 +41,8 @@ namespace RepoFieldGuide.Companion
                 string key = run == null || run.levelCurrent == null ? "menu" : $"{run.levelsCompleted}|{run.levelCurrent.name}|{SemiFunc.RunIsLevel()}|{SemiFunc.RunIsShop()}";
                 if (key != currentKey)
                 {
+                    Open(run); // closes the previous file first
                     currentKey = key;
-                    Open(run);
                 }
                 if (!levelDumped && SemiFunc.RunIsLevel() && LevelGenerator.Instance != null && LevelGenerator.Instance.Generated)
                 {
