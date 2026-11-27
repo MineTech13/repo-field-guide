@@ -59,11 +59,14 @@ export interface LiveTeammate {
   /** Last known position (alive teammates): when they were on your screen or pinged. */
   lastSeen?: Vec3;
   lastSeenAgo?: number;
-  lastSeenHow?: 'seen' | 'ping';
+  /** 'live' while you're dead and spectating (you can watch everyone). */
+  lastSeenHow?: 'seen' | 'ping' | 'live';
 }
 
 export interface LiveLayout {
   me?: Vec3;
+  /** You're dead and spectating: the map shows what the whole team can see. */
+  spectating?: boolean;
   /** Camera heading in degrees. */
   yaw?: number;
   /** Where the truck is (you start there, so it's always known). */

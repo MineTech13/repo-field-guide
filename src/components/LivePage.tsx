@@ -129,12 +129,20 @@ export function LivePage() {
         {team.length > 0 && (
           <div class="ls-team">
             {team.map((p) => (
-              <span class={`ls-mate ${p.dead ? 'dead' : ''}`} title={p.dead ? `Down, head found${p.headIn === 'truck' ? ', in the truck' : ''}` : 'Alive (as far as you know)'}>
+              <span
+                class={`ls-mate ${p.dead ? 'dead' : ''}`}
+                title={p.dead ? `Down${layout?.spectating ? '' : ', head found'}${p.headIn === 'truck' ? ', in the truck' : ''}` : layout?.spectating ? 'Alive' : 'Alive (as far as you know)'}
+              >
                 {p.dead ? '💀' : '🙂'} {p.isLocal ? 'You' : p.name}
                 {p.headIn === 'truck' ? ' 🚚' : ''}
               </span>
             ))}
           </div>
+        )}
+        {layout?.spectating && (
+          <span class="ls-spectating" title="You're dead: you can watch everyone, so the map shows what the whole team can see.">
+            👻 Spectating: showing what the team sees
+          </span>
         )}
       </header>
 

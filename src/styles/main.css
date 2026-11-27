@@ -2332,6 +2332,13 @@ a.chip:hover {
   border: 1px solid var(--border);
   background: var(--surface-2);
 }
+.ls-spectating {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.85em;
+  background: color-mix(in srgb, #a78bfa 22%, var(--surface-2));
+  border: 1px solid color-mix(in srgb, #a78bfa 55%, transparent);
+}
 .ls-mate.dead {
   border-color: var(--danger);
   color: var(--danger);

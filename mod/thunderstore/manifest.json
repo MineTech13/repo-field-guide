@@ -1,6 +1,6 @@
 {
   "name": "RepoFieldGuide_Companion",
-  "version_number": "0.2.9",
+  "version_number": "0.3.0",
   "website_url": "https://github.com/MineTech13/repo-field-guide",
   "description": "Optional, read-only companion for the R.E.P.O. Field Guide website: tracks monsters you've met and reads the shop for you.",
   "dependencies": [

@@ -57,13 +57,14 @@ namespace RepoFieldGuide.Companion
             var director = EnemyDirector.instance;
             if (director == null || director.enemiesSpawned == null) return;
 
+            bool spectating = MapData.Spectating;
             foreach (var parent in director.enemiesSpawned)
             {
                 if (parent == null) continue;
                 var enemy = parent.Enemy;
                 if (enemy == null) continue;
 
-                bool onScreen = parent.Spawned && enemy.HasOnScreen && enemy.OnScreen != null && enemy.OnScreen.OnScreenLocal;
+                bool onScreen = parent.Spawned && enemy.HasOnScreen && enemy.OnScreen != null && (enemy.OnScreen.OnScreenLocal || (spectating && (enemy.OnScreen.OnScreenAny || SpectatorSees(enemy))));
                 if (onScreen)
                 {
                     var e0 = Get(parent);
@@ -78,6 +79,24 @@ namespace RepoFieldGuide.Companion
                     else if (parent.Spawned && e.Killed && enemy.HasHealth && enemy.Health != null && enemy.Health.healthCurrent > 0) e.Killed = false;
                 }
             }
+        }
+
+        /// <summary>While dead: is the monster on the spectator camera (whoever you're watching), not behind a wall?</summary>
+        private static bool SpectatorSees(Enemy enemy)
+        {
+            var cam = Camera.main;
+            if (cam == null || enemy.OnScreen.points == null) return false;
+            foreach (var pt in enemy.OnScreen.points)
+            {
+                if (pt == null) continue;
+                var at = pt.position;
+                if (Vector3.Distance(at, cam.transform.position) > 25f) continue;
+                var v = cam.WorldToViewportPoint(at);
+                if (v.z <= 0 || v.x < 0 || v.x > 1 || v.y < 0 || v.y > 1) continue;
+                var dir = cam.transform.position - at;
+                if (!Physics.Raycast(at, dir, out var hit, Mathf.Min(dir.magnitude, 12f), enemy.VisionMask) || hit.transform.CompareTag("Player")) return true;
+            }
+            return false;
         }
 
         /// <summary>Called from the Ping_It hook when an enemy ping shows its name (Ping Info).</summary>

@@ -196,7 +196,7 @@ export function LiveMap({
                 {p.name}
               </text>
               <title>
-                {p.name} · {p.lastSeenHow === 'ping' ? 'pinged from here' : 'last seen here'} {fmtAgo(p.lastSeenAgo)}
+                {p.name} · {p.lastSeenHow === 'live' ? 'here now (spectating)' : `${p.lastSeenHow === 'ping' ? 'pinged from here' : 'last seen here'} ${fmtAgo(p.lastSeenAgo)}`}
               </title>
             </g>
           ))}

@@ -17,6 +17,16 @@ namespace RepoFieldGuide.Companion
 
         // ---------------- team status ----------------
 
+        /// <summary>
+        /// You're dead and spectating. You can watch everyone anyway, so the fog of war relaxes
+        /// to what the whole team can see: live teammate positions, every found or not-found
+        /// teammate's death, monsters on whoever's screen you're watching.
+        /// </summary>
+        public static bool Spectating
+        {
+            get { var me = SemiFunc.PlayerAvatarLocal(); return me != null && me.isDisabled && SemiFunc.RunIsLevel(); }
+        }
+
         public static Dictionary<string, object> Me()
         {
             var me = SemiFunc.PlayerAvatarLocal();
@@ -71,14 +81,21 @@ namespace RepoFieldGuide.Companion
                 if (p == null) continue;
                 var head = p.playerDeathHead;
                 bool headFound = head != null && head.triggered && head.serverSeen;
-                bool dead = p.isLocal ? p.isDisabled : p.isDisabled && headFound;
+                bool spectating = Spectating;
+                bool dead = p.isLocal || spectating ? p.isDisabled : p.isDisabled && headFound;
                 var d = new Dictionary<string, object>
                 {
                     ["name"] = p.playerName,
                     ["isLocal"] = p.isLocal,
                     ["dead"] = dead,
                 };
-                if (!p.isLocal && !dead)
+                if (!p.isLocal && !dead && spectating)
+                {
+                    d["lastSeen"] = P(p.transform.position);
+                    d["lastSeenAgo"] = 0f;
+                    d["lastSeenHow"] = "live";
+                }
+                else if (!p.isLocal && !dead)
                 {
                     UpdateMateSighting(p);
                     if (mates.TryGetValue(p.playerName ?? "?", out var m))
@@ -88,7 +105,7 @@ namespace RepoFieldGuide.Companion
                         d["lastSeenHow"] = m.how;
                     }
                 }
-                if (dead && head != null && head.triggered)
+                if (dead && head != null && (head.triggered || spectating))
                 {
                     d["head"] = P(head.transform.position);
                     if (head.inTruck) d["headIn"] = "truck";
@@ -208,8 +225,10 @@ namespace RepoFieldGuide.Companion
             var me = SemiFunc.PlayerAvatarLocal();
             if (me != null)
             {
-                map["me"] = P(me.transform.position);
                 var cam = Camera.main;
+                // While spectating, "you" are the camera following a teammate.
+                map["me"] = P(me.isDisabled && cam != null ? cam.transform.position : me.transform.position);
+                if (me.isDisabled) map["spectating"] = true;
                 if (cam != null) map["yaw"] = Mathf.Round(cam.transform.eulerAngles.y);
             }
             map["rooms"] = Rooms();

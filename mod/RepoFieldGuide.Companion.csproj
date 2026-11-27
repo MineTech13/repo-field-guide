@@ -11,7 +11,7 @@
     <RootNamespace>RepoFieldGuide.Companion</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
-    <Version>0.2.9</Version>
+    <Version>0.3.0</Version>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <DebugType>embedded</DebugType>
     <RestoreAdditionalProjectSources>https://nuget.bepinex.dev/v3/index.json</RestoreAdditionalProjectSources>
