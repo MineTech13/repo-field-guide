@@ -111,6 +111,7 @@ namespace RepoFieldGuide.Companion
         private static List<Tile> allFloors, allWalls;
         private static Level tilesLevel;
         private static int tilesLevelsCompleted = -1;
+        private static float nextTileScan;
         private static List<object> floorCache = new List<object>(), wallCache = new List<object>();
         private const float LayerHeight = 4f; // Map.LayerHeight
 
@@ -119,8 +120,12 @@ namespace RepoFieldGuide.Companion
         private static void CollectTiles()
         {
             var run = RunManager.instance;
-            if (allFloors != null && run != null && run.levelCurrent == tilesLevel && run.levelsCompleted == tilesLevelsCompleted) return;
+            bool sameLevel = allFloors != null && run != null && run.levelCurrent == tilesLevel && run.levelsCompleted == tilesLevelsCompleted;
+            // The level's rooms can spawn after LevelGenerator says it's generated (seen as a client),
+            // so keep re-scanning: often until the tile count settles, then now and then.
+            if (sameLevel && Time.unscaledTime < nextTileScan) return;
             if (LevelGenerator.Instance == null || !LevelGenerator.Instance.Generated) return;
+            int before = sameLevel ? allFloors.Count + allWalls.Count : -1;
             tilesLevel = run != null ? run.levelCurrent : null;
             tilesLevelsCompleted = run != null ? run.levelsCompleted : -1;
             allFloors = new List<Tile>();
@@ -149,7 +154,9 @@ namespace RepoFieldGuide.Companion
                 // Walls start at their pivot and run along local X.
                 allWalls.Add(new Tile { Pos = w.transform.position, Mid = w.transform.position + w.transform.right * l * (LevelGenerator.TileSize / 2f), Layer = LayerOf(w.transform.position.y), Yaw = w.transform.eulerAngles.y, Sx = Mathf.Abs(w.transform.lossyScale.x) * len, Kind = kind });
             }
-            Plugin.Log.LogInfo($"Map tiles: {allFloors.Count} floors, {allWalls.Count} walls (tile size {LevelGenerator.TileSize} m).");
+            int after = allFloors.Count + allWalls.Count;
+            nextTileScan = Time.unscaledTime + (after == before && after > 50 ? 20f : 2f);
+            if (after != before) Plugin.Log.LogInfo($"Map tiles: {allFloors.Count} floors, {allWalls.Count} walls (tile size {LevelGenerator.TileSize} m).");
         }
 
         /// <summary>
