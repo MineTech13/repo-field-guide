@@ -104,6 +104,18 @@ namespace RepoFieldGuide.Companion
         private static List<object> roomCache = new List<object>();
         private static Vector3? truckPos; // you always know where the truck is: you start there
         private static float nextRooms;
+        private static List<Bounds> exploredBounds = new List<Bounds>();
+
+        private static bool InExplored(Vector3 p)
+        {
+            foreach (var b in exploredBounds)
+            {
+                var bb = b;
+                bb.Expand(1f);
+                if (bb.Contains(p)) return true;
+            }
+            return false;
+        }
 
         // The in-game map is built from these tiles (DirtFinderMapFloor/Wall). A fog cover hides
         // each room until it's explored, so we only send tiles inside explored rooms.
@@ -249,6 +261,7 @@ namespace RepoFieldGuide.Companion
                 }
             }
             roomCache = list;
+            exploredBounds = explored;
             try { VisibleTiles(explored); } catch (Exception ex) { Plugin.Log.LogWarning("Map tiles: " + ex.Message); }
             return list;
         }
@@ -272,7 +285,9 @@ namespace RepoFieldGuide.Companion
                     if (ep == null || ep.isShop) continue;
                     var rv = ep.roomVolume != null ? ep.roomVolume.GetComponent<RoomVolume>() : null;
                     bool current = rd.extractionPointCurrent == ep;
-                    bool known = current || ep.currentState != ExtractionPoint.State.Idle || (rv != null && rv.Explored);
+                    // Found = active/used, its own room explored, or it stands in a room someone explored
+                    // (the game only marks the pad's own little room when you stand right on it).
+                    bool known = current || ep.currentState != ExtractionPoint.State.Idle || (rv != null && rv.Explored) || InExplored(go.transform.position);
                     if (!known) continue; // not found yet
                     points.Add(new Dictionary<string, object>
                     {
