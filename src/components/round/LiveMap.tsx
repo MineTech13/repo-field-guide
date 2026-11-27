@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { MONSTERS } from '../../data';
 import { dollarsK, type ExtractionPlan } from '../../engine/extraction';
 import { floorCorners, layerOf, wallSegment, type Route } from '../../engine/pathfind';
@@ -31,6 +32,20 @@ export function LiveMap({
   /** Walking route to the target over the explored map. */
   route?: Route | null;
 }) {
+  // The minimap fills its box, so the view takes the box's shape (no letterboxing).
+  const box = useRef<HTMLElement>(null);
+  const [aspect, setAspect] = useState(1);
+  useEffect(() => {
+    const el = box.current;
+    if (!minimap || !el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => {
+      const r = el.getBoundingClientRect();
+      if (r.width > 0 && r.height > 0) setAspect(Math.min(3, Math.max(1 / 3, r.width / r.height)));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [minimap]);
+
   const L = live.layout;
   if (!L) return null;
   const rooms = L.rooms ?? [];
@@ -77,24 +92,10 @@ export function LiveMap({
   let maxX = Math.max(...xs) + pad;
   let minZ = Math.min(...zs) - pad;
   let maxZ = Math.max(...zs) + pad;
-  if (radius && me) {
-    minX = me[0] - radius;
-    maxX = me[0] + radius;
-    minZ = me[2] - radius;
-    maxZ = me[2] + radius;
-  } else if (minimap) {
-    // Whole map in a square frame: centre it.
-    const size = Math.max(maxX - minX, maxZ - minZ);
-    const cx = (minX + maxX) / 2;
-    const cz = (minZ + maxZ) / 2;
-    minX = cx - size / 2;
-    maxX = cx + size / 2;
-    minZ = cz - size / 2;
-    maxZ = cz + size / 2;
-  }
+  if (minimap) [minX, maxX, minZ, maxZ] = frameView([minX, maxX, minZ, maxZ], radius && me ? me : null, radius ?? null, aspect);
   const w = Math.max(20, maxX - minX);
   const h = Math.max(20, maxZ - minZ);
-  const unit = Math.max(w, h) / 100; // marker size scales with the map
+  const unit = Math.min(Math.max(w, h), 2.2 * Math.min(w, h)) / 100; // marker size scales with the map
   const X = (v: Vec3 | number) => (typeof v === 'number' ? v : v[0]);
   const Y = (v: Vec3) => -v[2];
   const fade = (y: number) => (sameFloor(y) ? 1 : 0.3);
@@ -102,7 +103,7 @@ export function LiveMap({
   const heads = (live.team ?? []).filter((p) => p.dead && p.head); // yours too: you know where you died
 
   return (
-    <figure class={`live-map ${minimap ? 'minimap' : ''}`}>
+    <figure class={`live-map ${minimap ? 'minimap' : ''}`} ref={box}>
       <svg viewBox={`${minX} ${-maxZ} ${w} ${h}`} role="img" aria-label="Map of what you've explored">
         {/* The in-game Tab map: floor tiles, walls, doors, stairs (explored rooms only). */}
         {tiles &&
@@ -254,4 +255,28 @@ function fmtAgo(sec?: number): string {
   if (sec == null) return 'earlier';
   if (sec < 60) return `${Math.round(sec)} s ago`;
   return `${Math.floor(sec / 60)}:${String(Math.round(sec % 60)).padStart(2, '0')} ago`;
+}
+
+/**
+ * Minimap camera, shaped like its box (no wasted bands at the sides). Zoomed: `radius` metres
+ * around you on the box's shorter side, more on the longer one. With no radius: the whole
+ * explored map.
+ */
+export function frameView(content: [number, number, number, number], me: Vec3 | null, radius: number | null, aspect: number): [number, number, number, number] {
+  const [cMinX, cMaxX, cMinZ, cMaxZ] = content;
+  let wW: number;
+  let wH: number;
+  if (radius && me) {
+    wW = 2 * radius * Math.max(1, aspect);
+    wH = 2 * radius * Math.max(1, 1 / aspect);
+  } else {
+    wW = Math.max(20, cMaxX - cMinX);
+    wH = Math.max(20, cMaxZ - cMinZ);
+    if (wW / wH < aspect) wW = wH * aspect;
+    else wH = wW / aspect;
+  }
+  // Zoomed: centred on you. All: centred on the explored map.
+  const cx = radius && me ? me[0] : (cMinX + cMaxX) / 2;
+  const cz = radius && me ? me[2] : (cMinZ + cMaxZ) / 2;
+  return [cx - wW / 2, cx + wW / 2, cz - wH / 2, cz + wH / 2];
 }

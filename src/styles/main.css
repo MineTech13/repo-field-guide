@@ -2375,9 +2375,12 @@ a.chip:hover {
 .lm-head h2 {
   margin: 0 !important;
 }
+.live-map.minimap {
+  height: clamp(300px, 75vw, 560px);
+}
 .live-map.minimap svg {
-  aspect-ratio: 1;
   width: 100%;
+  height: 100%;
   max-height: none;
   border-radius: 14px;
   border-width: 3px;
@@ -2477,10 +2480,8 @@ a.chip:hover {
     position: sticky;
     top: 70px;
   }
-  .live-map.minimap svg {
-    max-height: calc(100vh - 250px);
-    width: auto;
-    margin: 0 auto;
+  .live-map.minimap {
+    height: clamp(420px, calc(100vh - 250px), 1400px);
   }
 }
 @media (min-width: 1500px) {
