@@ -143,3 +143,12 @@ describe('find: heading to a target', () => {
     expect(floorText(b.dy)).toBe('one floor up');
   });
 });
+
+describe('find: your own head', () => {
+  it('lists your head while you are dead', async () => {
+    const { navTargets } = await import('../src/engine/navigate');
+    const live = { v: 1, phase: 'level', layout: { me: [0, 0, 0] }, team: [{ name: 'Me', isLocal: true, dead: true, head: [5, 0, 5] }] } as never;
+    const t = navTargets(live, { points: [] } as never);
+    expect(t.find((x) => x.kind === 'head')?.label).toBe('Your head');
+  });
+});

@@ -28,7 +28,7 @@ export function navTargets(live: GameStateV1, plan: ExtractionPlan): NavTarget[]
       out.push({ id: `mate-${p.name}`, kind: 'mate', icon: '🙂', label: `${p.name} (${p.lastSeenAgo != null && p.lastSeenAgo < 5 ? 'now' : `${fmtAgo(p.lastSeenAgo ?? 0)} ago`})`, at: p.lastSeen });
   }
   for (const p of live.team ?? []) {
-    if (p.dead && p.head && !p.isLocal && p.headIn !== 'truck') out.push({ id: `head-${p.name}`, kind: 'head', icon: '💀', label: `${p.name}'s head`, at: p.head });
+    if (p.dead && p.head && p.headIn !== 'truck') out.push({ id: `head-${p.name}`, kind: 'head', icon: '💀', label: p.isLocal ? 'Your head' : `${p.name}'s head`, at: p.head });
   }
   for (const v of [...(L.valuables ?? [])].filter((v) => !v.inHaul).sort((a, b) => b.value - a.value)) {
     out.push({ id: `val-${v.name}-${v.at.join(',')}`, kind: 'valuable', icon: '💰', label: `${v.name} ${dollarsK(v.value)}`, at: v.at });

@@ -99,7 +99,7 @@ export function LiveMap({
   const Y = (v: Vec3) => -v[2];
   const fade = (y: number) => (sameFloor(y) ? 1 : 0.3);
 
-  const heads = (live.team ?? []).filter((p) => p.dead && p.head && !p.isLocal);
+  const heads = (live.team ?? []).filter((p) => p.dead && p.head); // yours too: you know where you died
 
   return (
     <figure class={`live-map ${minimap ? 'minimap' : ''}`}>
@@ -182,7 +182,7 @@ export function LiveMap({
           <text x={X(p.head!)} y={Y(p.head!)} font-size={unit * 3.6} text-anchor="middle" dominant-baseline="central" opacity={fade(p.head![1])}>
             💀
             <title>
-              {p.name}'s head{p.headIn === 'truck' ? ' · in the truck' : p.headIn === 'extraction' ? ' · in an extraction' : ''}
+              {p.isLocal ? 'Your' : `${p.name}'s`} head{p.headIn === 'truck' ? ' · in the truck' : p.headIn === 'extraction' ? ' · in an extraction' : ''}
             </title>
           </text>
         ))}
