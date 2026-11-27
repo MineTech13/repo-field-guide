@@ -2379,7 +2379,7 @@ a.chip:hover {
   aspect-ratio: 1;
   width: 100%;
   max-height: none;
-  border-radius: 50%;
+  border-radius: 14px;
   border-width: 3px;
 }
 .lm-legend {
