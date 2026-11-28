@@ -58,7 +58,13 @@ export function FindPanel({
               {route && route.floorChanges > 0 && <span class="muted"> · take the stairs</span>}
             </span>
             <span class="muted small">
-              {route ? 'Route over the explored map, through doors.' : hasTiles ? 'No known way there through explored rooms yet: straight line shown.' : 'Straight line, walls not counted.'}
+              {route?.partial
+                ? 'Route to the edge of what’s explored, then straight on: the way there isn’t explored yet.'
+                : route
+                  ? 'Route over the explored map, through doors and up/down stairs.'
+                  : hasTiles
+                    ? 'No known way there through explored rooms yet: straight line shown.'
+                    : 'Straight line, walls not counted.'}
             </span>
           </div>
           <button class="icon-btn" onClick={() => onSelect(null)} aria-label="Stop finding" title="Stop">

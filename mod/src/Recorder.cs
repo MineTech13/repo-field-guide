@@ -24,7 +24,8 @@ namespace RepoFieldGuide.Companion
         private static float fileStart;
         private static float nextWrite;
         private static string lastJson;
-        private static bool levelDumped;
+        private static int dumpedTiles;
+        private static float nextDump;
         public static string CurrentFile { get; private set; }
 
         public static void Tick(string snapshotJson)
@@ -44,9 +45,12 @@ namespace RepoFieldGuide.Companion
                     Open(run); // closes the previous file first
                     currentKey = key;
                 }
-                if (!levelDumped && SemiFunc.RunIsLevel() && LevelGenerator.Instance != null && LevelGenerator.Instance.Generated)
+                // The level's rooms can spawn a while after it says it's generated: (re)write the
+                // dump whenever more map pieces have turned up.
+                if (SemiFunc.RunIsLevel() && LevelGenerator.Instance != null && LevelGenerator.Instance.Generated && MapData.TileCount > dumpedTiles && Time.unscaledTime >= nextDump)
                 {
-                    levelDumped = true;
+                    dumpedTiles = MapData.TileCount;
+                    nextDump = Time.unscaledTime + 5f;
                     WriteLevelDump(run);
                 }
                 if (writer == null || Time.unscaledTime < nextWrite || snapshotJson == lastJson) return;
@@ -69,7 +73,8 @@ namespace RepoFieldGuide.Companion
         private static void Open(RunManager run)
         {
             Close();
-            levelDumped = false;
+            dumpedTiles = 0;
+            nextDump = 0f;
             if (run == null || run.levelCurrent == null) return; // nothing worth recording in menus
             dir = Path.Combine(Paths.ConfigPath, "RepoFieldGuide", "recordings");
             Directory.CreateDirectory(dir);

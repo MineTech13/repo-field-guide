@@ -14,6 +14,10 @@ namespace RepoFieldGuide.Companion
     {
         private static float[] P(Vector3 v) => new[] { R(v.x), R(v.y), R(v.z) };
         private static float R(float f) => (float)Math.Round(f * 2f, MidpointRounding.AwayFromZero) / 2f; // 0.5 m
+        private static float RT(float f) => (float)Math.Round(f * 20f, MidpointRounding.AwayFromZero) / 20f; // 5 cm: map pieces (quarter tiles are 1.25 m)
+
+        /// <summary>Map pieces found in the level so far (the recorder rewrites its level dump when this grows).</summary>
+        public static int TileCount => (allFloors?.Count ?? 0) + (allWalls?.Count ?? 0);
 
         // ---------------- team status ----------------
 
@@ -211,10 +215,10 @@ namespace RepoFieldGuide.Companion
             }
             foreach (var t in allFloors)
                 if (t.Truck || Seen(t.Mid))
-                    floors.Add(new object[] { R(t.Pos.x), R(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), Math.Round(t.Sz, 2), t.Kind });
+                    floors.Add(new object[] { RT(t.Pos.x), RT(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), Math.Round(t.Sz, 2), t.Kind });
             foreach (var t in allWalls)
                 if (Seen(t.Mid))
-                    walls.Add(new object[] { R(t.Pos.x), R(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), t.Kind });
+                    walls.Add(new object[] { RT(t.Pos.x), RT(t.Pos.z), t.Layer, Mathf.Round(t.Yaw), Math.Round(t.Sx, 2), t.Kind });
             floorCache = floors;
             wallCache = walls;
         }

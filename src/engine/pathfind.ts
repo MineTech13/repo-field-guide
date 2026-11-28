@@ -156,6 +156,34 @@ function stairLinks(cells: NavGrid['cells'], walls: Wall[]): NavGrid['links'] {
   }
 }
 
+/**
+ * Floor changes the map doesn't mark (ramps, a few steps): where two map floors meet edge to
+ * edge in the floor plan, without one lying over the other, you can walk from one onto the
+ * other. Costs a bit extra so marked stairs win when there are both.
+ */
+function rampLinks(cells: NavGrid['cells'], blockers: NavGrid['blockers'], links: NavGrid['links']) {
+  const g = { cells, blockers, links } as NavGrid;
+  for (const [k, c] of cells) {
+    const [l, i, j] = k.split('|').map(Number);
+    for (const dl of [1, -1]) {
+      if (cells.has(key(i, j, l + dl))) continue; // the other floor lies over/under this spot: not an edge
+      for (const [di, dj] of [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1],
+      ]) {
+        const nk = key(i + di, j + dj, l + dl);
+        const n = cells.get(nk);
+        if (!n || cells.has(key(i + di, j + dj, l))) continue;
+        if (blocked(g, l, c.x, c.z, n.x, n.z) || blocked(g, l + dl, c.x, c.z, n.x, n.z)) continue;
+        if (!links.has(k)) links.set(k, []);
+        links.get(k)!.push({ to: nk, cost: CELL + 3 });
+      }
+    }
+  }
+}
+
 function nearestOnLayer(cells: NavGrid['cells'], x: number, z: number, layer: number, maxR: number): string | null {
   const i0 = Math.floor(x / CELL);
   const j0 = Math.floor(z / CELL);
@@ -207,7 +235,9 @@ export function buildGrid(layout: LiveLayout): NavGrid | null {
       }
     }
   }
-  return { cells, blockers, links: stairLinks(cells, layout.walls ?? []) };
+  const links = stairLinks(cells, layout.walls ?? []);
+  rampLinks(cells, blockers, links);
+  return { cells, blockers, links };
 }
 
 function blocked(g: NavGrid, layer: number, ax: number, az: number, bx: number, bz: number): boolean {
@@ -260,16 +290,18 @@ export interface Route {
   length: number;
   /** Number of floor changes along the way. */
   floorChanges: number;
+  /** The explored map doesn't reach the target: the route ends at the closest explored spot (last point = the target, straight on). */
+  partial?: boolean;
 }
 
 /** Shortest walk over explored floor, or null when the explored map doesn't connect the two. */
 export function findRoute(g: NavGrid, from: Vec3, to: Vec3): Route | null {
   const start = nearestCell(g, from);
-  const goal = nearestCell(g, to);
-  if (!start || !goal) return null;
+  if (!start) return null;
+  // Target off the explored map: aim for where it is anyway (the route gets as close as it can).
+  const goal = nearestCell(g, to) ?? key(Math.floor(to[0] / CELL), Math.floor(to[2] / CELL), layerOf(to[1]));
   const parse = (k: string) => k.split('|').map(Number) as [number, number, number];
-  const [, gi, gj] = parse(goal);
-  const gl = parse(goal)[0];
+  const [gl, gi, gj] = parse(goal);
   const h = (i: number, j: number, l: number) => Math.hypot(i - gi, j - gj) * CELL + Math.abs(l - gl) * LAYER_HEIGHT;
 
   const open = new Map<string, number>([[start, 0]]);
@@ -314,9 +346,21 @@ export function findRoute(g: NavGrid, from: Vec3, to: Vec3): Route | null {
       }
     }
   }
-  if (!gScore.has(goal)) return null;
+  let end = goal;
+  let partial = false;
+  if (!gScore.has(goal)) {
+    // No way all the way there over the explored map: go to the explored spot closest to it.
+    let best = Infinity;
+    for (const k of gScore.keys()) {
+      const c = g.cells.get(k)!;
+      const d = Math.hypot(c.x - to[0], c.z - to[2]) + Math.abs(c.layer - gl) * LAYER_HEIGHT;
+      if (d < best) [best, end] = [d, k];
+    }
+    if (end === start || best > Math.hypot(from[0] - to[0], from[2] - to[2]) - 3) return null; // gets you no closer
+    partial = true;
+  }
 
-  const keys: string[] = [goal];
+  const keys: string[] = [end];
   while (keys[0] !== start) keys.unshift(came.get(keys[0])!);
   const pts: Vec3[] = keys.map((k) => {
     const c = g.cells.get(k)!;
@@ -337,12 +381,13 @@ export function findRoute(g: NavGrid, from: Vec3, to: Vec3): Route | null {
     simple.push(pts[next]);
     n = next;
   }
-  simple[simple.length - 1] = to;
+  if (partial) simple.push(to);
+  else simple[simple.length - 1] = to;
   let length = 0;
   let floorChanges = 0;
   for (let n = 1; n < pts.length; n++) {
     length += Math.hypot(pts[n][0] - pts[n - 1][0], pts[n][2] - pts[n - 1][2]);
     if (pts[n][1] !== pts[n - 1][1]) floorChanges++;
   }
-  return { points: simple, length: Math.round(length), floorChanges };
+  return { points: simple, length: Math.round(length), floorChanges, partial };
 }

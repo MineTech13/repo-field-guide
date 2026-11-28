@@ -55,14 +55,18 @@ describe('route over the explored map', () => {
   it('never goes through a wall or a blocked door', () => {
     for (const kind of [0, 2]) {
       const g = buildGrid({ floors, walls: [wallAt(kind)] })!;
-      expect(findRoute(g, [2, 0, 2], [18, 0, 2])).toBeNull();
+      const r = findRoute(g, [2, 0, 2], [18, 0, 2]);
+      // Only as far as the wall, then straight on: never a full route through it.
+      expect(r === null || r.partial).toBe(true);
+      if (r) expect(r.points[r.points.length - 2][0]).toBeLessThan(10);
     }
   });
 
   it('only uses explored floor', () => {
     // Gap at tile 2 (unexplored): no route.
     const g = buildGrid({ floors: [tile(0, 0), tile(1, 0), tile(3, 0)] })!;
-    expect(findRoute(g, [2, 0, 2], [18, 0, 2])).toBeNull();
+    const r = findRoute(g, [2, 0, 2], [18, 0, 2]);
+    expect(r === null || r.partial).toBe(true);
   });
 
   it('takes the stairs to another floor', () => {
@@ -86,6 +90,29 @@ describe('route over the explored map', () => {
     // The route heads for the foot of the stairs first.
     expect(r!.points[1][0]).toBeGreaterThan(8);
     expect(r!.points[1][1]).toBe(0);
+  });
+
+  it('steps between map floors that meet edge to edge (ramps the map does not mark)', () => {
+    // Ground floor x 0..10, a lower floor x 10..20 (layer -1), ground again x 20..25.
+    const floors = [tile(0, 0), tile(1, 0), tile(2, 0, -1), tile(3, 0, -1), tile(4, 0)];
+    const r = findRoute(buildGrid({ floors })!, [2, 0, 2], [23, 0, 2]);
+    expect(r).not.toBeNull();
+    expect(r!.partial).toBeFalsy();
+    expect(r!.floorChanges).toBe(2);
+  });
+
+  it('a balcony over a room is not a way down', () => {
+    // Room x 0..10 on the ground; a balcony (layer 1) over x 5..10. The balcony edge lies over the room.
+    const floors = [tile(0, 0), tile(1, 0), tile(1, 0, 1)];
+    const r = findRoute(buildGrid({ floors })!, [7, 4.5, 2], [2, 0, 2]);
+    expect(r === null || r.partial).toBe(true);
+  });
+
+  it('gets as close as it can when the way is not explored', () => {
+    const floors = [tile(0, 0), tile(1, 0)];
+    const r = findRoute(buildGrid({ floors })!, [2, 0, 2], [30, 0, 2]);
+    expect(r?.partial).toBe(true);
+    expect(r!.points[r!.points.length - 1]).toEqual([30, 0, 2]);
   });
 
   it('demo level: walks from the truck upstairs once it is explored', () => {
