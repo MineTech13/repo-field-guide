@@ -5,3 +5,6 @@ dist/
 .wrangler/
 .env*
 .claude/
+
+# Real game recordings for local testing (contain player names, never commit)
+.recordings/

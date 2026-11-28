@@ -19,7 +19,7 @@ Notes for continuing work (by a person or a new Claude Code session) inside the 
   - Extractions count as found when they're in an explored room.
   - Map pieces are sent to 5 cm.
   - Debug recorder: one file per level, with a level dump rewritten once the rooms exist.
-- **Recordings** from real runs: `/r2modman/profiles/Merged/BepInEx/config/RepoFieldGuide/recordings/` (`*.jsonl` + `*_level.json`).
+- **Recordings** from real runs: `/r2modman/profiles/Merged/BepInEx/config/RepoFieldGuide/recordings/` (pruned to the newest 20). Copies of the useful ones (Museum, Swiftbroom, Manor, Sunstone level dumps and layouts, one shop visit) are in `.recordings/` (git-ignored: they contain player names).
 
 ## Open
 - **Test in game:**
