@@ -2,36 +2,52 @@
 
 Notes for continuing work (by a person or a new Claude Code session) inside the dev container.
 
-## Where things stand
-- **v1 is live**: website with round helper, shop advisor and builder, secret shop finder and wiki. Currently on GitHub Pages: https://minetech13.github.io/repo-field-guide/
-- **v2 plan** (approved): a hybrid website plus an *optional* companion mod. Phases:
-  0. **Dev container**: this folder's `.devcontainer/`. ✅
-  1. **Check site data against the game**: decompile `/game/Managed/Assembly-CSharp.dll` with `ilspycmd` (`ShopManager`, `StatsManager`, `LevelGenerator.EnemySetup`, `EnemyDirector`, `ItemAttributes`, the `ItemUpgrade*` classes). Add the missing **Throw** upgrade, the real price formula, stock rules and the spawn curve. Decompiled output stays out of the repo.
-  2. **Website redesign**: Round page "Focus view" (compact bar, threat card with top 3, monster chips with type-ahead add, collapsible sections). Shop advisor with a preference profile (playstyle preset, per-upgrade nudge −2..+2, pin/ban, upgrades↔gear slider), a per-copy shelf (cheapest copy first), and a team split.
-  3. **Live link + copy code**: `src/live/` (GameState v1 schema). Opt-in polling of `http://127.0.0.1:47380/state`, an `RFG1:` paste code, and `scripts/mock-game.mjs` for testing.
-  4. **Companion mod** in `mod/` (BepInEx 5, netstandard2.1): seen monsters via `EnemyOnScreen.OnScreenLocal`, a shop reader, teammates' upgrades, a read-only 127.0.0.1 server, an F8 copy code, an F7 IMGUI panel, and an opt-in data dump. CI builds it against NuGet `R.E.P.O.GameLibs.Steam`.
-  5. **Hosting + releases**: move the site to Cloudflare Pages at **repo-field-guide.pages.dev** (the owner connects it in the Cloudflare dashboard). Turn the GitHub Pages URL into a redirect that keeps the `#/route`. Add a `release.yml` that builds a GitHub Release with the mod zip on `v*` tags.
+## Where things stand (2026-11-28)
+- **Site**: Cloudflare Pages at https://repo-field-guide.pages.dev. The old GitHub Pages URL redirects there.
+- **Branch `live-companion`** holds the second-screen companion work and isn't merged into `main` yet. Preview: https://live-companion.repo-field-guide.pages.dev/#/live
+  - Live page: minimap (fills its box, Near/Mid/Far/All), threat, monsters met, extraction planner, Find with walking routes, team status, demo and replay.
+  - **Map pieces** (`DirtFinderMapFloor`/`Wall`, checked on real dumps from Museum, Swiftbroom and Manor):
+    - Floors are squares (1, 0.5 or 0.25 tiles) anchored at a corner, extending along local +X and +Z.
+    - Walls start at their pivot and run along local +X.
+  - **Routes** (`src/engine/pathfind.ts`): 1.25 m cells per map layer.
+    - **Stairs**: the map's "Stairs" wall pieces each climb one storey along their forward axis. They're chained together, and L-shaped staircases work.
+    - **Unmarked floor changes**: links between layers that meet edge to edge without overlapping.
+    - **Partial routes**: when the way isn't explored, the route goes to the closest explored spot.
+  - **Spectating** (you're dead): the fog relaxes to what the team can see. The map centres on the player you're watching, and your own head is shown.
+- **Companion mod v0.3.2** (`mod/dist/`, not in git):
+  - The map re-scans until the rooms have spawned.
+  - Extractions count as found when they're in an explored room.
+  - Map pieces are sent to 5 cm.
+  - Debug recorder: one file per level, with a level dump rewritten once the rooms exist.
+- **Recordings** from real runs: `/r2modman/profiles/Merged/BepInEx/config/RepoFieldGuide/recordings/` (`*.jsonl` + `*_level.json`).
 
-## Ideas for later
-- **Ping_It support** (mod: Eberk-Ping_It 1.4.0, in the "Merged" profile): count monsters that you or a teammate pinged as seen.
-  - Hook: a Harmony postfix on `PingIt.PingIt:Spawn(PhysGrabObject physGrab, PingTarget type, string locationPrefix, int? sender)`. It is `internal static`, so resolve it with `AccessTools.Method("PingIt.PingIt:Spawn")` and skip it if Ping_It isn't installed (soft dependency, no compile reference).
-  - It runs for local pings and for teammates' pings, which arrive through REPOLib `NetworkedEvent "PingIt_TriggerPing"`. `sender` is the Photon actor number.
-  - In the postfix: when `type.ToString() == "Enemy"`, take `physGrab.GetComponentInParent<EnemyParent>()` and mark it in `Tracker` as seen, with a new `Pinged` flag (plus who pinged it).
-  - **Only with the Ping Info upgrade.** Without it, a ping doesn't tell you which enemy it is: the name and HP label only shows when the local player has Ping Info.
-    - Check that through reflection with `PingIt.PingIt:LocalHasPingInfo()` (internal static, returns bool).
-    - It already covers the host turning the upgrade requirement off (Ping Info is then free for everyone), and SharedUpgradesPlus.
-    - Without Ping Info, a pinged enemy isn't counted.
-  - On the site, show a "📍 pinged" mark on the chip. Add a config toggle "Count pinged monsters as seen", default on.
-  - This stays within the "only what you know" rule, because a ping is shown to you in-game.
+## Open
+- **Test in game:**
+  - Mod 0.3.2.
+  - Spectating mode.
+  - Stair and ramp routes on more maps. Swiftbroom has no stair pieces at all.
+- **The "72K left" report in the shop:** couldn't be reproduced. The recording shows surplus 73 and a $72K basket, and the advisor's math is consistent. Ask the owner which screen showed it.
+- **Merge `live-companion` into `main`** once the owner is happy (ask first).
+- **Not done yet:**
+  - `release.yml`: a `v*` tag makes a GitHub Release with the mod zip.
+  - A CI build of the mod.
+  - Help-level preset, MenuLib page, Canvas HUD, REPOLib teammate sharing.
 
 ## Hard rules
 - **The mod is 100% optional.** Every site feature works with manual entry. The site never contacts localhost unless the user turns on "Connect to game". The mod only reads, is client-side only, and doesn't need the website.
+- **Fair info only**:
+  - Show only what's been discovered: explored rooms, discovered valuables, found heads, monsters seen on screen, pings, and what the Tab map shows.
+  - A ping without Ping Info is only a spot on the map.
+  - While spectating, show what the team can see.
 - Never commit game files or decompiled code.
-- Ask before pushing, tagging or publishing anything.
+- **Pushing:** push feature branches like `live-companion` directly. Ask before pushing to `main`, merging, tagging or publishing.
+- Each mod build gets a new version number.
 
 ## Useful commands
 ```bash
 npm run check                   # validate data + tests + type-check + build
 npm run dev                     # website on :5173
+cd mod && bash pack.sh          # build the companion zip into mod/dist/
+node scripts/mock-game.mjs --replay <file.jsonl>   # replay a recording as a fake game
 ilspycmd -t ShopManager /game/Managed/Assembly-CSharp.dll
 ```
