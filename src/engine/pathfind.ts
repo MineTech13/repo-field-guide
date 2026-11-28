@@ -82,6 +82,91 @@ function segmentsCross(a: number[], b: number[]): boolean {
 export interface NavGrid {
   cells: Map<string, { x: number; z: number; layer: number; stairs: boolean }>;
   blockers: Map<string, number[][]>; // layer|bucket → wall segments that block
+  /** Staircases: walk from one cell to a cell on another floor (cost in metres). */
+  links: Map<string, { to: string; cost: number }[]>;
+}
+
+/**
+ * Staircases from the map's "Stairs" pieces. Each piece climbs one storey (4 m) along its
+ * forward axis over about 4 m, starting at its pivot edge; a staircase can be several pieces
+ * (the "Top" piece starts where the bottom one ends, possibly turning a corner). We chain the
+ * pieces and connect both ends to the nearest explored floor, so a route can use them.
+ */
+function stairLinks(cells: NavGrid['cells'], walls: Wall[]): NavGrid['links'] {
+  const links: NavGrid['links'] = new Map();
+  type End = { x: number; z: number; layer: number };
+  const pieces = walls
+    .filter((w) => w[5] === 3)
+    .map((w) => {
+      const { right, forward } = axes(w[3]);
+      const half = (w[4] * TILE) / 2;
+      const ax = w[0] + right[0] * half;
+      const az = w[1] + right[1] * half;
+      const run = LAYER_HEIGHT; // ~45° stairs
+      const lo: End = { x: ax - forward[0] * 0.5, z: az - forward[1] * 0.5, layer: w[2] };
+      const hi: End = { x: ax + forward[0] * (run + 0.5), z: az + forward[1] * (run + 0.5), layer: w[2] + 1 };
+      return { lo, hi };
+    });
+  if (!pieces.length) return links;
+
+  // Endpoints graph: each piece joins its two ends; ends of different pieces that meet are joined.
+  const ends: End[] = pieces.flatMap((p) => [p.lo, p.hi]);
+  const adj: [number, number][][] = ends.map(() => []);
+  pieces.forEach((_, i) => {
+    adj[2 * i].push([2 * i + 1, run(pieces[i])]);
+    adj[2 * i + 1].push([2 * i, run(pieces[i])]);
+  });
+  for (let a = 0; a < ends.length; a++)
+    for (let b = a + 1; b < ends.length; b++)
+      if (Math.floor(a / 2) !== Math.floor(b / 2) && ends[a].layer === ends[b].layer && Math.hypot(ends[a].x - ends[b].x, ends[a].z - ends[b].z) <= 6) {
+        adj[a].push([b, 2]);
+        adj[b].push([a, 2]);
+      }
+
+  // Where each end meets explored floor (if it does).
+  const floorAt = ends.map((e) => nearestOnLayer(cells, e.x, e.z, e.layer, 4));
+  for (let a = 0; a < ends.length; a++) {
+    const from = floorAt[a];
+    if (!from) continue;
+    // Cheapest way along the stairs to every other end (tiny Dijkstra).
+    const dist = new Map<number, number>([[a, 0]]);
+    const todo = [a];
+    while (todo.length) {
+      todo.sort((p, q) => dist.get(p)! - dist.get(q)!);
+      const n = todo.shift()!;
+      for (const [m, c] of adj[n]) {
+        const d = dist.get(n)! + c;
+        if (d < (dist.get(m) ?? Infinity)) {
+          dist.set(m, d);
+          todo.push(m);
+        }
+      }
+    }
+    for (const [b, d] of dist) {
+      const to = floorAt[b];
+      if (b === a || !to || ends[b].layer === ends[a].layer) continue;
+      if (!links.has(from)) links.set(from, []);
+      links.get(from)!.push({ to, cost: d });
+    }
+  }
+  return links;
+
+  function run(p: { lo: End; hi: End }) {
+    return Math.hypot(p.hi.x - p.lo.x, p.hi.z - p.lo.z, LAYER_HEIGHT);
+  }
+}
+
+function nearestOnLayer(cells: NavGrid['cells'], x: number, z: number, layer: number, maxR: number): string | null {
+  const i0 = Math.floor(x / CELL);
+  const j0 = Math.floor(z / CELL);
+  for (let r = 0; r <= maxR; r++)
+    for (let i = i0 - r; i <= i0 + r; i++)
+      for (let j = j0 - r; j <= j0 + r; j++) {
+        if (Math.max(Math.abs(i - i0), Math.abs(j - j0)) !== r) continue;
+        const k = key(i, j, layer);
+        if (cells.has(k)) return k;
+      }
+  return null;
 }
 
 const key = (i: number, j: number, l: number) => `${l}|${i}|${j}`;
@@ -122,7 +207,7 @@ export function buildGrid(layout: LiveLayout): NavGrid | null {
       }
     }
   }
-  return { cells, blockers };
+  return { cells, blockers, links: stairLinks(cells, layout.walls ?? []) };
 }
 
 function blocked(g: NavGrid, layer: number, ax: number, az: number, bx: number, bz: number): boolean {
@@ -208,6 +293,10 @@ export function findRoute(g: NavGrid, from: Vec3, to: Vec3): Route | null {
           steps.push([i + di, j + dj, l - 1, Math.hypot(di, dj) * CELL + 2]);
         }
       }
+    for (const l2 of g.links.get(cur) ?? []) {
+      const [nl, ni, nj] = parse(l2.to);
+      steps.push([ni, nj, nl, l2.cost]);
+    }
     for (const [ni, nj, nl, cost] of steps) {
       const nk = key(ni, nj, nl);
       const n = g.cells.get(nk);

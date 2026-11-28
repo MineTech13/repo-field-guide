@@ -72,6 +72,22 @@ describe('route over the explored map', () => {
     expect(r!.floorChanges).toBe(1);
   });
 
+  it('climbs a staircase made of "Stairs" map pieces (bottom + top, like the Museum)', () => {
+    // Ground floor x 0..15, upper floor (y 8, layer 2) x 20..30. Stairs climb +x from x 10 to 18.
+    const floors = [tile(0, 0), tile(1, 0), tile(2, 0), tile(4, 0, 2), tile(5, 0, 2)];
+    const walls: W[] = [
+      [10, 5, 0, 90, 1, 3], // bottom piece: pivot edge at x 10, 5 m wide (right = -z), climbs +x
+      [14, 5, 1, 90, 1, 3], // top piece: starts 4 m on, one storey up
+    ];
+    const g = buildGrid({ floors, walls })!;
+    const r = findRoute(g, [2, 0, 2], [27, 8, 2]);
+    expect(r).not.toBeNull();
+    expect(r!.floorChanges).toBe(1);
+    // The route heads for the foot of the stairs first.
+    expect(r!.points[1][0]).toBeGreaterThan(8);
+    expect(r!.points[1][1]).toBe(0);
+  });
+
   it('demo level: walks from the truck upstairs once it is explored', () => {
     const layout = demoState(110).layout!;
     const g = buildGrid(layout)!;
